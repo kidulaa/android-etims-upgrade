@@ -3,7 +3,11 @@ package com.kra.paypoint.data.repository
 import android.content.Context
 import com.google.gson.Gson
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
+import com.kra.paypoint.domain.exception.DeviceNotRegisteredException
+import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.InventoryRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -16,6 +20,7 @@ class HighVolumeTransactionTest {
 
     private lateinit var transactionDao: FakeTransactionDao
     private lateinit var inventoryRepository: InventoryRepository
+    private lateinit var deviceRepository: DeviceRepository
     private lateinit var context: Context
     private val gson = Gson()
     private lateinit var repository: TransactionRepositoryImpl
@@ -24,9 +29,15 @@ class HighVolumeTransactionTest {
     fun setup() {
         transactionDao = FakeTransactionDao()
         inventoryRepository = mock(InventoryRepository::class.java)
+        deviceRepository = mock(DeviceRepository::class.java)
         context = mock(Context::class.java)
         `when`(context.applicationContext).thenReturn(context)
-        repository = TransactionRepositoryImpl(transactionDao, inventoryRepository, gson, context)
+        `when`(deviceRepository.registration).thenReturn(MutableStateFlow(null))
+        runBlocking {
+            `when`(deviceRepository.signReceipt(org.mockito.kotlin.any()))
+                .thenReturn(Result.failure(DeviceNotRegisteredException()))
+        }
+        repository = TransactionRepositoryImpl(transactionDao, inventoryRepository, deviceRepository, gson, context)
     }
 
     @Test

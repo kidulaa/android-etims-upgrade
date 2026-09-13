@@ -3,6 +3,7 @@ package com.kra.paypoint.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kra.paypoint.BuildConfig
+import com.kra.paypoint.data.remote.EtimsAuthInterceptor
 import com.kra.paypoint.data.remote.api.AuthService
 import com.kra.paypoint.data.remote.api.MasterDataService
 import com.kra.paypoint.data.remote.api.TransactionService
@@ -31,17 +32,21 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(etimsAuthInterceptor: EtimsAuthInterceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {
             // Never log request/response bodies in release: they carry TINs, tax data and
-            // eTIMS signing material. Headers only, and only in debug builds.
+            // eTIMS signing material. Headers only, and only in debug builds. Even at HEADERS
+            // level, the cmcKey/signing-key headers themselves must never reach a debug log
+            // in a way that could leak into a bug report — see EtimsAuthInterceptor.
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.HEADERS
             } else {
                 HttpLoggingInterceptor.Level.NONE
             }
+            redactHeader("cmcKey")
         }
         return OkHttpClient.Builder()
+            .addInterceptor(etimsAuthInterceptor)
             .addInterceptor(logging)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)

@@ -12,3 +12,6 @@ captures/
 keystore.properties
 *.keystore
 *.jks
+
+# Claude Code harness state, not project source
+.claude/

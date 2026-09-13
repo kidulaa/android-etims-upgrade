@@ -74,6 +74,69 @@ fun HardwareSettingsScreen(
                 }
             }
 
+            // eTIMS Device Registration
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = if (uiState.isDeviceRegistered)
+                        MaterialTheme.colorScheme.surface
+                    else
+                        MaterialTheme.colorScheme.errorContainer
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "eTIMS Device Registration",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = if (uiState.isDeviceRegistered)
+                                "Registered — this device can sign fiscal receipts."
+                            else
+                                "Not registered. Sales will be recorded unsigned until this completes.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (uiState.isDeviceRegistered)
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            else
+                                MaterialTheme.colorScheme.onErrorContainer
+                        )
+                    }
+                    if (!uiState.isDeviceRegistered) {
+                        Button(
+                            onClick = viewModel::retryDeviceRegistration,
+                            enabled = !uiState.isRegisteringDevice,
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            if (uiState.isRegisteringDevice) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(16.dp),
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    strokeWidth = 2.dp
+                                )
+                            } else {
+                                Text("Register")
+                            }
+                        }
+                    } else {
+                        Icon(
+                            Icons.Default.CheckCircle,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            }
+
             // Paper Width Configuration
             Card(
                 modifier = Modifier

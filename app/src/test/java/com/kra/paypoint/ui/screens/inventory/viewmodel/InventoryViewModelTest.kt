@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -20,10 +20,10 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.anyDouble
-import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class InventoryViewModelTest {
@@ -65,6 +65,10 @@ class InventoryViewModelTest {
 
     @Test
     fun `search filters item list`() = runTest {
+        // filteredItems is a stateIn(WhileSubscribed) flow: it only starts producing values
+        // once something actually collects it, not merely by advancing virtual time — so
+        // every test reading .value needs a live collector, same as a real Compose screen.
+        backgroundScope.launch { viewModel.filteredItems.collect {} }
         testScheduler.advanceUntilIdle()
         assertEquals(1, viewModel.filteredItems.value.size)
 
@@ -79,7 +83,7 @@ class InventoryViewModelTest {
 
     @Test
     fun `stockIn triggers inventoryRepository and resets selectedItem`() = runTest {
-        `when`(inventoryRepository.recordStockIn(anyString(), anyDouble(), anyString(), anyString(), anyString(), anyString()))
+        `when`(inventoryRepository.recordStockIn(any(), any(), any(), any(), any(), any()))
             .thenReturn(Result.success(20.0))
 
         viewModel.selectItem(sampleItem)
@@ -87,12 +91,12 @@ class InventoryViewModelTest {
         testScheduler.advanceUntilIdle()
 
         verify(inventoryRepository).recordStockIn(
-            org.mockito.Mockito.eq("ITM-50"),
-            org.mockito.Mockito.eq(10.0),
-            anyString(),
-            anyString(),
-            anyString(),
-            anyString()
+            eq("ITM-50"),
+            eq(10.0),
+            any(),
+            any(),
+            any(),
+            any()
         )
         assertEquals(null, viewModel.uiState.value.selectedItem)
         assertNotNull(viewModel.uiState.value.feedbackMessage)

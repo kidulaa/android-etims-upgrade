@@ -4,6 +4,7 @@ import com.kra.paypoint.data.local.dao.TransactionDao
 import com.kra.paypoint.data.local.dao.ZReportDao
 import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.ZReportEntity
+import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.XReportSummary
 import com.kra.paypoint.domain.repository.ZReportRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +17,8 @@ import javax.inject.Singleton
 @Singleton
 class ZReportRepositoryImpl @Inject constructor(
     private val transactionDao: TransactionDao,
-    private val zReportDao: ZReportDao
+    private val zReportDao: ZReportDao,
+    private val deviceRepository: DeviceRepository
 ) : ZReportRepository {
 
     override fun getAllZReports(): Flow<List<ZReportEntity>> {
@@ -75,38 +77,37 @@ class ZReportRepositoryImpl @Inject constructor(
         }
 
         val summary = getLiveShiftSummary()
-        val nextZNumber = zReportDao.getNextZReportNumber()
+        val floor = deviceRepository.registration.value?.lastZReportNumber ?: 0L
 
-        val zReport = ZReportEntity(
-            zReportNumber = nextZNumber,
-            reportDate = summary.reportDate,
-            closeoutTimestamp = System.currentTimeMillis(),
-            operatorId = operatorId,
-            operatorName = operatorName,
-            firstInvoiceNumber = summary.firstInvoiceNumber,
-            lastInvoiceNumber = summary.lastInvoiceNumber,
-            totalTransactionCount = summary.totalTransactionCount,
-            grossSalesAmount = summary.grossSalesAmount,
-            taxableAmountA = summary.taxableAmountA,
-            taxAmountA = summary.taxAmountA,
-            taxableAmountB = summary.taxableAmountB,
-            taxableAmountC = summary.taxableAmountC,
-            taxableAmountD = summary.taxableAmountD,
-            taxableAmountE = summary.taxableAmountE,
-            taxAmountE = summary.taxAmountE,
-            totalTaxableAmount = summary.totalTaxableAmount,
-            totalTaxAmount = summary.totalTaxAmount,
-            cashAmount = summary.cashAmount,
-            cardAmount = summary.cardAmount,
-            mobileAmount = summary.mobileAmount,
-            // Honest default: there is no `saveReportZ`-equivalent eTIMS submission wired up
-            // yet (the KRA Z-report contract needs confirming before building against it), so
-            // this must not claim SYNCED for a report that was never actually filed.
-            syncStatus = "PENDING"
-        )
-
-        zReportDao.insertZReport(zReport)
-        return zReport
+        return zReportDao.insertWithNextZReportNumber(floorZReportNumber = floor) { zReportNumber ->
+            ZReportEntity(
+                zReportNumber = zReportNumber,
+                reportDate = summary.reportDate,
+                closeoutTimestamp = System.currentTimeMillis(),
+                operatorId = operatorId,
+                operatorName = operatorName,
+                firstInvoiceNumber = summary.firstInvoiceNumber,
+                lastInvoiceNumber = summary.lastInvoiceNumber,
+                totalTransactionCount = summary.totalTransactionCount,
+                grossSalesAmount = summary.grossSalesAmount,
+                taxableAmountA = summary.taxableAmountA,
+                taxAmountA = summary.taxAmountA,
+                taxableAmountB = summary.taxableAmountB,
+                taxableAmountC = summary.taxableAmountC,
+                taxableAmountD = summary.taxableAmountD,
+                taxableAmountE = summary.taxableAmountE,
+                taxAmountE = summary.taxAmountE,
+                totalTaxableAmount = summary.totalTaxableAmount,
+                totalTaxAmount = summary.totalTaxAmount,
+                cashAmount = summary.cashAmount,
+                cardAmount = summary.cardAmount,
+                mobileAmount = summary.mobileAmount,
+                // Honest default: there is no `saveReportZ`-equivalent eTIMS submission wired
+                // up yet (the KRA Z-report contract needs confirming before building against
+                // it), so this must not claim SYNCED for a report that was never actually filed.
+                syncStatus = "PENDING"
+            )
+        }
     }
 
     override suspend fun getZReport(zReportNumber: Long): ZReportEntity? {

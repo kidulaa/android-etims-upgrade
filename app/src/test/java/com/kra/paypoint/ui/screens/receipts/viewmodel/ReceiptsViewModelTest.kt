@@ -8,8 +8,8 @@ import com.kra.paypoint.hardware.printer.PrinterService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -19,10 +19,10 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.anyBoolean
-import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ReceiptsViewModelTest {
@@ -71,6 +71,8 @@ class ReceiptsViewModelTest {
 
     @Test
     fun `filteredTransactions filters by PENDING and SYNCED status`() = runTest {
+        // stateIn(WhileSubscribed) only starts producing once collected.
+        backgroundScope.launch { viewModel.filteredTransactions.collect {} }
         testScheduler.advanceUntilIdle()
         assertEquals(2, viewModel.filteredTransactions.value.size)
 
@@ -126,7 +128,7 @@ class ReceiptsViewModelTest {
         viewModel.reprintReceipt(details)
         testScheduler.advanceUntilIdle()
 
-        verify(printerService).printReceipt(anyString(), org.mockito.Mockito.eq(true))
+        verify(printerService).printReceipt(any(), eq(true))
         assertNotNull(viewModel.uiState.value.printMessage)
     }
 }

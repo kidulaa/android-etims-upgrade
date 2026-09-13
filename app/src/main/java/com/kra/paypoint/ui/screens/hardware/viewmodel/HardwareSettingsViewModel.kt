@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kra.paypoint.domain.repository.AuthRepository
+import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.hardware.printer.PrinterService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,12 +23,16 @@ data class HardwareSettingsUiState(
     val paperWidth: String = "58mm", // "58mm" or "80mm"
     val isTestingPrint: Boolean = false,
     val isConnecting: Boolean = false,
-    val statusMessage: String? = null
+    val statusMessage: String? = null,
+    val isDeviceRegistered: Boolean = false,
+    val isRegisteringDevice: Boolean = false
 )
 
 @HiltViewModel
 class HardwareSettingsViewModel @Inject constructor(
     private val printerService: PrinterService,
+    private val deviceRepository: DeviceRepository,
+    private val authRepository: AuthRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -43,6 +49,31 @@ class HardwareSettingsViewModel @Inject constructor(
 
     init {
         refreshPrinters()
+        viewModelScope.launch {
+            _uiState.update { it.copy(isDeviceRegistered = deviceRepository.isRegistered()) }
+        }
+    }
+
+    fun retryDeviceRegistration() {
+        val user = authRepository.currentUser.value
+        if (user == null) {
+            _uiState.update { it.copy(statusMessage = "Sign in again before retrying device registration.") }
+            return
+        }
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRegisteringDevice = true, statusMessage = null) }
+            val result = deviceRepository.registerDevice(user.tin, user.branchId)
+            _uiState.update {
+                it.copy(
+                    isRegisteringDevice = false,
+                    isDeviceRegistered = result.isSuccess,
+                    statusMessage = result.fold(
+                        onSuccess = { "Device eTIMS registration complete." },
+                        onFailure = { e -> "Device registration failed: ${e.localizedMessage}" }
+                    )
+                )
+            }
+        }
     }
 
     fun refreshPrinters() {

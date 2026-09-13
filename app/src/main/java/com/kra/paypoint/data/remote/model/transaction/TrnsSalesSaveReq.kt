@@ -45,5 +45,10 @@ data class TrnsSalesSaveReq(
     @SerializedName("regrNm") val regrNm: String?,
     @SerializedName("modrId") val modrId: String?,
     @SerializedName("modrNm") val modrNm: String?,
-    @SerializedName("itemList") val itemList: List<TrnsSalesSaveItem>
+    @SerializedName("itemList") val itemList: List<TrnsSalesSaveItem>,
+    // Computed client-side once the invoice number is known — see FiscalSignature and
+    // DeviceRepository.signReceipt. Null only if this device hasn't completed eTIMS
+    // registration yet (see TransactionRepositoryImpl.processSale).
+    @SerializedName("rcptSign") val rcptSign: String? = null,
+    @SerializedName("intrlData") val intrlData: String? = null
 )

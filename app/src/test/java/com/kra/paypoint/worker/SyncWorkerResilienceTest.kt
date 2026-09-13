@@ -11,8 +11,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.any
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import java.io.IOException
 
@@ -150,7 +150,10 @@ class SyncWorkerResilienceTest {
             syncStatus = "PENDING", syncAttempts = 1, payloadJson = gson.toJson(sampleReq)
         )
         transactionDao.insertTransaction(pendingEntity)
-        `when`(transactionService.saveSalesTransaction(any())).thenThrow(IOException("Unable to resolve host"))
+        // thenThrow() validates against the method's declared checked exceptions, and Kotlin
+        // suspend functions never declare any (no Kotlin equivalent of `throws`) — so a
+        // checked exception like IOException must be raised via thenAnswer instead.
+        `when`(transactionService.saveSalesTransaction(any())).thenAnswer { throw IOException("Unable to resolve host") }
 
         runSyncPass()
 

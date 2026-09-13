@@ -5,8 +5,12 @@ import com.google.gson.Gson
 import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
+import com.kra.paypoint.domain.exception.DeviceNotRegisteredException
+import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.InventoryRepository
 import com.kra.paypoint.domain.repository.RefundItemParam
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -21,6 +25,7 @@ class TransactionRepositoryTest {
 
     private lateinit var transactionDao: FakeTransactionDao
     private lateinit var inventoryRepository: InventoryRepository
+    private lateinit var deviceRepository: DeviceRepository
     private lateinit var context: Context
     private val gson = Gson()
     private lateinit var repository: TransactionRepositoryImpl
@@ -29,9 +34,17 @@ class TransactionRepositoryTest {
     fun setup() {
         transactionDao = FakeTransactionDao()
         inventoryRepository = mock(InventoryRepository::class.java)
+        deviceRepository = mock(DeviceRepository::class.java)
         context = mock(Context::class.java)
         `when`(context.applicationContext).thenReturn(context)
-        repository = TransactionRepositoryImpl(transactionDao, inventoryRepository, gson, context)
+        // Unregistered by default: signing is best-effort (see TransactionRepositoryImpl.trySign),
+        // so an unsigned PENDING transaction must still be recorded, never blocked.
+        `when`(deviceRepository.registration).thenReturn(MutableStateFlow(null))
+        runBlocking {
+            `when`(deviceRepository.signReceipt(org.mockito.kotlin.any()))
+                .thenReturn(Result.failure(DeviceNotRegisteredException()))
+        }
+        repository = TransactionRepositoryImpl(transactionDao, inventoryRepository, deviceRepository, gson, context)
     }
 
     private fun dummySaleReq(invcNoPlaceholder: Long = 0L) = TrnsSalesSaveReq(

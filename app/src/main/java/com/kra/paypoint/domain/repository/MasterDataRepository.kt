@@ -14,4 +14,10 @@ interface MasterDataRepository {
     fun searchCustomers(query: String): Flow<List<CustomerEntity>>
     suspend fun getCustomerByTin(tin: String): CustomerEntity?
     suspend fun saveCustomer(customer: CustomerEntity)
+
+    /** Pulls the branch item catalog from eTIMS (`selectItemList`) and persists it locally. */
+    suspend fun syncItemsFromEtims(tin: String, bhfId: String): Result<Int>
+
+    /** Pulls this branch's registered customers from eTIMS (`selectCustomerList`). */
+    suspend fun syncCustomersFromEtims(tin: String, bhfId: String): Result<Int>
 }

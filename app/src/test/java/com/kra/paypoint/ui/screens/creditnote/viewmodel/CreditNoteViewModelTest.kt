@@ -9,6 +9,7 @@ import com.kra.paypoint.domain.repository.TransactionRepository
 import com.kra.paypoint.hardware.printer.PrinterService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -20,13 +21,12 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyList
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.ArgumentMatchers.contains
-import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argThat
+import org.mockito.kotlin.eq
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CreditNoteViewModelTest {
@@ -90,7 +90,7 @@ class CreditNoteViewModelTest {
         authRepository = mock(AuthRepository::class.java)
         printerService = mock(PrinterService::class.java)
 
-        `when`(authRepository.getCurrentUser()).thenReturn(testOperator)
+        runBlocking { `when`(authRepository.getCurrentUser()).thenReturn(testOperator) }
 
         viewModel = CreditNoteViewModel(
             transactionRepository = transactionRepository,
@@ -177,9 +177,9 @@ class CreditNoteViewModelTest {
         `when`(
             transactionRepository.issueCreditNote(
                 originalTransaction = eq(testTx),
-                itemsToRefund = anyList(),
+                itemsToRefund = any(),
                 reasonCode = eq("01"),
-                reasonDescription = anyString(),
+                reasonDescription = any(),
                 restockInventory = eq(true),
                 operatorId = eq("OP-10"),
                 operatorName = eq("Grace Hopper")
@@ -198,7 +198,7 @@ class CreditNoteViewModelTest {
         assertTrue(state.feedbackMessage?.contains("Credit Note #5002") == true)
 
         verify(printerService).printReceipt(
-            contains("KRA FISCAL CREDIT NOTE"),
+            argThat { contains("KRA FISCAL CREDIT NOTE") },
             eq(false)
         )
     }

@@ -22,18 +22,26 @@ interface TransactionDao {
     suspend fun insertTransactionItems(items: List<TransactionItemEntity>)
 
     /**
-     * Assigns the next monotonic invoice number (last local number + 1, mirroring how the
-     * legacy EBM2x till derived KRA invoice numbers) and inserts the transaction in the same
-     * Room transaction, so the read-then-write can't race against another insert from this
-     * device. [buildEntity] receives the assigned number to finalize the row (and the payload
-     * that will be sent to KRA) before it's written.
+     * Assigns the next monotonic invoice number and inserts the transaction in the same Room
+     * transaction, so the read-then-write can't race against another insert from this device.
+     *
+     * The number is `max(local MAX(invoiceNumber), floorInvoiceNumber) + 1`: [floorInvoiceNumber]
+     * should be the device's `lastSaleInvcNo` from eTIMS device registration
+     * (DeviceRegistration.lastSaleInvoiceNumber), so a reinstalled app with an empty local
+     * table resumes numbering from where this device left off with KRA instead of restarting
+     * at 1 and potentially reissuing a number already submitted — the same reason the legacy
+     * till kept this floor in a separate persisted config, not just the transactions table.
+     *
+     * [buildEntity] receives the assigned number to finalize the row (and the payload that
+     * will be sent to KRA) before it's written.
      */
     @Transaction
     suspend fun insertWithNextInvoiceNumber(
-        buildEntity: (Long) -> TransactionEntity,
-        buildItems: (Long) -> List<TransactionItemEntity>
+        floorInvoiceNumber: Long = 0L,
+        buildEntity: suspend (Long) -> TransactionEntity,
+        buildItems: suspend (Long) -> List<TransactionItemEntity>
     ): SaleInsertResult {
-        val nextInvoiceNumber = (getLastInvoiceNumber() ?: 0L) + 1L
+        val nextInvoiceNumber = maxOf(getLastInvoiceNumber() ?: 0L, floorInvoiceNumber) + 1L
         val entity = buildEntity(nextInvoiceNumber)
         val transactionId = insertTransaction(entity)
         val items = buildItems(transactionId)

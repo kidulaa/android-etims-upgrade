@@ -3,6 +3,7 @@ package com.kra.paypoint.ui.screens.login.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kra.paypoint.domain.repository.AuthRepository
+import com.kra.paypoint.domain.repository.DeviceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,12 +23,14 @@ data class LoginUiState(
     val branchId: String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
+    val deviceWarning: String? = null,
     val isAuthenticated: Boolean = false
 )
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val deviceRepository: DeviceRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -118,7 +121,24 @@ class LoginViewModel @Inject constructor(
                 onSuccess = {
                     val loginResult = authRepository.login(state.username, state.password)
                     loginResult.fold(
-                        onSuccess = { _uiState.update { it.copy(isLoading = false, isAuthenticated = true) } },
+                        onSuccess = {
+                            // Best-effort: this needs live connectivity to KRA, which an
+                            // offline-first till may not have during setup. Failing here
+                            // must not block account creation — it blocks signed sales
+                            // later instead (see DeviceRepository.signReceipt), with a
+                            // clear warning surfaced now so it isn't a silent gap.
+                            val deviceResult = deviceRepository.registerDevice(state.branchTin, state.branchId)
+                            _uiState.update {
+                                it.copy(
+                                    isLoading = false,
+                                    isAuthenticated = true,
+                                    deviceWarning = deviceResult.exceptionOrNull()?.let { e ->
+                                        "Device eTIMS registration did not complete (${e.localizedMessage}). " +
+                                            "Retry it from Hardware Settings before processing real sales."
+                                    }
+                                )
+                            }
+                        },
                         onFailure = { error ->
                             _uiState.update {
                                 it.copy(isLoading = false, errorMessage = error.localizedMessage ?: "Setup failed")

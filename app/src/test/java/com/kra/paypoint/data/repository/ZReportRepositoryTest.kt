@@ -1,24 +1,23 @@
 package com.kra.paypoint.data.repository
 
 import com.kra.paypoint.data.local.dao.TransactionDao
-import com.kra.paypoint.data.local.dao.ZReportDao
 import com.kra.paypoint.data.local.entity.TransactionEntity
-import com.kra.paypoint.data.local.entity.ZReportEntity
+import com.kra.paypoint.domain.repository.DeviceRepository
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
 
 class ZReportRepositoryTest {
 
     private lateinit var transactionDao: TransactionDao
-    private lateinit var zReportDao: ZReportDao
+    private lateinit var zReportDao: FakeZReportDao
+    private lateinit var deviceRepository: DeviceRepository
     private lateinit var repository: ZReportRepositoryImpl
 
     private val sampleTransactions = listOf(
@@ -55,13 +54,18 @@ class ZReportRepositoryTest {
     @Before
     fun setup() {
         transactionDao = mock(TransactionDao::class.java)
-        zReportDao = mock(ZReportDao::class.java)
+        zReportDao = FakeZReportDao()
+        deviceRepository = mock(DeviceRepository::class.java)
 
         `when`(transactionDao.getAllTransactions()).thenReturn(flowOf(sampleTransactions))
-        `when`(zReportDao.getLastZReport()).thenReturn(null)
-        `when`(zReportDao.getNextZReportNumber()).thenReturn(1L)
+        `when`(deviceRepository.registration).thenReturn(MutableStateFlow(null))
+        runBlocking {
+            // No unsynced transactions by default, so closeShiftAndGenerateZReport's
+            // pending-transaction guard doesn't block these tests.
+            `when`(transactionDao.getPendingTransactionsList()).thenReturn(emptyList())
+        }
 
-        repository = ZReportRepositoryImpl(transactionDao, zReportDao)
+        repository = ZReportRepositoryImpl(transactionDao, zReportDao, deviceRepository)
     }
 
     @Test
@@ -87,16 +91,22 @@ class ZReportRepositoryTest {
 
     @Test
     fun `closeShiftAndGenerateZReport advances Z-number and persists record`() = runTest {
-        val captor = ArgumentCaptor.forClass(ZReportEntity::class.java)
-        `when`(zReportDao.insertZReport(captor.capture())).thenReturn(1L)
-
         val report = repository.closeShiftAndGenerateZReport("CASHIER01", "Jane Doe")
 
-        verify(zReportDao).insertZReport(any())
         assertEquals(1L, report.zReportNumber)
         assertEquals("CASHIER01", report.operatorId)
         assertEquals(332.0, report.grossSalesAmount, 0.001)
         assertEquals(1001L, report.firstInvoiceNumber)
         assertEquals(1002L, report.lastInvoiceNumber)
+        assertEquals(1, zReportDao.getAllZReports().value.size)
+    }
+
+    @Test
+    fun `closing the shift twice never reuses a Z-report number`() = runTest {
+        val first = repository.closeShiftAndGenerateZReport("CASHIER01", "Jane Doe")
+        val second = repository.closeShiftAndGenerateZReport("CASHIER01", "Jane Doe")
+
+        assertEquals(1L, first.zReportNumber)
+        assertEquals(2L, second.zReportNumber)
     }
 }

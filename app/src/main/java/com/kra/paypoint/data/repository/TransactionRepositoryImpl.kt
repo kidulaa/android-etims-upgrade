@@ -8,13 +8,16 @@ import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.data.local.entity.TransactionWithItems
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveItem
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
+import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.InventoryRepository
 import com.kra.paypoint.domain.repository.RefundItemParam
+import com.kra.paypoint.domain.repository.SignedReceipt
 import com.kra.paypoint.domain.repository.TransactionRepository
 import com.kra.paypoint.domain.usecase.TaxCalculationEngine
 import com.kra.paypoint.worker.SyncManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import android.util.Log
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -24,9 +27,33 @@ import javax.inject.Singleton
 class TransactionRepositoryImpl @Inject constructor(
     private val transactionDao: TransactionDao,
     private val inventoryRepository: InventoryRepository,
+    private val deviceRepository: DeviceRepository,
     private val gson: Gson,
     @ApplicationContext private val context: Context
 ) : TransactionRepository {
+
+    /**
+     * Signs the receipt if this device has completed eTIMS registration; otherwise proceeds
+     * unsigned rather than blocking the sale outright — offline-first means a till without a
+     * live KRA connection yet must still be able to record a sale locally. An unsigned
+     * PENDING transaction is a visible, honest state; silently fabricating a signature would
+     * not be.
+     */
+    private suspend fun trySign(receiptData: String): SignedReceipt? =
+        deviceRepository.signReceipt(receiptData).getOrNull()
+
+    /**
+     * A failure to *schedule* a background sync attempt (e.g. WorkManager unavailable) must
+     * never fail a sale that's already durably recorded in the local DB -- the periodic
+     * 15-minute sync will still pick it up. Log and move on.
+     */
+    private fun safeTriggerSync() {
+        try {
+            SyncManager.triggerImmediateSync(context)
+        } catch (e: Exception) {
+            Log.w("TransactionRepository", "Could not schedule an immediate sync attempt: ${e.message}")
+        }
+    }
 
     override fun getPendingTransactions(): Flow<List<TransactionEntity>> {
         return transactionDao.getPendingTransactions()
@@ -51,9 +78,18 @@ class TransactionRepositoryImpl @Inject constructor(
         // The invoice number is assigned atomically inside the DAO transaction (last local
         // number + 1, mirroring the legacy till's sequencing) rather than by the caller, so
         // two near-simultaneous checkouts on this device can never compute the same number.
+        // floorInvoiceNumber guards a reinstalled/empty-DB device against reusing a number
+        // already sent to KRA under a prior install.
         val result = transactionDao.insertWithNextInvoiceNumber(
+            floorInvoiceNumber = deviceRepository.registration.value?.lastSaleInvoiceNumber ?: 0L,
             buildEntity = { invoiceNumber ->
-                val finalRequest = request.copy(invcNo = invoiceNumber)
+                val receiptData = "${request.tin}|${request.bhfId}|$invoiceNumber|${request.salesDt}|${request.totAmt}"
+                val signed = trySign(receiptData)
+                val finalRequest = request.copy(
+                    invcNo = invoiceNumber,
+                    rcptSign = signed?.receiptSignature,
+                    intrlData = signed?.internalData
+                )
                 TransactionEntity(
                     invoiceNumber = invoiceNumber,
                     originalInvoiceNumber = finalRequest.orgInvcNo,
@@ -78,6 +114,9 @@ class TransactionRepositoryImpl @Inject constructor(
                     totalAmount = finalRequest.totAmt,
                     salesDate = finalRequest.salesDt,
                     syncStatus = "PENDING",
+                    // QR payload = TIN + branch + signature, matching the URL pattern the
+                    // legacy printer heads embedded on the fiscal receipt.
+                    qrCodeData = signed?.let { "${finalRequest.tin}${finalRequest.bhfId}${it.receiptSignature}" },
                     payloadJson = gson.toJson(finalRequest),
                     createdAt = System.currentTimeMillis()
                 )
@@ -85,7 +124,7 @@ class TransactionRepositoryImpl @Inject constructor(
             buildItems = { transactionId -> lineItems.map { it.copy(transactionId = transactionId) } }
         )
 
-        SyncManager.triggerImmediateSync(context)
+        safeTriggerSync()
         return result.transactionId to result.invoiceNumber
     }
 
@@ -234,8 +273,15 @@ class TransactionRepositoryImpl @Inject constructor(
             }
 
             val insertResult = transactionDao.insertWithNextInvoiceNumber(
+                floorInvoiceNumber = deviceRepository.registration.value?.lastSaleInvoiceNumber ?: 0L,
                 buildEntity = { invoiceNumber ->
-                    val finalReq = baseReq.copy(invcNo = invoiceNumber)
+                    val receiptData = "${baseReq.tin}|${baseReq.bhfId}|$invoiceNumber|${baseReq.salesDt}|${baseReq.totAmt}"
+                    val signed = trySign(receiptData)
+                    val finalReq = baseReq.copy(
+                        invcNo = invoiceNumber,
+                        rcptSign = signed?.receiptSignature,
+                        intrlData = signed?.internalData
+                    )
                     TransactionEntity(
                         invoiceNumber = invoiceNumber,
                         originalInvoiceNumber = originalTransaction.invoiceNumber,
@@ -260,6 +306,7 @@ class TransactionRepositoryImpl @Inject constructor(
                         totalAmount = totAmt,
                         salesDate = dateStr,
                         syncStatus = "PENDING",
+                        qrCodeData = signed?.let { "${finalReq.tin}${finalReq.bhfId}${it.receiptSignature}" },
                         payloadJson = gson.toJson(finalReq),
                         createdAt = System.currentTimeMillis()
                     )
@@ -280,7 +327,7 @@ class TransactionRepositoryImpl @Inject constructor(
                 }
             }
 
-            SyncManager.triggerImmediateSync(context)
+            safeTriggerSync()
 
             Result.success(insertResult.transactionId)
         } catch (e: Exception) {

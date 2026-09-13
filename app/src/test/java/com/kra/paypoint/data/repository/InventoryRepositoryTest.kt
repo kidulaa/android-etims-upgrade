@@ -10,10 +10,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.whenever
 
 /** Runs the block inline with no real DB transaction — sufficient for unit tests, since the
  *  atomicity guarantee itself lives in Room/[com.kra.paypoint.data.local.database.RoomTransactionRunner]. */
@@ -48,8 +49,8 @@ class InventoryRepositoryTest {
     fun `recordStockIn increments stock atomically and inserts movement record`() = runTest {
         `when`(itemDao.getItemByCode("ITM-100")).thenReturn(testItem)
 
-        val captor = ArgumentCaptor.forClass(StockMovementEntity::class.java)
-        `when`(stockMovementDao.insertMovement(captor.capture())).thenReturn(1L)
+        val captor = argumentCaptor<StockMovementEntity>()
+        whenever(stockMovementDao.insertMovement(captor.capture())).thenReturn(1L)
 
         val result = repository.recordStockIn("ITM-100", 15.0, "01", "Delivery", "PO-123", "ADMIN")
 
@@ -60,7 +61,7 @@ class InventoryRepositoryTest {
         // "set to computed value" — that's the race the old implementation had.
         verify(itemDao).increaseStock("ITM-100", 15.0)
 
-        val capturedMovement = captor.value
+        val capturedMovement = captor.firstValue
         assertEquals("STOCK_IN", capturedMovement.movementType)
         assertEquals(25.0, capturedMovement.previousStock, 0.001)
         assertEquals(40.0, capturedMovement.newStock, 0.001)
@@ -72,15 +73,15 @@ class InventoryRepositoryTest {
         `when`(itemDao.getItemByCode("ITM-100")).thenReturn(testItem)
         `when`(itemDao.decreaseStockIfSufficient("ITM-100", 5.0)).thenReturn(1)
 
-        val captor = ArgumentCaptor.forClass(StockMovementEntity::class.java)
-        `when`(stockMovementDao.insertMovement(captor.capture())).thenReturn(2L)
+        val captor = argumentCaptor<StockMovementEntity>()
+        whenever(stockMovementDao.insertMovement(captor.capture())).thenReturn(2L)
 
         val result = repository.recordStockOut("ITM-100", 5.0, "02", "Damage", "Broken cap", "ADMIN")
 
         assertTrue(result.isSuccess)
         assertEquals(20.0, result.getOrNull()!!, 0.001)
 
-        val capturedMovement = captor.value
+        val capturedMovement = captor.firstValue
         assertEquals("STOCK_OUT", capturedMovement.movementType)
         assertEquals(25.0, capturedMovement.previousStock, 0.001)
         assertEquals(20.0, capturedMovement.newStock, 0.001)
@@ -104,8 +105,8 @@ class InventoryRepositoryTest {
     fun `recordAdjustment sets exact physical count`() = runTest {
         `when`(itemDao.getItemByCode("ITM-100")).thenReturn(testItem)
 
-        val captor = ArgumentCaptor.forClass(StockMovementEntity::class.java)
-        `when`(stockMovementDao.insertMovement(captor.capture())).thenReturn(3L)
+        val captor = argumentCaptor<StockMovementEntity>()
+        whenever(stockMovementDao.insertMovement(captor.capture())).thenReturn(3L)
 
         val result = repository.recordAdjustment("ITM-100", 28.0, "Physical Recount", "ADMIN")
 
@@ -114,7 +115,7 @@ class InventoryRepositoryTest {
 
         verify(itemDao).setStockQuantity("ITM-100", 28.0)
 
-        val capturedMovement = captor.value
+        val capturedMovement = captor.firstValue
         assertEquals("ADJUSTMENT", capturedMovement.movementType)
         assertEquals(25.0, capturedMovement.previousStock, 0.001)
         assertEquals(28.0, capturedMovement.newStock, 0.001)

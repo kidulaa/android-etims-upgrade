@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -49,6 +50,9 @@ class DashboardViewModelTest {
 
     @Test
     fun `pendingSyncCount reflects transactionRepository flow`() = runTest {
+        // stateIn(WhileSubscribed) only starts producing once collected — see the same note
+        // in InventoryViewModelTest.
+        backgroundScope.launch { viewModel.pendingSyncCount.collect {} }
         testScheduler.advanceUntilIdle()
         assertEquals(3, viewModel.pendingSyncCount.value)
     }

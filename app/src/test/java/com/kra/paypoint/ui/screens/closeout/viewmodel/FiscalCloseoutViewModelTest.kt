@@ -21,10 +21,10 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.anyBoolean
-import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class FiscalCloseoutViewModelTest {
@@ -87,7 +87,7 @@ class FiscalCloseoutViewModelTest {
         viewModel.printXReport()
         testScheduler.advanceUntilIdle()
 
-        verify(printerService).printReceipt(anyString(), org.mockito.Mockito.eq(false))
+        verify(printerService).printReceipt(any(), eq(false))
         assertNotNull(viewModel.uiState.value.feedbackMessage)
     }
 
@@ -100,7 +100,7 @@ class FiscalCloseoutViewModelTest {
         testScheduler.advanceUntilIdle()
 
         verify(zReportRepository).closeShiftAndGenerateZReport("CASHIER01", "Jane Doe")
-        verify(printerService).printReceipt(anyString(), org.mockito.Mockito.eq(false))
+        verify(printerService).printReceipt(any(), eq(false))
         assertNotNull(viewModel.uiState.value.feedbackMessage)
     }
 }

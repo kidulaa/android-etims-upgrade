@@ -96,9 +96,12 @@ class CreditNoteViewModel @Inject constructor(
                     return@launch
                 }
 
-                if (transactionWithItems.transaction.salesTypeCode == "C" ||
-                    transactionWithItems.transaction.receiptTypeCode == "R"
-                ) {
+                // salesTypeCode "C" is the actual credit-note marker (see
+                // TransactionRepositoryImpl.issueCreditNote). receiptTypeCode distinguishes
+                // Receipt/Simplified/Invoice document types, not refund status — "R" (Receipt)
+                // is the default for every ordinary sale, so checking it here would reject
+                // every normal invoice as "already a credit note."
+                if (transactionWithItems.transaction.salesTypeCode == "C") {
                     _uiState.update {
                         it.copy(
                             isLoading = false,

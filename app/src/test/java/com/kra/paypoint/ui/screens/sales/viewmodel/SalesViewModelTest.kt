@@ -19,8 +19,8 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.any
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SalesViewModelTest {

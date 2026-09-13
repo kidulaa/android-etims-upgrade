@@ -25,8 +25,10 @@ fun LoginScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(uiState.isAuthenticated) {
-        if (uiState.isAuthenticated) {
+    LaunchedEffect(uiState.isAuthenticated, uiState.deviceWarning) {
+        // Hold on the login screen if setup produced a device-registration warning, so it's
+        // actually seen instead of flashing past on the way to the dashboard.
+        if (uiState.isAuthenticated && uiState.deviceWarning == null) {
             onNavigateToDashboard()
         }
     }
@@ -84,13 +86,37 @@ fun LoginScreen(
                     )
                 }
 
-                if (uiState.needsFirstRunSetup) {
+                if (uiState.isAuthenticated && uiState.deviceWarning != null) {
+                    DeviceWarningNotice(uiState.deviceWarning!!, onContinue = onNavigateToDashboard)
+                } else if (uiState.needsFirstRunSetup) {
                     FirstRunSetupForm(uiState, viewModel)
                 } else {
                     SignInForm(uiState, viewModel)
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun DeviceWarningNotice(message: String, onContinue: () -> Unit) {
+    Text(
+        text = "Account created",
+        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
+    Text(
+        text = message,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.error,
+        modifier = Modifier.padding(bottom = 20.dp)
+    )
+    Button(
+        onClick = onContinue,
+        modifier = Modifier.fillMaxWidth().height(56.dp),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Text(text = "Continue to Dashboard", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
     }
 }
 
