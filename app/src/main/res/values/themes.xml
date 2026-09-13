@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Compose owns all real theming (ui/theme/Theme.kt); this XML theme only covers the
+         window background shown before the first Compose frame draws, and opts into
+         edge-to-edge so the system bars don't force their own background/scrim. -->
+    <style name="Theme.PayPoint" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/paypoint_background_light</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="29">shortEdges</item>
+    </style>
+</resources>

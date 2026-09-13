@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"    
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Phone.Sales.PersonalShopReprintPage">
+    <ContentPage.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="30">
+            <component:PhoneHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <ListView x:Name="detailListView" 
+                       RowHeight="36" Grid.Row="2" Grid.Column="0" Grid.RowSpan="16" Grid.ColumnSpan="16">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <listview:SearchReceiptDetailView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <component:EchoPanel Grid.Row="18" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <draw:DrawBox Grid.Row="20" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+            <component:KeypadPanel Grid.Row="22" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16"
+                                   FunctionCalled="OnFunctionCalled"/>
+            <!-- ===========================================================================
+            ==== function panel 
+            ================================================================================-->
+            <draw:FixedGrid ColumnCount="16" RowCount="2" x:Name="finishedFunctionPanel"
+                           Grid.Row="20" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Back" FunctionID="Back" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton x:Name="extSendSMSButton" Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Send SMS" FunctionID="FinishedSendSMS"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Print Journal" FunctionID="FinishedSales"/>
+            </draw:FixedGrid>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

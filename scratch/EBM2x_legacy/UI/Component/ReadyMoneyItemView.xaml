@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.ReadyMoneyItemView">
+    <ContentView.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="2">
+            <draw:DrawBox x:Name="backgroungBox"
+                          Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <draw:DrawNumber x:Name="priceNumber"
+                             Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" Format="#,##0"/>
+            <draw:DrawNumber x:Name="qtyNumber"
+                             Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="4" Format="#0"/>
+            <draw:DrawNumber x:Name="amountNumber"
+                             Grid.Row="0" Grid.Column="9" Grid.RowSpan="2" Grid.ColumnSpan="6" Format="#,##0"/>
+
+            <draw:BoxButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"
+                          ButtonClicked="OnBoxButtonClicked"/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

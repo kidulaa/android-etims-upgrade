@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             xmlns:entry="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.Login.BackofficeLoginPage">
+    <ContentPage.Content>
+        <draw:FixedGrid x:Name="fixedGrid" ColumnCount="20" RowCount="20">
+            <component:LogoBackground Icon="eTIMS_logo.png" Color="ffffff" Align="CENTER"  
+                                      Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="23"/>
+            <draw:DrawText Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="23" Grid.RowSpan="2" TextAlign="CENTER" FillRate="0.4"
+                           Text="ETIMS Client"/>
+
+            <draw:DrawText Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="7" Grid.RowSpan="1" TextAlign="LEFT" FillRate="0.4"
+                           Text="PIN Number"/>
+            <entry:ExtendedEntryPanel x:Name="entityTINNumber" Grid.Row="9" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="7"/>
+            <draw:DrawText Grid.Row="10" Grid.Column="8" Grid.ColumnSpan="7" Grid.RowSpan="1" TextAlign="LEFT" FillRate="0.4"
+                           Text="User ID"/>
+            <entry:ExtendedEntryPanel x:Name="entityUserID" Grid.Row="11" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="7"/>
+            <draw:DrawText Grid.Row="12" Grid.Column="8" Grid.ColumnSpan="7" Grid.RowSpan="1" TextAlign="LEFT" FillRate="0.4"
+                           Text="Password"/>
+            <entry:PasswordMaskedEntryPanel x:Name="entityPassword" Grid.Row="13" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="7"/>
+
+            <draw:IconTextButton Grid.Row="15" Grid.Column="9" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                                 ButtonClicked="OnFunctionLogin" Text="Login" FillRate="0.3"  ButtonColor="#E30613" TextColor="#FFFFFF"/>
+            <draw:IconTextButton Grid.Row="15" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                                 ButtonClicked="OnFunctionCancel" Text="Back" FillRate="0.3"  ButtonColor="#E30613" TextColor="#FFFFFF"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

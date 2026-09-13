@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.StockManagement.StockStatusPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="ffffff"/>
+            <drawbase:DrawBox Grid.Row="4" Grid.Column="0" Grid.RowSpan="16" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Stock Status" TextAlign="Left" FillRate="0.5"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="58" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnStockDate" Text="Stock|Date" FillRate="0.3" Icon="i_date.png"
+                             ButtonClicked="OnFunctionStockDate"/>
+            <drawbase:IconTextButton Grid.Column="66" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnExport" Text="Export" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionExport"/>
+            <drawbase:IconTextButton Grid.Column="74" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnAdjust" Text="Adjust" FillRate="0.3" Icon="i_adjust.png"
+                             ButtonClicked="OnFunctionAdjust"/>
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnClose" Text="Close" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionClose"/>
+            <!--===========================================================================================-->
+
+            <!--Grid Search Bar============================================================================-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Date" FillRate="0.4"/>
+            <entitybase:DatePickerEntryPanel Grid.Column="10" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etFromDate"/>
+            <drawbase:DrawText Grid.Column="20" Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="~" FillRate="0.6" TextAlign="CENTER"/>
+            <entitybase:DatePickerEntryPanel Grid.Column="25" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etToDate"/>
+            <drawbase:DrawText Grid.Column="35" Grid.Row="3" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Item Code or Name, Barcode" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="3" Grid.ColumnSpan="30" Grid.RowSpan="1"
+                            x:Name="etLikeValue" BorderColor="LightGray" BackColor="White"/>
+
+            <drawbase:IconTextButton Grid.Column="80" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                             x:Name="btnSearch" Text="Search" FillRate="0.6" Icon="query.png" ButtonColor="4169E1"
+                             ButtonClicked="OnSearch"/>
+            <!-- ListView ===========================================================================================-->
+            <drawbase:DrawBox Grid.Row="4" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="15" Text= "Item Code"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="15"  Grid.ColumnSpan="20" Text= "Item Name"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="35"  Grid.ColumnSpan="30" Text= "Finished Product"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="45" Grid.ColumnSpan="10" Text= "Expiration Date"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="55" Grid.ColumnSpan="10" Text= "Raw Material"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="65" Grid.ColumnSpan="10" Text= "Current Stock"/>
+
+            <ListView x:Name="listView"  ItemSelected="OnSelectedItem"
+                      RowHeight="40" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="90" Grid.RowSpan="15">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.ColumnSpan="15" Text="{Binding ItemCd}" />
+                                <drawbase:DrawGridCell Grid.Column="15"  Grid.ColumnSpan="20" Text="{Binding ItemNm}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="35"  Grid.ColumnSpan="30" Text="{Binding FinishedProduct}" />
+                                <drawbase:DrawGridCellDate Grid.Column="45" Grid.ColumnSpan="10" Text="{Binding ExpirDt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="55" Grid.ColumnSpan="10" Text="{Binding RawMaterial}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="65" Grid.ColumnSpan="10" Text="{Binding RdsQty}" />
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.SalesManagement.SelectPrinterPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="90" Color="ffffff"/>
+            <drawbase:DrawBox Grid.Row="6" Grid.Column="0" Grid.RowSpan="14" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Print Receipt" TextAlign="Left" FillRate="0.5"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnClose" Text="Close" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionClose"/>
+            <!--===========================================================================================-->
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="2"
+                             x:Name="btnPrintReceipt" Text="Print Receipt" FillRate="0.3" Icon="i_printer.png"
+                             ButtonClicked="OnFunctionPrintReceipt"/>
+            <drawbase:IconTextButton Grid.Column="20" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="2"
+                             x:Name="btnPrintA4" Text="Print A4" FillRate="0.3" Icon="i_printer.png"
+                             ButtonClicked="OnFunctionPrintA4"/>
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

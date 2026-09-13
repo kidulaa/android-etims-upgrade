@@ -1,0 +1,1021 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Process\master\**" />
+    <EmbeddedResource Remove="Process\master\**" />
+    <None Remove="Process\master\**" />
+    <None Remove="Xamarin.Essentials" />
+    <None Remove="UI\i18n\rw3 %28copy%29.json" />
+    <None Remove="UI\Resource\rw.json" />
+    <None Remove="UI\Resource\kenya.png" />
+    <None Remove="UI\Resource\kra_iconBlack.png" />
+    <None Remove="UI\Resource\EBM22x.png" />
+    <None Remove="UI\Resource\en2.png" />
+    <None Remove="UI\Resource\kra_icon.png" />
+    <None Remove="UI\Resource\kra_icon72.png" />
+    <None Remove="UI\Resource\EBM2xBlack.png" />
+    <None Remove="UI\Resource\EBM2x-72.png" />
+    <None Remove="UI\Resource\EBM2x.png" />
+    <None Remove="UI\Resource\EBM2x-16.png" />
+    <None Remove="UI\Resource\EBM2x-200.png" />
+    <None Remove="UI\Resource\eTIMS_logo.png" />
+    <None Remove="UI\Resource\EBM2xClient.ico" />
+    <None Remove="UI\Resource\Backoffice\CustomerManagement.png" />
+    <None Remove="UI\Resource\Backoffice\Environment.png" />
+    <None Remove="UI\Resource\Backoffice\ImportManagement.png" />
+    <None Remove="UI\Resource\Backoffice\ItemManagement.png" />
+    <None Remove="UI\Resource\Backoffice\PurchaseManagement.png" />
+    <None Remove="UI\Resource\Backoffice\SalesManagement.png" />
+    <None Remove="UI\Resource\Backoffice\StockManagement.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="UI\i18n\de.json" />
+    <None Remove="UI\i18n\en.json" />
+    <None Remove="UI\i18n\fr.json" />
+    <None Remove="UI\i18n\hi.json" />
+    <None Remove="UI\i18n\ko.json" />
+    <None Remove="UI\i18n\rw.json" />
+    <None Remove="UI\PresetImage\empty.png" />
+    <None Remove="UI\PresetImage\preset00.png" />
+    <None Remove="UI\PresetImage\preset01.png" />
+    <None Remove="UI\PresetImage\preset02.png" />
+    <None Remove="UI\PresetImage\preset03.png" />
+    <None Remove="UI\PresetImage\preset04.png" />
+    <None Remove="UI\PresetImage\preset05.png" />
+    <None Remove="UI\PresetImage\preset06.png" />
+    <None Remove="UI\PresetImage\preset07.png" />
+    <None Remove="UI\PresetImage\preset08.png" />
+    <None Remove="UI\PresetImage\preset09.png" />
+    <None Remove="UI\PresetImage\presetgroup00.png" />
+    <None Remove="UI\PresetImage\presetgroup01.png" />
+    <None Remove="UI\PresetImage\presetgroup02.png" />
+    <None Remove="UI\PresetImage\presetgroup03.png" />
+    <None Remove="UI\Resource\add.png" />
+    <None Remove="UI\Resource\back.png" />
+    <None Remove="UI\Resource\backoffice.png" />
+    <None Remove="UI\Resource\Backoffice\arrow.png" />
+    <None Remove="UI\Resource\Backoffice\Calendar.png" />
+    <None Remove="UI\Resource\Backoffice\Cancel.png" />
+    <None Remove="UI\Resource\Backoffice\checkboxOff.png" />
+    <None Remove="UI\Resource\Backoffice\checkboxOn.png" />
+    <None Remove="UI\Resource\Backoffice\Circle.png" />
+    <None Remove="UI\Resource\Backoffice\Photo.png" />
+    <None Remove="UI\Resource\Backoffice\PopupBackBoard.png" />
+    <None Remove="UI\Resource\Backoffice\Search.png" />
+    <None Remove="UI\Resource\Backoffice\TitleIcon.png" />
+    <None Remove="UI\Resource\calculator.png" />
+    <None Remove="UI\Resource\cancel.png" />
+    <None Remove="UI\Resource\cancelcombineseat.png" />
+    <None Remove="UI\Resource\carlendar.png" />
+    <None Remove="UI\Resource\checked.png" />
+    <None Remove="UI\Resource\checkin.png" />
+    <None Remove="UI\Resource\clock.png" />
+    <None Remove="UI\Resource\close-camera.png" />
+    <None Remove="UI\Resource\closepage.png" />
+    <None Remove="UI\Resource\combineseat.png" />
+    <None Remove="UI\Resource\confirm.png" />
+    <None Remove="UI\Resource\CustomerManagement.png" />
+    <None Remove="UI\Resource\delete.png" />
+    <None Remove="UI\Resource\deleteRed.png" />
+    <None Remove="UI\Resource\diningroom.png" />
+    <None Remove="UI\Resource\diningtable.png" />
+    <None Remove="UI\Resource\dividebill.png" />
+    <None Remove="UI\Resource\downpage.png" />
+    <None Remove="UI\Resource\EBM2x-128.png" />
+    <None Remove="UI\Resource\en.png" />
+    <None Remove="UI\Resource\english512.png" />
+    <None Remove="UI\Resource\Environment.png" />
+    <None Remove="UI\Resource\extfuncmenu.png" />
+    <None Remove="UI\Resource\fr.png" />
+    <None Remove="UI\Resource\funcmenu.png" />
+    <None Remove="UI\Resource\grocerystore.png" />
+    <None Remove="UI\Resource\hotel.png" />
+    <None Remove="UI\Resource\hotelfloor.png" />
+    <None Remove="UI\Resource\hotelroom.png" />
+    <None Remove="UI\Resource\image.png" />
+    <None Remove="UI\Resource\ImportManagement.png" />
+    <None Remove="UI\Resource\information.png" />
+    <None Remove="UI\Resource\ItemManagement.png" />
+    <None Remove="UI\Resource\i_adjust.png" />
+    <None Remove="UI\Resource\i_cancel.png" />
+    <None Remove="UI\Resource\i_close.png" />
+    <None Remove="UI\Resource\i_date.png" />
+    <None Remove="UI\Resource\i_delete.png" />
+    <None Remove="UI\Resource\i_export.png" />
+    <None Remove="UI\Resource\i_import.png" />
+    <None Remove="UI\Resource\i_new.png" />
+    <None Remove="UI\Resource\i_printer.png" />
+    <None Remove="UI\Resource\i_query.png" />
+    <None Remove="UI\Resource\i_save.png" />
+    <None Remove="UI\Resource\key.png" />
+    <None Remove="UI\Resource\ko.png" />
+    <None Remove="UI\Resource\leftpage.png" />
+    <None Remove="UI\Resource\login.png" />
+    <None Remove="UI\Resource\members.png" />
+    <None Remove="UI\Resource\mergebill.png" />
+    <None Remove="UI\Resource\moveseat.png" />
+    <None Remove="UI\Resource\new.png" />
+    <None Remove="UI\Resource\notice.png" />
+    <None Remove="UI\Resource\pharmacy.png" />
+    <None Remove="UI\Resource\Photo.png" />
+    <None Remove="UI\Resource\PurchaseManagement.png" />
+    <None Remove="UI\Resource\query.png" />
+    <None Remove="UI\Resource\receipt.png" />
+    <None Remove="UI\Resource\restaurant.png" />
+    <None Remove="UI\Resource\returnpage.png" />
+    <None Remove="UI\Resource\rightpage.png" />
+    <None Remove="UI\Resource\rralogo.bytes" />
+    <None Remove="UI\Resource\rra_logo.bmp" />
+    <None Remove="UI\Resource\rra_logo2.bmp" />
+    <None Remove="UI\Resource\rw-image-150.png" />
+    <None Remove="UI\Resource\rw-image-200.png" />
+    <None Remove="UI\Resource\rw-image.png" />
+    <None Remove="UI\Resource\rw.png" />
+    <None Remove="UI\Resource\SalesManagement.png" />
+    <None Remove="UI\Resource\save.png" />
+    <None Remove="UI\Resource\savefile.png" />
+    <None Remove="UI\Resource\selectfrom.png" />
+    <None Remove="UI\Resource\selectowner.png" />
+    <None Remove="UI\Resource\specialstore.png" />
+    <None Remove="UI\Resource\star.png" />
+    <None Remove="UI\Resource\StockManagement.png" />
+    <None Remove="UI\Resource\TitleIcon.png" />
+    <None Remove="UI\Resource\translation.png" />
+    <None Remove="UI\Resource\unchecked.png" />
+    <None Remove="UI\Resource\uppage.png" />
+    <None Remove="UI\Resource\user.png" />
+    <None Remove="UI\Resource\vn.png" />
+    <None Remove="UI\Resource\warning.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="UI\i18n\de.json" />
+    <EmbeddedResource Include="UI\i18n\en.json" />
+    <EmbeddedResource Include="UI\i18n\hi.json" />
+    <EmbeddedResource Include="UI\i18n\ko.json" />
+    <EmbeddedResource Include="UI\i18n\fr.json" />
+    <EmbeddedResource Include="UI\i18n\rw3.json" />
+    <EmbeddedResource Include="UI\PresetImage\empty.png" />
+    <EmbeddedResource Include="UI\Resource\add.png" />
+    <EmbeddedResource Include="UI\Resource\back.png" />
+    <EmbeddedResource Include="UI\Resource\backoffice.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\arrow.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\Calendar.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\Cancel.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\checkboxOff.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\checkboxOn.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\Circle.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\ImportManagementr.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\ItemManagementr.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\Photo.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\PopupBackBoard.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\PurchaseManagementr.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\SalesManagementr.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\Search.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\StockManagementr.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\TitleIcon.png" />
+    <EmbeddedResource Include="UI\Resource\calculator.png" />
+    <EmbeddedResource Include="UI\Resource\cancel.png" />
+    <EmbeddedResource Include="UI\Resource\cancelcombineseat.png" />
+    <EmbeddedResource Include="UI\Resource\carlendar.png" />
+    <EmbeddedResource Include="UI\Resource\checked.png" />
+    <EmbeddedResource Include="UI\Resource\checkin.png" />
+    <EmbeddedResource Include="UI\Resource\clock.png" />
+    <EmbeddedResource Include="UI\Resource\close-camera.png" />
+    <EmbeddedResource Include="UI\Resource\closepage.png" />
+    <EmbeddedResource Include="UI\Resource\combineseat.png" />
+    <EmbeddedResource Include="UI\Resource\confirm.png" />
+    <EmbeddedResource Include="UI\Resource\CustomerManagement.png" />
+    <EmbeddedResource Include="UI\Resource\delete.png" />
+    <EmbeddedResource Include="UI\Resource\deleteRed.png" />
+    <EmbeddedResource Include="UI\Resource\diningroom.png" />
+    <EmbeddedResource Include="UI\Resource\diningtable.png" />
+    <EmbeddedResource Include="UI\Resource\dividebill.png" />
+    <EmbeddedResource Include="UI\Resource\downpage.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x-128.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x-16r.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x-200r.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x-72r.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2xr.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2xBlackR.png" />
+    <EmbeddedResource Include="UI\Resource\en.png" />
+    <EmbeddedResource Include="UI\Resource\english512.png" />
+    <EmbeddedResource Include="UI\Resource\Environment.png" />
+    <EmbeddedResource Include="UI\Resource\extfuncmenu.png" />
+    <EmbeddedResource Include="UI\Resource\fr.png" />
+    <EmbeddedResource Include="UI\Resource\funcmenu.png" />
+    <EmbeddedResource Include="UI\Resource\grocerystore.png" />
+    <EmbeddedResource Include="UI\Resource\hotel.png" />
+    <EmbeddedResource Include="UI\Resource\hotelfloor.png" />
+    <EmbeddedResource Include="UI\Resource\hotelroom.png" />
+    <EmbeddedResource Include="UI\Resource\image.png" />
+    <EmbeddedResource Include="UI\Resource\ImportManagement.png" />
+    <EmbeddedResource Include="UI\Resource\information.png" />
+    <EmbeddedResource Include="UI\Resource\ItemManagement.png" />
+    <EmbeddedResource Include="UI\Resource\i_adjust.png" />
+    <EmbeddedResource Include="UI\Resource\i_cancel.png" />
+    <EmbeddedResource Include="UI\Resource\i_close.png" />
+    <EmbeddedResource Include="UI\Resource\i_date.png" />
+    <EmbeddedResource Include="UI\Resource\i_delete.png" />
+    <EmbeddedResource Include="UI\Resource\i_export.png" />
+    <EmbeddedResource Include="UI\Resource\i_import.png" />
+    <EmbeddedResource Include="UI\Resource\i_new.png" />
+    <EmbeddedResource Include="UI\Resource\i_printer.png" />
+    <EmbeddedResource Include="UI\Resource\i_query.png" />
+    <EmbeddedResource Include="UI\Resource\i_save.png" />
+    <EmbeddedResource Include="UI\Resource\key.png" />
+    <EmbeddedResource Include="UI\Resource\ko.png" />
+    <EmbeddedResource Include="UI\Resource\leftpage.png" />
+    <EmbeddedResource Include="UI\Resource\login.png" />
+    <EmbeddedResource Include="UI\Resource\rralogo.bytes" />
+    <EmbeddedResource Include="UI\Resource\rra_logo.bmp" />
+    <EmbeddedResource Include="UI\Resource\members.png" />
+    <EmbeddedResource Include="UI\Resource\mergebill.png" />
+    <EmbeddedResource Include="UI\Resource\moveseat.png" />
+    <EmbeddedResource Include="UI\Resource\new.png" />
+    <EmbeddedResource Include="UI\Resource\notice.png" />
+    <EmbeddedResource Include="UI\Resource\pharmacy.png" />
+    <EmbeddedResource Include="UI\Resource\Photo.png" />
+    <EmbeddedResource Include="UI\Resource\PurchaseManagement.png" />
+    <EmbeddedResource Include="UI\Resource\query.png" />
+    <EmbeddedResource Include="UI\Resource\receipt.png" />
+    <EmbeddedResource Include="UI\Resource\restaurant.png" />
+    <EmbeddedResource Include="UI\Resource\returnpage.png" />
+    <EmbeddedResource Include="UI\Resource\rightpage.png" />
+    <EmbeddedResource Include="UI\Resource\rra_logo2.bmp" />
+    <EmbeddedResource Include="UI\Resource\rw-image-150.png" />
+    <EmbeddedResource Include="UI\Resource\rw-image-200.png" />
+    <EmbeddedResource Include="UI\Resource\rw-image.png" />
+    <EmbeddedResource Include="UI\Resource\rw.png" />
+    <EmbeddedResource Include="UI\Resource\SalesManagement.png" />
+    <EmbeddedResource Include="UI\Resource\save.png" />
+    <EmbeddedResource Include="UI\Resource\savefile.png" />
+    <EmbeddedResource Include="UI\Resource\selectfrom.png" />
+    <EmbeddedResource Include="UI\Resource\selectowner.png" />
+    <EmbeddedResource Include="UI\Resource\specialstore.png" />
+    <EmbeddedResource Include="UI\Resource\star.png" />
+    <EmbeddedResource Include="UI\Resource\StockManagement.png" />
+    <EmbeddedResource Include="UI\Resource\TitleIcon.png" />
+    <EmbeddedResource Include="UI\Resource\translation.png" />
+    <EmbeddedResource Include="UI\Resource\unchecked.png" />
+    <EmbeddedResource Include="UI\Resource\uppage.png" />
+    <EmbeddedResource Include="UI\Resource\user.png" />
+    <EmbeddedResource Include="UI\Resource\vn.png" />
+    <EmbeddedResource Include="UI\Resource\warning.png" />
+    <EmbeddedResource Include="UI\i18n\rw.json" />
+    <EmbeddedResource Include="UI\Resource\rwr.png" />
+    <EmbeddedResource Include="UI\Resource\kenya.png" />
+    <EmbeddedResource Include="UI\Resource\kra_iconBlack.png" />
+    <EmbeddedResource Include="UI\Resource\EBM22x.png" />
+    <EmbeddedResource Include="UI\Resource\en2.png" />
+    <EmbeddedResource Include="UI\Resource\kra_icon.png" />
+    <EmbeddedResource Include="UI\Resource\kra_icon72.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2xBlack.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x-72.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x-16.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2x-200.png" />
+    <EmbeddedResource Include="UI\Resource\eTIMS_logo.png" />
+    <EmbeddedResource Include="UI\Resource\EBM2xClient.ico" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\CustomerManagement.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\Environment.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\ImportManagement.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\ItemManagement.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\PurchaseManagement.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\SalesManagement.png" />
+    <EmbeddedResource Include="UI\Resource\Backoffice\StockManagement.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.9.1" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="SharpZipLib" Version="1.3.1" />
+    <PackageReference Include="SkiaSharp" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.0" />
+    <PackageReference Include="System.Data.Common" Version="4.3.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.34" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Management">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Management.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AppPhone.xaml.cs">
+      <DependentUpon>AppPhone.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="AppTablet.xaml.cs">
+      <DependentUpon>AppTablet.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\AmountMaskedViewPanel.xaml.cs">
+      <DependentUpon>AmountMaskedViewPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ExtendedDateEntryPanel.xaml.cs">
+      <DependentUpon>ExtendedDateEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\LocationPickerEntryPanel.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\BaudRatePickerEntryPanel.xaml.cs">
+      <DependentUpon>BaudRatePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\PchsSttsPickerEntryPanel.xaml.cs">
+      <DependentUpon>PchsSttsPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ImptItemSttsPickerEntryPanel.xaml.cs">
+      <DependentUpon>ImptItemSttsPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\Rate100MaskedEntryPanel.xaml.cs">
+      <DependentUpon>Rate100MaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\SalesSttsPickerEntryPanel.xaml.cs">
+      <DependentUpon>SalesSttsPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\BhfPickerEntryPanel.xaml.cs">
+      <DependentUpon>BhfPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\AdjustTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>AdjustTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\LongMaskedEntryPanel.xaml.cs">
+      <DependentUpon>LongMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\CheckBoxPanel.xaml.cs">
+      <DependentUpon>CheckBoxPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\BarCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>BarCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\DatePickerEntryPanel.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ItemCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>ItemCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ExtendedEntryPanel.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\EMailMaskedEntryPanel.xaml.cs">
+      <DependentUpon>EMailMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ApprovalStatusPickerEntryPanel.xaml.cs">
+      <DependentUpon>ApprovalStatusPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ItemTaxTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>ItemTaxTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\TaxTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>TaxTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\QtyUnitPickerEntryPanel.xaml.cs">
+      <DependentUpon>QtyUnitPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\PkgUnitPickerEntryPanel.xaml.cs">
+      <DependentUpon>PkgUnitPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\OriginQueryEntryPanel.xaml.cs">
+      <DependentUpon>OriginQueryEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\PhoneNumberMaskedEntryPanel.xaml.cs">
+      <DependentUpon>PhoneNumberMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\MRCMaskedEntryPanel.xaml.cs">
+      <DependentUpon>MRCMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\AmountMaskedEntryPanel.xaml.cs">
+      <DependentUpon>AmountMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\QuantityMaskedEntryPanel.xaml.cs">
+      <DependentUpon>QuantityMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ItemTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>ItemTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\SDCMaskedEntryPanel.xaml.cs">
+      <DependentUpon>SDCMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\NationalityQueryEntryPanel.xaml.cs">
+      <DependentUpon>NationalityQueryEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ClassCodeQueryEntryPanel.xaml.cs">
+      <DependentUpon>ClassCodeQueryEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ClassCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>ClassCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\MySQLServerTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>MySQLServerTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\POSNumPickerEntryPanel.xaml.cs">
+      <DependentUpon>POSNumPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\PaperSizePickerEntryPanel.xaml.cs">
+      <DependentUpon>PaperSizePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\TempletPickerEntryPanel.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\TINQueryEntryPanel.xaml.cs">
+      <DependentUpon>TINQueryEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\TINMaskedEntryPanel.xaml.cs">
+      <DependentUpon>TINMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\PasswordMaskedEntryPanel.xaml.cs">
+      <DependentUpon>PasswordMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\RolePickerEntryPanel.xaml.cs">
+      <DependentUpon>RolePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\BranchCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>BranchCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\CustTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>CustTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\CustGroupPickerEntryPanel.xaml.cs">
+      <DependentUpon>CustGroupPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\InsureCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>InsureCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\RateMaskedEntryPanel.xaml.cs">
+      <DependentUpon>RateMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\RcptTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>RcptTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\ClassificationLvlEntryPanel.xaml.cs">
+      <DependentUpon>ClassificationLvlEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\NonVatPickerEntryPanel.xaml.cs">
+      <DependentUpon>NonVatPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\WorkModePickerEntryPanel.xaml.cs">
+      <DependentUpon>WorkModePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\UserIdMaskedEntryPanel.xaml.cs">
+      <DependentUpon>UserIdMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\UsePickerEntryPanel.xaml.cs">
+      <DependentUpon>UsePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\BackofficeEntry\UsablePickerEntryPanel.xaml.cs">
+      <DependentUpon>UsablePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\CustomerManagement\TaxpayerPopupPage.xaml.cs">
+      <DependentUpon>TaxpayerPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\CustomerManagement\CustomerPopupPage.xaml.cs">
+      <DependentUpon>CustomerPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\Environment\PhoneSystemSettingPage.xaml.cs">
+      <DependentUpon>PhoneSystemSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\PurchaseManagement\PurchaseModifyPage.xaml.cs">
+      <DependentUpon>PurchaseModifyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\InputPhoneCheckInformationPage.xaml.cs">
+      <DependentUpon>InputPhoneCheckInformationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\ItemManagement\ItemPopupPage.xaml.cs">
+      <DependentUpon>ItemPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\ItemManagement\SystemCodePopupPage.xaml.cs">
+      <DependentUpon>SystemCodePopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\ItemManagement\OriginPopupPage.xaml.cs">
+      <DependentUpon>OriginPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\ItemManagement\ClassificationPopupPage.xaml.cs">
+      <DependentUpon>ClassificationPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\BackofficeMenuPage.xaml.cs">
+      <DependentUpon>BackofficeMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\CustomerManagement\InsurerManagementPage.xaml.cs">
+      <DependentUpon>InsurerManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\CustomerManagement\CustomerManagementPage.xaml.cs">
+      <DependentUpon>CustomerManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\Environment\UserManagementPage.xaml.cs">
+      <DependentUpon>UserManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\Environment\SystemSettingPage.xaml.cs">
+      <DependentUpon>SystemSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\Environment\ChangePasswordPage.xaml.cs">
+      <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\ImportManagement\ImportSplitPage.xaml.cs">
+      <DependentUpon>ImportSplitPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\ImportManagement\ImportManagementPage.xaml.cs">
+      <DependentUpon>ImportManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\ItemManagement\ItemManagementPage.xaml.cs">
+      <DependentUpon>ItemManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\PurchaseManagement\DetailInformationOfPurchasePage.xaml.cs">
+      <DependentUpon>DetailInformationOfPurchasePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\PurchaseManagement\PurchaseManagementPage.xaml.cs">
+      <DependentUpon>PurchaseManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\PurchaseManagement\PurchaseRegistrationPage.xaml.cs">
+      <DependentUpon>PurchaseRegistrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\DetailInformationOfSalePage.xaml.cs">
+      <DependentUpon>DetailInformationOfSalePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\SelectPrinterPage.xaml.cs">
+      <DependentUpon>SelectPrinterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\RefundReasonPopupPage.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\SaleRegistrationPage.xaml.cs">
+      <DependentUpon>SaleRegistrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\SalesReportPage.xaml.cs">
+      <DependentUpon>SalesReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\EnterTheRefundReasonPage.xaml.cs">
+      <DependentUpon>EnterTheRefundReasonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\PrintReceiptPage.xaml.cs">
+      <DependentUpon>PrintReceiptPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\ZReportPage.xaml.cs">
+      <DependentUpon>ZReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\SalesManagement\SalesManagementPage.xaml.cs">
+      <DependentUpon>SalesManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\PrintReceiptPage.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\ProcessingItemPopup.xaml.cs">
+      <DependentUpon>ProcessingItemPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\PhoneStockDatePage.xaml.cs">
+      <DependentUpon>PhoneStockDatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\StockMovementPage.xaml.cs">
+      <DependentUpon>StockMovementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\ProcessingManagementPage.xaml.cs">
+      <DependentUpon>ProcessingManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\StockStatusPage.xaml.cs">
+      <DependentUpon>StockStatusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\StockAdjustmentPage.xaml.cs">
+      <DependentUpon>StockAdjustmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\StockDatePage.xaml.cs">
+      <DependentUpon>StockDatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\StockOutHistoryPage.xaml.cs">
+      <DependentUpon>StockOutHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\StockInHistoryPage.xaml.cs">
+      <DependentUpon>StockInHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Backoffice\StockManagement\OpeningClosingStockPage.xaml.cs">
+      <DependentUpon>OpeningClosingStockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Component\DiningTablePanel.xaml.cs">
+      <DependentUpon>DiningTablePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Component\HotelRoomPanel.xaml.cs">
+      <DependentUpon>HotelRoomPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Component\AlphaKeypadPanel.xaml.cs">
+      <DependentUpon>AlphaKeypadPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Component\PhoneMembersPanel.xaml.cs">
+      <DependentUpon>PhoneMembersPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Component\TabletHeaderExtPanel.xaml.cs">
+      <DependentUpon>TabletHeaderExtPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Component\TabletHeaderNonPanel.xaml.cs">
+      <DependentUpon>TabletHeaderNonPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\DrawBoxBack.xaml.cs">
+      <DependentUpon>DrawBoxBack.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\DrawGridCellDate.xaml.cs">
+      <DependentUpon>DrawGridCellDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\DrawGridCellLong.xaml.cs">
+      <DependentUpon>DrawGridCellLong.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\DrawGridCellDouble.xaml.cs">
+      <DependentUpon>DrawGridCellDouble.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\DrawGridCell.xaml.cs">
+      <DependentUpon>DrawGridCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\DrawSystemImage.xaml.cs">
+      <DependentUpon>DrawSystemImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\DrawGridHead.xaml.cs">
+      <DependentUpon>DrawGridHead.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\IconTextButton.xaml.cs">
+      <DependentUpon>IconTextButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Draw\ImageTextButton.xaml.cs">
+      <DependentUpon>ImageTextButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\ClassificationLvlEntryPanel.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\CustGroupPickerEntryPanel.xaml.cs">
+      <DependentUpon>CustGroupPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\DigitExtendedEntryPanel.xaml.cs">
+      <DependentUpon>DigitExtendedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\ExtendedDateEntryPanel.xaml.cs">
+      <DependentUpon>ExtendedDateEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\AlphaExtendedEntryPanel.xaml.cs">
+      <DependentUpon>AlphaExtendedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\ItemTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\PkgUnitPickerEntryPanel.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\AmountMaskedEntryPanel.xaml.cs">
+      <DependentUpon>AmountMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\LongMaskedEntryPanel.xaml.cs">
+      <DependentUpon>LongMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\QuantityMaskedEntryPanel.xaml.cs">
+      <DependentUpon>QuantityMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\ComportPickerEntryPanel.xaml.cs">
+      <DependentUpon>ComportPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\LocationPickerEntryPanel.xaml.cs">
+      <DependentUpon>LocationPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\TinCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>TinCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\ItemCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>ItemCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\CustTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>CustTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\TaxTypePickerEntryPanel.xaml.cs">
+      <DependentUpon>TaxTypePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\QtyUnitPickerEntryPanel.xaml.cs">
+      <DependentUpon>QtyUnitPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\ClassCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>ClassCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\TempletPickerEntryPanel.xaml.cs">
+      <DependentUpon>TempletPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\UserPermissionPickerEntryPanel.xaml.cs">
+      <DependentUpon>UserPermissionPickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\UserCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>UserCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\StoreCodeMaskedEntryPanel.xaml.cs">
+      <DependentUpon>StoreCodeMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\UrlMaskedEntryPanel.xaml.cs">
+      <DependentUpon>UrlMaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\MaskedEntryPanel.xaml.cs">
+      <DependentUpon>MaskedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\CheckBoxEntryPanel.xaml.cs">
+      <DependentUpon>CheckBoxEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\PickerEntryPanel.xaml.cs">
+      <DependentUpon>PickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\DatePickerEntryPanel.xaml.cs">
+      <DependentUpon>DatePickerEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\EntryPanel\ExtendedEntryPanel.xaml.cs">
+      <DependentUpon>ExtendedEntryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchUserView.xaml.cs">
+      <DependentUpon>SearchUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchUserHeaderView.xaml.cs">
+      <DependentUpon>SearchUserHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchTinView.xaml.cs">
+      <DependentUpon>SearchTinView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchTinHeaderView.xaml.cs">
+      <DependentUpon>SearchTinHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchClassHeaderView.xaml.cs">
+      <DependentUpon>SearchClassHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchCustomerHeaderView.xaml.cs">
+      <DependentUpon>SearchCustomerHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchClassView.xaml.cs">
+      <DependentUpon>SearchClassView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchHoldView.xaml.cs">
+      <DependentUpon>SearchHoldView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchHoldHeaderView.xaml.cs">
+      <DependentUpon>SearchHoldHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchCustomerView.xaml.cs">
+      <DependentUpon>SearchCustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchInsurerHeaderView.xaml.cs">
+      <DependentUpon>SearchInsurerHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SalesReportView.xaml.cs">
+      <DependentUpon>SalesReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\ZReportView.xaml.cs">
+      <DependentUpon>ZReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\ZReportHeaderView.xaml.cs">
+      <DependentUpon>ZReportHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SalesReportHeaderView.xaml.cs">
+      <DependentUpon>SalesReportHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchReceiptHeaderView.xaml.cs">
+      <DependentUpon>SearchReceiptHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchReceiptDetailView.xaml.cs">
+      <DependentUpon>SearchReceiptDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchRefundReasonHeaderView.xaml.cs">
+      <DependentUpon>SearchRefundReasonHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchInsurerView.xaml.cs">
+      <DependentUpon>SearchInsurerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchReceiptView.xaml.cs">
+      <DependentUpon>SearchReceiptView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\ListViewComponent\SearchRefundReasonView.xaml.cs">
+      <DependentUpon>SearchRefundReasonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\Menu\PersonalShopSendMenuPage.xaml.cs">
+      <DependentUpon>PersonalShopSendMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\Menu\PersonalShopCommMenuPage.xaml.cs">
+      <DependentUpon>PersonalShopCommMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\Sales\PersonalShopReprintPage.xaml.cs">
+      <DependentUpon>PersonalShopReprintPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\Calculator\SimpleCalculatorPage.xaml.cs">
+      <DependentUpon>SimpleCalculatorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\Notice\NoticePopupPage.xaml.cs">
+      <DependentUpon>NoticePopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSearchUserPopupPage.xaml.cs">
+      <DependentUpon>PhoneSearchUserPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletScanningPopupPage.xaml.cs">
+      <DependentUpon>TabletScanningPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSearchOriginPopupPage.xaml.cs">
+      <DependentUpon>PhoneSearchOriginPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletSearchUserPopupPage.xaml.cs">
+      <DependentUpon>TabletSearchUserPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletSearchOriginPopupPage.xaml.cs">
+      <DependentUpon>TabletSearchOriginPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\RraSdc\EBM2xSendManagementPage.xaml.cs">
+      <DependentUpon>EBM2xSendManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\RraSdc\EBM2xSdcPDAManagementPage.xaml.cs">
+      <DependentUpon>EBM2xSdcPDAManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\RraSdc\EBM2xSdcManagementPage.xaml.cs">
+      <DependentUpon>EBM2xSdcManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\Menu\PersonalShopAdminMenuPage.xaml.cs">
+      <DependentUpon>PersonalShopAdminMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\Menu\PersonalShopEndOfDayMainPage.xaml.cs">
+      <DependentUpon>PersonalShopEndOfDayMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\PersonalShopStartPage.xaml.cs">
+      <DependentUpon>PersonalShopStartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\Sales\PersonalShopRefundPaymentPage.xaml.cs">
+      <DependentUpon>PersonalShopRefundPaymentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Phone\Sales\PersonalShopRefundSalesPage.xaml.cs">
+      <DependentUpon>PersonalShopRefundSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneItemManagementPopupPage.xaml.cs">
+      <DependentUpon>PhoneItemManagementPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneCustomerManagementPopupPage.xaml.cs">
+      <DependentUpon>PhoneCustomerManagementPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSearchTinPopupPage.xaml.cs">
+      <DependentUpon>PhoneSearchTinPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSearchClassPopupPage.xaml.cs">
+      <DependentUpon>PhoneSearchClassPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneStoreManagementPopupPage.xaml.cs">
+      <DependentUpon>PhoneStoreManagementPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneUserManagementPopupPage.xaml.cs">
+      <DependentUpon>PhoneUserManagementPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneRefundReasonPopupPage.xaml.cs">
+      <DependentUpon>PhoneRefundReasonPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSalesReportPopupPage.xaml.cs">
+      <DependentUpon>PhoneSalesReportPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSearchItemPopupPage.xaml.cs">
+      <DependentUpon>PhoneSearchItemPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSearchCustomerPopupPage.xaml.cs">
+      <DependentUpon>PhoneSearchCustomerPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneSearchReceiptPopupPage.xaml.cs">
+      <DependentUpon>PhoneSearchReceiptPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletInsuranceManagementPopupPage.xaml.cs">
+      <DependentUpon>TabletInsuranceManagementPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletHotelArrivalPopupPage.xaml.cs">
+      <DependentUpon>TabletHotelArrivalPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletQueryReceiptPopupPage.xaml.cs">
+      <DependentUpon>TabletQueryReceiptPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletSearchTinPopupPage.xaml.cs">
+      <DependentUpon>TabletSearchTinPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletSearchClassPopupPage.xaml.cs">
+      <DependentUpon>TabletSearchClassPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletUserManagementPopupPage.xaml.cs">
+      <DependentUpon>TabletUserManagementPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletStoreManagementPopupPage.xaml.cs">
+      <DependentUpon>TabletStoreManagementPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletZReportPopupPage.xaml.cs">
+      <DependentUpon>TabletZReportPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletSearchCustomerPopupPage.xaml.cs">
+      <DependentUpon>TabletSearchCustomerPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\PhoneZReportPopupPage.xaml.cs">
+      <DependentUpon>PhoneZReportPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Popup\TabletSalesReportPopupPage.xaml.cs">
+      <DependentUpon>TabletSalesReportPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Setup\EBM2xPhoneDeviceSetupPage.xaml.cs">
+      <DependentUpon>EBM2xPhoneDeviceSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Setup\EBM2xPhoneSetupPage.xaml.cs">
+      <DependentUpon>EBM2xPhoneSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Setup\EBM2xDeviceSetupPage.xaml.cs">
+      <DependentUpon>EBM2xDeviceSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Setup\EBM2xSetupPage.xaml.cs">
+      <DependentUpon>EBM2xSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\AdminMenuPage.xaml.cs">
+      <DependentUpon>AdminMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\GroceryStoreStartPage.xaml.cs">
+      <DependentUpon>GroceryStoreStartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\HotelStartPage.xaml.cs">
+      <DependentUpon>HotelStartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\CashierShiftPageMainPage.xaml.cs">
+      <DependentUpon>CashierShiftPageMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\GroceryStoreAdminMenuPage.xaml.cs">
+      <DependentUpon>GroceryStoreAdminMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\HotelAdminMenuPage.xaml.cs">
+      <DependentUpon>HotelAdminMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\HotelRoomManagementPage.xaml.cs">
+      <DependentUpon>HotelRoomManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\DiningTableManagementPage.xaml.cs">
+      <DependentUpon>DiningTableManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\PharmacyAdminMenuPage.xaml.cs">
+      <DependentUpon>PharmacyAdminMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\RestaurantAdminMenuPage.xaml.cs">
+      <DependentUpon>RestaurantAdminMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\SpecialStoreAdminMenuPage.xaml.cs">
+      <DependentUpon>SpecialStoreAdminMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Menu\EndOfDayMainPage.xaml.cs">
+      <DependentUpon>EndOfDayMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Sales\HotelRefundSalesPage.xaml.cs">
+      <DependentUpon>HotelRefundSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Sales\RestaurantRefundSalesPage.xaml.cs">
+      <DependentUpon>RestaurantRefundSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\PharmacyStartPage.xaml.cs">
+      <DependentUpon>PharmacyStartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\RestaurantStartPage.xaml.cs">
+      <DependentUpon>RestaurantStartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\SetDateTimeMenuPage.xaml.cs">
+      <DependentUpon>SetDateTimeMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\SendMenuPage.xaml.cs">
+      <DependentUpon>SendMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Sales\GroceryStoreRefundSalesPage.xaml.cs">
+      <DependentUpon>GroceryStoreRefundSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Sales\PharmacyRefundSalesPage.xaml.cs">
+      <DependentUpon>PharmacyRefundSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Sales\SpecialStoreRefundSalesPage.xaml.cs">
+      <DependentUpon>SpecialStoreRefundSalesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\Sales\TabletRefundPaymentPage.xaml.cs">
+      <DependentUpon>TabletRefundPaymentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Tablet\SpecialStoreStartPage.xaml.cs">
+      <DependentUpon>SpecialStoreStartPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="UI\BackofficeEntry\ItemTaxTypePickerEntryPanel.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\Popup\Calculator\SimpleCalculatorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\Backoffice\Login\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="nexgo-smartpos-sdk-v3.03.001_20210412.aar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

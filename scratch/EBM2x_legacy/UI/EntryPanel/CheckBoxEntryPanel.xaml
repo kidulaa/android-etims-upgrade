@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.EntryPanel.CheckBoxEntryPanel">
+    <ContentView.Content>
+        <draw:FixedGrid x:Name="entryFixedGrid" ColumnCount="16" RowCount="16">
+            <draw:DrawText x:Name="entryTitle" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="14" Grid.RowSpan="5" 
+                           TextColor="000000" TextAlign="LEFT" Text="Code, Name"/>
+
+            <CheckBox x:Name="entryCheckBox" Grid.Row="5" Grid.Column="1" Grid.RowSpan="9" Grid.ColumnSpan="14"
+                        IsChecked="True" />
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

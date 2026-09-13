@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.PresetItemButton">
+    <ContentView.Content>
+      <draw:FixedGrid ColumnCount="8" RowCount="4">
+            <draw:DrawBox x:Name="backgroungBox" Color="ecb7d1" IsRound="True"
+                          Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            
+            <draw:DrawNumber x:Name="noNumber"
+                             Grid.Row="0" Grid.Column="0" Format="00"/>
+          
+            <draw:DrawNumber x:Name="priceNumber" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="6"/>
+            <draw:DrawText x:Name="itemNameText" FillRate="0.4" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="8"/>
+
+            <draw:DrawImage x:Name="selectOwner"  Icon="selectowner.png"
+                              Grid.Row="0" Grid.Column="0" Grid.RowSpan="4"  Grid.ColumnSpan="8"/>
+
+            <draw:BoxButton  x:Name="buttonEvent"
+                             Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="8"
+                             ButtonClicked="OnBoxButtonClicked"/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

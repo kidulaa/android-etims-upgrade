@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.ItemManagement.ItemManagementPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="90" Color="#ffffff"/>
+            <drawbase:DrawBox Grid.Row="11" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Item Management" TextAlign="Left" FillRate="0.5" TextColor="ffffff"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="42" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnImport" Text="Import" FillRate="0.3" Icon="i_import.png"
+                             ButtonClicked="OnFunctionImport" ButtonColor="#ff000000" TextColor="fff"/>
+            <drawbase:IconTextButton Grid.Column="50" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnExport" Text="Export" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionExport" ButtonColor="#ff000000" TextColor="fff"/>
+            <drawbase:IconTextButton Grid.Column="58" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnNew" Text="New" FillRate="0.3" Icon="i_new.png"
+                             ButtonClicked="OnFunctionNew" ButtonColor="#ff000000" TextColor="fff"/>
+            <drawbase:IconTextButton Grid.Column="66" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnSave" Text="Save" FillRate="0.3" Icon="i_save.png"
+                             ButtonClicked="OnFunctionSave" ButtonColor="#ff000000" TextColor="fff"/>
+            <!--drawbase:IconTextButton Grid.Column="74" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnDelete" Text="Delete" FillRate="0.3" Icon="i_delete.png"
+                             ButtonClicked="OnFunctionDelete"/-->
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnClose" Text="Close" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionClose" ButtonColor="#ff000000" TextColor="fff"/>
+            <!--===========================================================================================-->
+
+            <!--데이터 영역================================================================================-->
+            <!--Data Line 1-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Item Code" FillRate="0.4"/>
+            <entitybase:ItemCodeMaskedEntryPanel Grid.Column="10" Grid.Row="3" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            x:Name="etItemCode" BorderColor="LightGray" BackColor="OldLace" />
+
+            <drawbase:DrawBox  Grid.Column="30" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                             IsStroke="True" StrokeColor="000000"/>
+            <entitybase:CheckBoxPanel Grid.Column="30" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1" 
+                               x:Name="etAutoNumbering" BackColor="GhostWhite" Text="Auto Numbering"/>
+            <drawbase:DrawText Grid.Column="34" Grid.Row="3" Grid.ColumnSpan="6" Grid.RowSpan="1"
+                            Text="Auto Numbering" FillRate="0.3"/>
+            <drawbase:ImageButton Grid.Column="28" Grid.Row="3" Grid.RowSpan="1" Grid.ColumnSpan="2"
+                               x:Name="etAutoNumberingImageButton"   ButtonClicked="OnFunctionNumbering" Icon="new.png"/>
+
+            <drawbase:DrawText Grid.Column="40" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Class Code" FillRate="0.4"/>
+            <entitybase:ClassCodeQueryEntryPanel Grid.Column="50" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etClassCode" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:ImageButton Grid.Column="58" Grid.Row="3" Grid.RowSpan="1" Grid.ColumnSpan="2"
+                            x:Name="etClassCodeImageButton"  ButtonClicked="OnFunctionQueryClassCode" Icon="query.png"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="60" Grid.Row="3" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            x:Name="etClassName" BorderColor="LightGray" BackColor="OldLace" />
+
+            <!--Data Line 2-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Item Name" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="4" Grid.ColumnSpan="30" Grid.RowSpan="1"
+                            x:Name="etItemName" BorderColor="LightGray" BackColor="OldLace" />
+
+            <drawbase:DrawText Grid.Column="40" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Use Barcode" FillRate="0.4"/>
+            <entitybase:UsablePickerEntryPanel Grid.Column="50" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                                       x:Name="etUseBarcode" BorderColor="LightGray" BackColor="OldLace" />
+            <drawbase:DrawText Grid.Column="60" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Bar Code" FillRate="0.4"/>
+            <entitybase:BarCodeMaskedEntryPanel Grid.Column="70" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etBarcode" BorderColor="LightGray" BackColor="OldLace" />
+
+            <!--Data Line 3-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Batch Num" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etBatchNum" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="20" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Origin" FillRate="0.4"/>
+            <entitybase:OriginQueryEntryPanel Grid.Column="30" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etOrigin" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:ImageButton Grid.Column="38" Grid.Row="5" Grid.RowSpan="1" Grid.ColumnSpan="2"
+                            x:Name="etOriginImageButton" ButtonClicked="OnFunctionQueryOrigin" Icon="query.png"/>
+            <drawbase:DrawText Grid.Column="40" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Insurance Y/N" FillRate="0.4"/>
+            <entitybase:UsablePickerEntryPanel Grid.Column="50" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                                       x:Name="etInsuranceYN" BorderColor="LightGray" BackColor="OldLace" />
+            <drawbase:DrawText Grid.Column="60" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  L1 Sale Price (incl)" FillRate="0.4"/>
+            <entitybase:AmountMaskedEntryPanel Grid.Column="70" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etL1SalePrice" BorderColor="LightGray" BackColor="OldLace"/>
+
+            <!--Data Line 4-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Item Type" FillRate="0.4"/>
+            <entitybase:ItemTypePickerEntryPanel Grid.Column="10" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                              x:Name="etItemType"/>
+            <drawbase:DrawText Grid.Column="20" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Pkg Unit" FillRate="0.4"/>
+            <entitybase:PkgUnitPickerEntryPanel Grid.Column="30" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                              x:Name="etPkgUnit"/>
+            <drawbase:DrawText Grid.Column="40" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Qty Unit" FillRate="0.4"/>
+            <entitybase:QtyUnitPickerEntryPanel Grid.Column="50" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                              x:Name="etQtyUnit"/>
+            <!--drawbase:DrawText Grid.Column="60" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  L2 Sale Price" FillRate="0.4"/-->
+            <!--entitybase:AmountMaskedEntryPanel Grid.Column="70" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etL2SalePrice" BorderColor="LightGray" BackColor="OldLace"/-->
+
+            <!--Data Line 5-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Purchase Price (incl)" FillRate="0.4"/>
+            <entitybase:AmountMaskedEntryPanel Grid.Column="10" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etPurchasePrice" BorderColor="LightGray" BackColor="OldLace"/>
+            <drawbase:DrawText Grid.Column="20" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Sale Price (incl)" FillRate="0.4"/>
+            <entitybase:AmountMaskedEntryPanel Grid.Column="30" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSalePrice" BorderColor="LightGray" BackColor="OldLace"/>
+            <drawbase:DrawText Grid.Column="40" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Tax Type" FillRate="0.4"/>
+            <entitybase:ItemTaxTypePickerEntryPanel Grid.Column="50" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                              x:Name="etTaxType"/>
+            <!--drawbase:DrawText Grid.Column="60" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  L3 Sale Price" FillRate="0.4"/>
+            <entitybase:AmountMaskedEntryPanel Grid.Column="70" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etL3SalePrice" BorderColor="LightGray" BackColor="OldLace"/-->
+
+            <!--Data Line 6-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Beginning Stock" FillRate="0.4"/>
+            <!--
+            24.05.2022 Commented BY Bright, while adding Aime Code
+            <entitybase:QuantityMaskedEntryPanel Grid.Column="10" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etBeginningStock" BorderColor="LightGray" BackColor="OldLace" />
+            -->
+            <entitybase:AmountMaskedEntryPanel Grid.Column="10" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etBeginningStock" BorderColor="LightGray" BackColor="OldLace" />
+            <drawbase:DrawText Grid.Column="20" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Current Stock" FillRate="0.4"/>
+            <entitybase:AmountMaskedViewPanel Grid.Column="30" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etCurrentStock" BorderColor="LightGray" BackColor="OldLace"/>
+            <drawbase:DrawText Grid.Column="40" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Safety Stock" FillRate="0.4"/>
+            <entitybase:QuantityMaskedEntryPanel Grid.Column="50" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSafetyStock" BorderColor="LightGray" BackColor="White"/>
+            <!--drawbase:DrawText Grid.Column="60" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  L4 Sale Price" FillRate="0.4"/>
+            <entitybase:AmountMaskedEntryPanel Grid.Column="70" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etL4SalePrice" BorderColor="LightGray" BackColor="OldLace"/-->
+
+            <!--Data Line 7-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Use Expiration" FillRate="0.4"/>
+            <entitybase:UsablePickerEntryPanel Grid.Column="10" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etUseExpire" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="20" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Expiration Date" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1" 
+                            x:Name="etExpireDate" BorderColor="LightGray" BackColor="OldLace" />
+            <entitybase:DatePickerEntryPanel Grid.Column="30" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1" 
+                            x:Name="etExpireDateInput" />
+            <drawbase:DrawText Grid.Column="40" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Use" FillRate="0.4"/>
+            <entitybase:UsablePickerEntryPanel Grid.Column="50" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                                       x:Name="etUse" BorderColor="LightGray" BackColor="OldLace"/>
+            <!--drawbase:DrawText Grid.Column="60" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  L5 Sale Price" FillRate="0.4"/>
+            <entitybase:AmountMaskedEntryPanel Grid.Column="70" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etL5SalePrice" BorderColor="LightGray" BackColor="OldLace"/-->
+            <!--Data Line 8-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Description" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="10" Grid.ColumnSpan="70" Grid.RowSpan="1"
+                            x:Name="etDescription" BorderColor="LightGray" BackColor="White"/>
+            <!--===========================================================================================-->
+
+            <!--Grid Search Bar============================================================================-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Item Code, Barcode, Item Name" FillRate="0.4" TextColor="FFFFFF"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="11" Grid.ColumnSpan="40" Grid.RowSpan="1"
+                            x:Name="etLikeValue" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="60" Grid.Row="11" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Use" FillRate="0.4" TextColor="FFFFFF"/>
+            <drawbase:ImageButton Grid.Column="68" Grid.Row="11" Grid.RowSpan="1" Grid.ColumnSpan="2"
+                                 ButtonClicked="OnClearUse" Icon="delete.png"/>
+            <entitybase:UsablePickerEntryPanel Grid.Column="70" Grid.Row="11" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                              x:Name="etSearchUsable" BorderColor="LightGray"  BackColor="White"/>
+            <drawbase:IconTextButton Grid.Column="80" Grid.Row="11" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                             x:Name="btnSearch" Text="Search" FillRate="0.6" Icon="query.png" ButtonColor="#E30613"
+                             ButtonClicked="OnSearch"/>
+            <!-- ListView ===========================================================================================-->
+            <drawbase:DrawBox Grid.Column="0" Grid.Row="12" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="0"  Grid.ColumnSpan="16" Text= "Item Code"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="16"  Grid.ColumnSpan="12" Text= "Item Name"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="28"  Grid.ColumnSpan="8" Text= "Origin"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="36"  Grid.ColumnSpan="8" Text= "Item Type"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="44" Grid.ColumnSpan="4" Text= "Pack Unit"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="48" Grid.ColumnSpan="8" Text= "Qty Unit"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="66" Grid.ColumnSpan="8" Text= "Purchase Price"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="74" Grid.ColumnSpan="8" Text= "Sale Price"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="82" Grid.ColumnSpan="8" Text= "Beginning Stock"/>
+
+            <ListView x:Name="listView"  ItemSelected="OnSelectedItem"
+                      RowHeight="40" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="90" Grid.RowSpan="8">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.ColumnSpan="16" Text="{Binding ItemCd}" />
+                                <drawbase:DrawGridCell Grid.Column="16"  Grid.ColumnSpan="12" Text="{Binding ItemNm}" />
+                                <drawbase:DrawGridCell Grid.Column="28"  Grid.ColumnSpan="8" Text="{Binding OrgnNatName}" />
+                                <drawbase:DrawGridCell Grid.Column="36"  Grid.ColumnSpan="8" Text="{Binding ItemTyName}" />
+                                <drawbase:DrawGridCell Grid.Column="44" Grid.ColumnSpan="4" Text="{Binding PkgUnitName}" />
+                                <drawbase:DrawGridCell Grid.Column="48" Grid.ColumnSpan="8" Text="{Binding QtyUnitName}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="66" Grid.ColumnSpan="8" Text="{Binding InitlWhUntpc}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="74" Grid.ColumnSpan="8" Text="{Binding DftPrc}" />
+                                <!--24.05.2022 Commented BY Bright, while adding Aime Code
+                                <drawbase:DrawGridCellLong Grid.Column="82" Grid.ColumnSpan="8" Text="{Binding InitlQty}" />
+                                -->
+                                <drawbase:DrawGridCellDouble Grid.Column="82" Grid.ColumnSpan="8" Text="{Binding InitlQty}" />
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>            
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

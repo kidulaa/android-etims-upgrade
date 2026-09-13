@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<draw:ExtContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.SalesMenuPage">
+    <draw:ExtContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:LogoBackground Icon="eTIMS_logo.png" Color="ffffff" Align="LEFT"  
+                                      Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="15"/>
+
+            <draw:DrawText Grid.Row="23" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                           Text="Management|Module" TextAlign="CENTER" FillRate="0.5"/>
+            <draw:ImageButton Grid.Row="15" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="5"
+                            ButtonClicked="OnFunctionCalled" FunctionID="BackOffice" Icon="backoffice.png"/>
+            <draw:DrawText Grid.Row="23" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                           x:Name="txtGroceryStore" Text="Grocery Store" TextAlign="CENTER"/>
+            <draw:ImageButton Grid.Row="15" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="5"
+                           x:Name="btnGroceryStore" ButtonClicked="OnFunctionCalled" FunctionID="GroceryStore" Icon="grocerystore.png"/>
+            <draw:DrawText Grid.Row="23" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                           x:Name="txtPharmacy" Text="Pharmacy" TextAlign="CENTER"/>
+            <draw:ImageButton Grid.Row="15" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="5"
+                           x:Name="btnPharmacy" ButtonClicked="OnFunctionCalled" FunctionID="Pharmacy" Icon="pharmacy.png"/>
+
+            <draw:DrawText Grid.Row="23" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                           x:Name="txtSpecialStore" Text="Specialty Store" TextAlign="CENTER"/>
+            <draw:ImageButton Grid.Row="15" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="5"
+                           x:Name="btnSpecialStore" ButtonClicked="OnFunctionCalled" FunctionID="SpecialtyStore" Icon="specialstore.png"/>
+            <draw:DrawText Grid.Row="23" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                           x:Name="txtRestaurant" Text="Restaurant/Bar" TextAlign="CENTER"/>
+            <draw:ImageButton Grid.Row="15" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="5"
+                           x:Name="btnRestaurant" ButtonClicked="OnFunctionCalled" FunctionID="Restaurant" Icon="restaurant.png"/>
+            <draw:DrawText Grid.Row="23" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                           x:Name="txtHotel" Text="Hotel" TextAlign="CENTER"/>
+            <draw:ImageButton Grid.Row="15" Grid.Column="5" Grid.RowSpan="9" Grid.ColumnSpan="5"
+                           x:Name="btnHotel" ButtonClicked="OnFunctionCalled" FunctionID="Hotel" Icon="hotel.png"/>
+
+          <component:LogoBackground Icon="EBM2x-72.png" Align="LEFT"
+                                      Grid.Row="3" Grid.Column="15" Grid.RowSpan="14" Grid.ColumnSpan="8"/>
+
+            <component:InformationPanel Grid.Row="17" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <component:EchoPanel Grid.Row="21" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox Grid.Row="25" Grid.Column="15" Grid.RowSpan="15" Grid.ColumnSpan="8" Color="4e4e4e"/>
+
+            <draw:FixedGrid ColumnCount="16" RowCount="2" Grid.Row="25" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8" BackgroundColor="#4e4e4e">
+                <draw:ExtMenuButton x:Name="extMenuButton"
+                                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                ButtonClicked="OnFunctionCalled" FunctionID="ExtMenu" ButtonColor="#E30613"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="#E30613"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="#E30613"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="#E30613"/>
+            </draw:FixedGrid>
+
+            <component:KeypadPanel Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8"
+                               FunctionCalled="OnFunctionCalled"/>
+
+            <draw:FixedGrid  x:Name="extFunctionPanel" ColumnCount="16" RowCount="8" 
+                            Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8" BackgroundColor="#ffffff">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="" FunctionID="Phone" TextColor="FFFFFF" FillRate="0.5" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="." FunctionID="Setting" TextColor="FFFFFF" FillRate="0.2" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Send" FunctionID="RraSdcSend" TextColor="FFFFFF" FillRate="0.2" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Receive" FunctionID="RraSdcReceive" TextColor="FFFFFF" FillRate="0.2" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="" FunctionID="Admin" TextColor="FFFFFF" FillRate="0.5" ButtonColor="4e4e4e"/>
+            </draw:FixedGrid>
+
+            <draw:DrawBox Grid.Row="30" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="13" IsStroke="True" StrokeColor="000000" Color="#E30613" />
+            <draw:DrawText Grid.Row="30" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" 
+                           Text="Waiting for upload" TextAlign="LEFT" FillRate="0.6" TextColor="ffffff"/>
+
+            <draw:DrawBox Grid.Row="32" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="#E30613"/>
+            <draw:DrawText Grid.Row="32" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="4" 
+                           Text="Count" TextAlign="CENTER" FillRate="0.6" TextColor="ffffff"/>
+            <draw:DrawBox Grid.Row="34" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="ffffff"/>
+            <draw:DrawText x:Name="textWaitCount" Grid.Row="34" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                           Text="0" TextAlign="CENTER" FillRate="0.6" TextColor="000000"/>
+            <draw:DrawText x:Name="textErrCount" Grid.Row="37" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="4" 
+                           Text="0" TextAlign="LEFT" FillRate="0.6" TextColor="000000"/>
+
+            <draw:DrawBox Grid.Row="32" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="9" IsStroke="True" StrokeColor="000000" Color="#E30613"/>
+            <draw:DrawText Grid.Row="32" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="9" 
+                             Text="Amount" TextAlign="CENTER" FillRate="0.6" TextColor="ffffff"/>
+            <draw:DrawBox Grid.Row="34" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="9" IsStroke="True" StrokeColor="000000" Color="ffffff"/>
+            <draw:DrawText x:Name="textWaitAmount" Grid.Row="34" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="9" 
+                           Text="0" TextAlign="CENTER" FillRate="0.6" TextColor="000000"/>
+
+            <draw:DrawText x:Name="textAppVersion" Grid.Row="39" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="10" 
+                           Text="" TextAlign="Left"/>
+        </draw:FixedGrid>
+    </draw:ExtContentPage.Content>
+</draw:ExtContentPage>

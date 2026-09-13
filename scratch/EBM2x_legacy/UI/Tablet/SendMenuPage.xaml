@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<draw:ExtContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.SendMenuPage">
+    <draw:ExtContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <!--<component:LogoBackground Icon="EBM12x.png" Color="#fce6e6" Align="LEFT"  
+                                      Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="15"/>-->
+
+          <component:LogoBackground Icon="EBM2x-72.png" Align="LEFT"
+                                      Grid.Row="3" Grid.Column="15" Grid.RowSpan="14" Grid.ColumnSpan="8" Color="#fce6e6"/>
+
+            <draw:DrawText Text="Waiting quantity" Grid.Row="8" Grid.Column="16" Grid.RowSpan="1" Grid.ColumnSpan="6"/>
+            <draw:DrawBox StrokeColor="ff1700" IsStroke="true"
+                          Grid.Row="9" Grid.Column="16" Grid.RowSpan="2" Grid.ColumnSpan="6" Color="#fad0cf"/>
+            <draw:DrawText x:Name="waitingEntry"
+                           Grid.Row="9" Grid.Column="16" Grid.RowSpan="2" Grid.ColumnSpan="6"/>
+
+            <draw:DrawText Text="Invoice number to resend" Grid.Row="12" Grid.Column="16" Grid.RowSpan="1" Grid.ColumnSpan="6"/>
+            <draw:DrawText Text="From" Grid.Row="13" Grid.Column="16" Grid.RowSpan="1" Grid.ColumnSpan="2"/>
+            <draw:DrawBox StrokeColor="ff1700" IsStroke="true"
+                          Grid.Row="14" Grid.Column="16" Grid.RowSpan="2" Grid.ColumnSpan="2" Color="#fad0cf"/>
+            <draw:DrawText x:Name="fromInvoiceEntry"
+                           Grid.Row="14" Grid.Column="16" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+            <draw:DrawText Text="~" TextAlign="CENTER" Grid.Row="14" Grid.Column="18" Grid.RowSpan="2" Grid.ColumnSpan="1"/>
+            <draw:DrawText Text="To" Grid.Row="13" Grid.Column="19" Grid.RowSpan="1" Grid.ColumnSpan="2"/>
+            <draw:DrawBox StrokeColor="ff1700" IsStroke="true"
+                          Grid.Row="14" Grid.Column="19" Grid.RowSpan="2" Grid.ColumnSpan="2" Color="#fad0cf"/>
+            <draw:DrawText x:Name="toInvoiceEntry"
+                           Grid.Row="14" Grid.Column="19" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+            <component:InformationPanel Grid.Row="17" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <component:EchoPanel Grid.Row="21" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox Grid.Row="25" Grid.Column="15" Grid.RowSpan="15" Grid.ColumnSpan="8" Color="4e4e4e"/>
+
+            <draw:FixedGrid ColumnCount="16" RowCount="2" Grid.Row="25" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8">
+                <draw:ExtMenuButton x:Name="extMenuButton"
+                                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                ButtonClicked="OnFunctionCalled" FunctionID="ExtMenu" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Back" FunctionID="Back" ButtonColor="4e4e4e"/>
+            </draw:FixedGrid>
+
+            <component:KeypadPanel Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8"
+                               FunctionCalled="OnFunctionCalled"/>
+
+            <draw:FixedGrid  x:Name="extFunctionPanel" ColumnCount="16" RowCount="8" 
+                            Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="." FunctionID="Setting" TextColor="FFFFFF" FillRate="0.2" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="From|Invoice" FunctionID="FromInvoice" TextColor="FFFFFF" FillRate="0.3" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="To|Invoice" FunctionID="ToInvoice" TextColor="FFFFFF" FillRate="0.3" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Send" FunctionID="RraSdcSend" TextColor="FFFFFF" FillRate="0.6" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Resend" FunctionID="ReRraSdcSend" TextColor="FFFFFF" FillRate="0.5" ButtonColor="4e4e4e"/>
+            </draw:FixedGrid>
+        </draw:FixedGrid>
+    </draw:ExtContentPage.Content>
+</draw:ExtContentPage>

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"  
+             xmlns:entry="clr-namespace:EBM2x.UI.EntryPanel;assembly=EBM2x"      
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Popup.PhoneSearchReceiptPopupPage">
+    <ContentPage.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="40">
+            <component:PhoneHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="16"
+                                        OffEventHandler="True"/>
+
+            <draw:FixedGrid x:Name="fixedGrid" ColumnCount="16" RowCount="4"
+                            Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="16">
+                <entry:DatePickerEntryPanel x:Name="salesDateEntry" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6"/>
+                <!--entry:DigitExtendedEntryPanel x:Name="invoiceNumEntry" Grid.Row="0" Grid.Column="6" Grid.RowSpan="3" Grid.ColumnSpan="6"/-->
+
+                <draw:IconTextButton Grid.Row="0" Grid.Column="10" Grid.RowSpan="3" Grid.ColumnSpan="3"
+                            Text="Query" FillRate="0.3" ButtonClicked="OnFunctionCalled" FunctionID="Query" Icon="query.png"/>
+                <draw:IconTextButton Grid.Row="0" Grid.Column="13" Grid.RowSpan="3" Grid.ColumnSpan="3"
+                            Text="Back" FillRate="0.3" ButtonClicked="OnCancelButtonClicked" FunctionID="Cancel" Icon="back.png"/>
+            </draw:FixedGrid>
+            <listview:SearchReceiptHeaderView x:Name="headerView" Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <ListView  x:Name="listView" ItemSelected="OnSelectedItem" 
+                       RowHeight="48" Grid.Row="8" Grid.Column="0" Grid.RowSpan="32" Grid.ColumnSpan="16">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <listview:SearchReceiptView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <draw:FixedGrid x:Name="detailFixedGrid" ColumnCount="16" RowCount="3"
+                            Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="16">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Reprint" FunctionID="Reprint"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="3" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Reload" FunctionID="Reload"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="3" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Credit Note" FunctionID="Refund"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="3" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Back" FunctionID="Back"/>
+            </draw:FixedGrid>
+            <ListView x:Name="detailListView" 
+                       RowHeight="36" Grid.Row="6" Grid.Column="0" Grid.RowSpan="34" Grid.ColumnSpan="16">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <listview:SearchReceiptDetailView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

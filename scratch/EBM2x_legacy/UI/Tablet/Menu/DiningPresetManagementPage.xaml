@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"              
+             xmlns:entry="clr-namespace:EBM2x.UI.EntryPanel;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.Menu.DiningPresetManagementPage">
+    <ContentPage.Content>
+        <draw:FixedGrid x:Name="fixedGrid00" ColumnCount="23" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:DiningMenuPanel x:Name="diningMenuPanel" FunctionCalled="OnFunctionCalled"
+                              Grid.Row="3" Grid.Column="0" Grid.RowSpan="32" Grid.ColumnSpan="15"/>
+
+            <draw:FixedGrid x:Name="fixedGridBase" ColumnCount="8" RowCount="4"
+                            Grid.Row="3" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="8" Color="e1c9a3"/>
+
+                <draw:IconTextButton  Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="add.png"
+                                      ButtonClicked="OnFunctionCalled" FunctionID="AddGroup"
+                                      Text="Group|Add +5" FillRate="0.2" ButtonColor="af5d21"/>
+                <draw:IconTextButton  Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="deleteRed.png"
+                                      ButtonClicked="OnFunctionCalled" FunctionID="DeleteGroup"
+                                      Text="Group|Delete -5" FillRate="0.2" ButtonColor="af5d21"/>
+
+                <draw:IconTextButton  Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="add.png"
+                                      ButtonClicked="OnFunctionCalled" FunctionID="AddItem" 
+                                      Text="Item|Add +25" FillRate="0.2" ButtonColor="af5d21"/>
+                <draw:IconTextButton  Grid.Row="0" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="delete.png"
+                                      ButtonClicked="OnFunctionCalled" FunctionID="DeleteItem" 
+                                      Text="Item|Delete -25" FillRate="0.2" ButtonColor="af5d21"/>
+            </draw:FixedGrid>
+
+            <draw:FixedGrid x:Name="fixedGridGroup" ColumnCount="8" RowCount="22"
+                            Grid.Row="7" Grid.Column="15" Grid.RowSpan="22" Grid.ColumnSpan="8">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="22" Grid.ColumnSpan="8" Color="e1c9a3"/>
+
+                <entry:ExtendedEntryPanel x:Name="groupName" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6"/>
+                <draw:DrawSystemImage x:Name="groupImage" Grid.Row="3" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="4"/>
+
+                <draw:IconTextButton Grid.Row="0" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="image.png"
+                                     ButtonClicked="OnFunctionCalled" FunctionID="ImageGroup" 
+                                     Text="Image" FillRate="0.2" ButtonColor="af5d21"/>
+
+                <draw:IconTextButton  Grid.Row="14" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="savefile.png"
+                                      ButtonClicked="OnFunctionCalled" FunctionID="ConfirmGroup" 
+                                      Text="Confirm" FillRate="0.2" ButtonColor="af5d21"/>
+                <draw:IconTextButton Grid.Row="18" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="back.png"
+                                     ButtonClicked="OnFunctionCalled" FunctionID="Cancel" 
+                                     Text="Cancel" FillRate="0.2" ButtonColor="af5d21"/>
+
+            </draw:FixedGrid>
+            <!-- fixedGridGroup OR fixedGridItem -->
+            <draw:FixedGrid x:Name="fixedGridItem" ColumnCount="8" RowCount="22"
+                            Grid.Row="7" Grid.Column="15" Grid.RowSpan="22" Grid.ColumnSpan="8">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="22" Grid.ColumnSpan="8" Color="e1c9a3"/>
+
+                <entry:ExtendedEntryPanel x:Name="itemCode" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6"/>
+                <entry:ExtendedEntryPanel x:Name="itemName" Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6"/>
+                <entry:ExtendedEntryPanel x:Name="itemPrice" Grid.Row="6" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6"/>
+                <draw:DrawSystemImage x:Name="itemImage" Grid.Row="9" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="4"/>
+
+                <draw:IconTextButton Grid.Row="0" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="query.png"
+                                     ButtonClicked="OnFunctionCalled" FunctionID="Query" 
+                                     Text="Query" FillRate="0.2" ButtonColor="af5d21"/>
+                <draw:IconTextButton Grid.Row="4" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="image.png"
+                                     ButtonClicked="OnFunctionCalled" FunctionID="ImageItem" 
+                                     Text="Image" FillRate="0.2" ButtonColor="af5d21"/>
+
+                <draw:IconTextButton  x:Name="uncheckedButton" Grid.Row="8" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="unchecked.png"
+                                      ButtonClicked="OnFunctionCalled" FunctionID="Check" 
+                                      Text="Visible" FillRate="0.2" ButtonColor="af5d21"/>
+                <draw:IconTextButton x:Name="checkedButton" Grid.Row="8" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="checked.png"
+                                     ButtonClicked="OnFunctionCalled" FunctionID="Uncheck" 
+                                     Text="Unvisible" FillRate="0.2" ButtonColor="af5d21"/>
+
+                <draw:IconTextButton  Grid.Row="14" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="savefile.png"
+                                      ButtonClicked="OnFunctionCalled" FunctionID="ConfirmItem" 
+                                      Text="Confirm" FillRate="0.2" ButtonColor="af5d21"/>
+                <draw:IconTextButton Grid.Row="18" Grid.Column="6" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="back.png"
+                                     ButtonClicked="OnFunctionCalled" FunctionID="Cancel" 
+                                     Text="Cancel" FillRate="0.2" ButtonColor="af5d21"/>
+            </draw:FixedGrid>
+
+            <draw:IconTextButton Grid.Row="36" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="closepage.png"                     
+                                 ButtonClicked="OnFunctionCalled" Text="Back" FillRate="0.2" FunctionID="Back"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

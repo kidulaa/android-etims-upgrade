@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.SalesManagement.SalesManagementPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="90" Color="#FFFFFF"/>
+            <drawbase:DrawBox Grid.Row="12" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Sales Management" TextAlign="Left" FillRate="0.5" TextColor="fff"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="66" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnExportVAT" Text="Export|VAT" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionExportVAT" TextColor="fff" ButtonColor="#ff000000"/>
+            <drawbase:IconTextButton Grid.Column="74" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnExport" Text="Export" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionExportAll" TextColor="fff" ButtonColor="#ff000000"/>
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnClose" Text="Close" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionClose" TextColor="fff" ButtonColor="#ff000000"/>
+            <!--===========================================================================================-->
+
+            <!--데이터 영역================================================================================-->
+            <!--Data Line 1-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Total.VAT"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            x:Name="etTotalVAT" BorderColor="LightGray" BackColor="OldLace" />
+            <drawbase:DrawText Grid.Column="30" Grid.Row="2" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Total" FillRate="0.6"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="40" Grid.Row="2" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            x:Name="etTotal" BorderColor="LightGray" BackColor="OldLace" />
+            <!--===========================================================================================-->
+
+            <!--Grid Search Bar============================================================================-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Date" FillRate="0.4"/>
+            <entitybase:DatePickerEntryPanel Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etFromDate"/>
+            <drawbase:DrawText Grid.Column="15" Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="~" FillRate="0.6" TextAlign="CENTER"/>
+            <entitybase:DatePickerEntryPanel Grid.Column="20" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etToDate"/>
+            <drawbase:DrawText Grid.Column="30" Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Invoice" FillRate="0.4"/>
+            <entitybase:LongMaskedEntryPanel Grid.Column="35" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etInvoice" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="45" Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Status" FillRate="0.4"/>
+            <drawbase:ImageButton Grid.Column="49" Grid.Row="3" Grid.RowSpan="1" Grid.ColumnSpan="1"
+                                 ButtonClicked="OnClearUse" Icon="delete.png"/>
+            <entitybase:SalesSttsPickerEntryPanel Grid.Column="50" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1" 
+                              x:Name="etSalesStts"/>
+
+            <drawbase:IconTextButton Grid.Column="66" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnSearch" Text="Search" FillRate="0.6" Icon="query.png" ButtonColor="4169E1"
+                             ButtonClicked="OnSearch"/>
+            <drawbase:IconTextButton Grid.Column="74" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnZReport" Text="Z Report" FillRate="0.6" Icon="query.png" ButtonColor="4169E1"
+                             ButtonClicked="OnZReport"/>
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnSalesReport" Text="Sales Rpt" FillRate="0.6" Icon="query.png" ButtonColor="4169E1"
+                             ButtonClicked="OnSalesReport"/>
+            <!-- ListView ===========================================================================================-->
+            <drawbase:DrawBox Grid.Row="4" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="8"  Text= "Status"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="8"  Grid.ColumnSpan="6"  Text= "Invoice ID"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="14"  Grid.ColumnSpan="20"  Text= "Customer"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="34"  Grid.ColumnSpan="10"  Text= "Sale Date"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="44" Grid.ColumnSpan="10"  Text= "Release Date"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="54" Grid.ColumnSpan="10"  Text= "Refund Date"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="64" Grid.ColumnSpan="8"  Text= "VAT"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="72" Grid.ColumnSpan="9"  Text= "Total Amount"/>
+            <drawbase:DrawGridHead Grid.Row="4" Grid.Column="81" Grid.ColumnSpan="9"  Text= "Sales Amount"/>
+
+            <ListView x:Name="listViewTran"  ItemSelected="OnSelectedTran"
+                      RowHeight="40" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="90" Grid.RowSpan="7">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.ColumnSpan="8" Text="{Binding SalesSttsNm}" />
+                                <drawbase:DrawGridCell Grid.Column="8"  Grid.ColumnSpan="6" Text="{Binding InvcNo}" />
+                                <drawbase:DrawGridCell Grid.Column="14"  Grid.ColumnSpan="20" Text="{Binding TradeNm}" />
+                                <drawbase:DrawGridCellDate Grid.Column="34"  Grid.ColumnSpan="10" Text="{Binding SalesDt}" />
+                                <drawbase:DrawGridCellDate Grid.Column="44" Grid.ColumnSpan="10" Text="{Binding CfmDt}" />
+                                <drawbase:DrawGridCellDate Grid.Column="54" Grid.ColumnSpan="10" Text="{Binding RfdDt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="64" Grid.ColumnSpan="8" Text="{Binding TotTaxAmt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="72" Grid.ColumnSpan="9" Text="{Binding TotTaxblAmt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="81" Grid.ColumnSpan="9" Text="{Binding TotAmt}" />
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--Grid Search Bar============================================================================-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="90" Grid.RowSpan="1"
+                            Text="  Detail list" FillRate="0.7"/>
+            <drawbase:DrawText Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Status" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="13" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSelectStatus" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="20" Grid.Row="13" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Invoice ID" FillRate="0.4"/>
+            <entitybase:LongMaskedEntryPanel Grid.Column="30" Grid.Row="13" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSelectInvoiceID" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="40" Grid.Row="13" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Customer" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="13" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSelectCustomer" BorderColor="LightGray" BackColor="White"/>
+
+            <drawbase:DrawText Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  VAT" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="14" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSelectVAT" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="20" Grid.Row="14" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Total Amount" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="14" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSelectTotalAmount" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="40" Grid.Row="14" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Sales Amount" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="14" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSelectSalesAmount" BorderColor="LightGray" BackColor="White" />
+
+            <drawbase:IconTextButton Grid.Column="66" Grid.Row="13" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnNew" Text="New" FillRate="0.3" Icon="i_new.png"
+                             ButtonClicked="OnFunctionNew" TextColor="fff" ButtonColor="#ff000000"/>
+            <drawbase:IconTextButton Grid.Column="74" Grid.Row="13" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnDetail" Text="Detail" FillRate="0.3" Icon="query.png"
+                             ButtonClicked="OnFunctionDetail" TextColor="fff" ButtonColor="#ff000000"/>
+            <!---->
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="13" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnModify" Text="Modify" FillRate="0.6" Icon="Environment.png"
+                             ButtonClicked="OnFunctionModify" TextColor="fff" ButtonColor="#ff000000"/>
+            
+                    <drawbase:IconTextButton Grid.Column="82" Grid.Row="14" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnDelete" Text="Delete" FillRate="0.6" Icon="i_delete.png"
+                             ButtonClicked="OnFunctionDelete" TextColor="fff" ButtonColor="#ff000000"/>
+            
+            <!--
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="13" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnDelete" Text="Delete" FillRate="0.3" Icon="i_delete.png"
+                             ButtonClicked="OnFunctionDelete"/> -->
+            <!-- ListView ===========================================================================================-->
+            <drawbase:DrawBox Grid.Row="15" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="0"  Grid.ColumnSpan="8" Text= "Seq"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="8"  Grid.ColumnSpan="16" Text= "Item Code"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="24"  Grid.ColumnSpan="20" Text= "Item Name"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="44"  Grid.ColumnSpan="8" Text= "Quantity"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="52"  Grid.ColumnSpan="8" Text= "Unit Price"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="60" Grid.ColumnSpan="8" Text= "Amount"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="68" Grid.ColumnSpan="8" Text= "Sales Amount"/>
+            <drawbase:DrawGridHead Grid.Row="15" Grid.Column="76" Grid.ColumnSpan="8" Text= "VAT"/>
+
+            <ListView x:Name="listViewItems" RowHeight="40" Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="90" Grid.RowSpan="4">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.ColumnSpan="8" Text="{Binding ItemSeq}" />
+                                <drawbase:DrawGridCell Grid.Column="8"  Grid.ColumnSpan="16" Text="{Binding ItemCd}" />
+                                <drawbase:DrawGridCell Grid.Column="24"  Grid.ColumnSpan="20" Text="{Binding ItemNm}" />
+                                <!-- Commented By Bright While Incorporating Aimee code 1.5.2022 
+                                <drawbase:DrawGridCellLong Grid.Column="44" Grid.ColumnSpan="8" Text="{Binding Qty}" />-->
+                                <drawbase:DrawGridCellDouble Grid.Column="44" Grid.ColumnSpan="8" Text="{Binding Qty}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="52"  Grid.ColumnSpan="8" Text="{Binding Prc}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="60" Grid.ColumnSpan="8" Text="{Binding TaxblAmt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="68" Grid.ColumnSpan="8" Text="{Binding TotAmt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="76" Grid.ColumnSpan="8" Text="{Binding TaxAmt}" />
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

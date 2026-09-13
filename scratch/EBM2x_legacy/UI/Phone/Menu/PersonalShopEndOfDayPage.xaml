@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"              
+             xmlns:local="clr-namespace:EBM2x.UI.Phone.SignOn;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Phone.Menu.PersonalShopEndOfDayPage">
+    <ContentPage.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="30">
+            <component:PhoneHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <draw:DrawBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="16" Color="51806c"/>
+            <draw:DrawText Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="16" TextColor="86de4d" TextAlign="LEFT" 
+                           Text="End Of Day" FillRate="0.9"/>
+            
+            <component:ReadyMoneyPanel x:Name="readyMoneyPanel" 
+                                       ButtonClicked="OnSelectMoneyType"
+                                       Grid.Row="3" Grid.Column="0" Grid.RowSpan="13" Grid.ColumnSpan="16"/>
+
+            <component:InformationPanel Grid.Row="16" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:EchoPanel Grid.Row="18" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <draw:DrawBox Grid.Row="20" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+            <draw:FixedGrid ColumnCount="16" RowCount="2" Grid.Row="20" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Up" FunctionID="Up"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Down" FunctionID="Down"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Back" FunctionID="Back"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  TextColor="000000"  ButtonColor="00FF00" BorderColor="808080"
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Confirm" FunctionID="Confirm"/>
+            </draw:FixedGrid>
+
+            <component:KeypadPanel Grid.Row="22" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16"
+                               FunctionCalled="OnFunctionCalled"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

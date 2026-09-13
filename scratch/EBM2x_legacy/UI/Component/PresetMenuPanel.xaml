@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.PresetMenuPanel">
+    <ContentView.Content>
+        <draw:FixedGrid x:Name="fixedGrid" ColumnCount="20" RowCount="12" Spacing="2">
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

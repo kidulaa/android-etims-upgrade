@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.KeypadPanel">
+    <ContentView.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="8">
+            <draw:NumberButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="7" FunctionID="7"/>
+            <draw:NumberButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="8" FunctionID="8"/>
+            <draw:NumberButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="9" FunctionID="9"/>
+            <draw:NumberButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnBackspaceClicked"
+                             Text="Backspace"  FunctionID="Backspace" FillRate="0.3"/>
+
+            <draw:NumberButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="4" FunctionID="4"/>
+            <draw:NumberButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="5" FunctionID="5"/>
+            <draw:NumberButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="6" FunctionID="6"/>
+            <draw:NumberButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnClearClicked"
+                             Text="Clear" FunctionID="Clear" FillRate="0.3"/>
+
+            <draw:NumberButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="1" FunctionID="1"/>
+            <draw:NumberButton Grid.Row="4" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="2" FunctionID="2"/>
+            <draw:NumberButton Grid.Row="4" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="3" FunctionID="3"/>
+            <draw:NumberButton Grid.Row="4" Grid.Column="12" Grid.RowSpan="4" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnEnterClicked"
+                             Text="Enter" FunctionID="Enter" FillRate="0.3"/>
+
+            <draw:NumberButton Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="0" FunctionID="0"/>
+            <draw:NumberButton Grid.Row="6" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="00" FunctionID="00"/>
+            <draw:NumberButton Grid.Row="6" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="." FunctionID="."/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

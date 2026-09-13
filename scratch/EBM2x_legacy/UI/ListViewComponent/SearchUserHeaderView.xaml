@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.ListViewComponent.SearchUserHeaderView">
+    <ContentView.Content>
+        <draw:FixedGrid x:Name="fixedGrid" ColumnCount="16" RowCount="2">
+            <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16" Color="#E30613"/>
+
+            <draw:DrawText Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="6" 
+                           TextColor="fff915" TextAlign="LEFT" FillRate="0.3" Text="User Id"/>
+            <draw:DrawText Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="10" 
+                           TextColor="fff915" TextAlign="LEFT" FillRate="0.3" Text="User Name"/>
+
+        </draw:FixedGrid>        
+    </ContentView.Content>
+</ContentView>

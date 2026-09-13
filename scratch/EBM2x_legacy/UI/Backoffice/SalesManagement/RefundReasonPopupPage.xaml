@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.SalesManagement.RefundReasonPopupPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="90" Color="ffffff"/>
+            <drawbase:DrawBox Grid.Row="5" Grid.Column="0" Grid.RowSpan="15" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Refund Reason Popup" TextAlign="Left" FillRate="0.5"/>
+
+            <!--버튼=======================================================================================-->
+            <!--drawbase:IconTextButton Grid.Column="74" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnCancel" Text="Cancel" FillRate="0.3" Icon="i_cancel.png"
+                             ButtonClicked="OnFunctionCancel"/-->
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnConfirm" Text="Confirm" FillRate="0.3" Icon="confirm.png" ButtonColor="0000CD"
+                             ButtonClicked="OnFunctionConfirm"/>
+            <!--===========================================================================================-->
+
+            <!--데이터 영역================================================================================-->
+            <!--Info 영역-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="30" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Refund reason information" FillRate="0.4"/>
+
+            <drawbase:DrawText Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Refund Code" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="3" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            x:Name="etCd" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Refund Name" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="4" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            x:Name="etCdNm" BorderColor="LightGray" BackColor="White" />
+            <!-- ListView ===========================================================================================-->
+            <drawbase:DrawBox Grid.Row="5" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="5" Grid.Column="0"  Grid.ColumnSpan="10"  Text= "  Refund Code"/>
+            <drawbase:DrawGridHead Grid.Row="5" Grid.Column="10"  Grid.ColumnSpan="20"  Text= "  Refund Reason"/>
+            <drawbase:DrawGridHead Grid.Row="5" Grid.Column="30"  Grid.ColumnSpan="30"  Text= ""/>
+
+            <ListView x:Name="listView"  ItemSelected="OnSelectedItem"
+                      RowHeight="40" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="90" Grid.RowSpan="14">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.ColumnSpan="10" Text="{Binding Cd}" />
+                                <drawbase:DrawGridCell Grid.Column="10"  Grid.ColumnSpan="20" Text="{Binding CdNm}" />
+                                <drawbase:DrawGridCell Grid.Column="30"  Grid.ColumnSpan="30" Text="" />
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

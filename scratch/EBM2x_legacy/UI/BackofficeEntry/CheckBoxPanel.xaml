@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.BackofficeEntry.CheckBoxPanel">
+  <ContentView.Content>
+        <draw:FixedGrid x:Name="entryFixedGrid" ColumnCount="10" RowCount="1">
+            <CheckBox x:Name="cbBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" IsChecked="False" />
+            <draw:DrawText x:Name="entryTitle" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="6" 
+                           TextColor="000000" TextAlign="LEFT" FillRate="0.4"/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

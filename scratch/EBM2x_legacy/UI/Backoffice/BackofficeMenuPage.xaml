@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.BackofficeMenuPage">
+    <ContentPage.Content>
+        <draw:FixedGrid x:Name="fixedGrid" ColumnCount="24" RowCount="45">
+            <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="24" Color="#E30613"/>
+            <draw:DrawBox Grid.Row="3" Grid.Column="0" Grid.RowSpan="42" Grid.ColumnSpan="1" Color="#E30613"/>
+            <draw:DrawBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="42" Grid.ColumnSpan="4" Color="#fad0cf"/>
+            
+            <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" Color="#ff000000"/>
+
+            <draw:DrawText Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" 
+                           Text="ETIMS" TextAlign="CENTER" FillRate="0.6" TextColor="ffffff"/>
+
+            <draw:DrawText x:Name="textUserName" Grid.Row="0" Grid.Column="6" Grid.RowSpan="3" Grid.ColumnSpan="10" 
+                           Text="ETIMS USER" TextAlign="LEFT" FillRate="0.6" TextColor="000000"/>
+
+            <draw:DrawDateTime Grid.Row="10" Grid.Column="8" Grid.RowSpan="3" Grid.ColumnSpan="12"/>
+
+            <draw:DrawBox Grid.Row="13" Grid.Column="8" Grid.RowSpan="3" Grid.ColumnSpan="12" IsStroke="True" StrokeColor="000000" Color="#E30613"/>
+            <draw:DrawText Grid.Row="13" Grid.Column="9" Grid.RowSpan="3" Grid.ColumnSpan="10" 
+                           Text="Waiting for Approval" TextAlign="LEFT" FillRate="0.6" TextColor="ffffff"/>
+
+            <draw:DrawBox Grid.Row="16" Grid.Column="8" Grid.RowSpan="3" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="#E30613"/>
+            <draw:DrawText Grid.Row="16" Grid.Column="8" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                           Text="Sales" TextAlign="CENTER" FillRate="0.6" TextColor="ffffff"/>
+            <draw:DrawBox Grid.Row="19" Grid.Column="8" Grid.RowSpan="6" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="ffffff"/>
+            <draw:DrawText x:Name="textWaitSales" Grid.Row="19" Grid.Column="8" Grid.RowSpan="6" Grid.ColumnSpan="4" 
+                           Text="0" TextAlign="CENTER" FillRate="0.8" TextColor="000000"/>
+
+            <draw:DrawBox Grid.Row="16" Grid.Column="12" Grid.RowSpan="3" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="#E30613"/>
+            <draw:DrawText Grid.Row="16" Grid.Column="12" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="Purchase" TextAlign="CENTER" FillRate="0.6" TextColor="ffffff"/>
+            <draw:DrawBox Grid.Row="19" Grid.Column="12" Grid.RowSpan="6" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="ffffff"/>
+            <draw:DrawText x:Name="textWaitPurchase" Grid.Row="19" Grid.Column="12" Grid.RowSpan="6" Grid.ColumnSpan="4" 
+                           Text="0" TextAlign="CENTER" FillRate="0.8" TextColor="000000"/>
+
+            <draw:DrawBox Grid.Row="16" Grid.Column="16" Grid.RowSpan="3" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="#E30613"/>
+            <draw:DrawText Grid.Row="16" Grid.Column="16" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="Import" TextAlign="CENTER" FillRate="0.6" TextColor="ffffff"/>
+            <draw:DrawBox Grid.Row="19" Grid.Column="16" Grid.RowSpan="6" Grid.ColumnSpan="4" IsStroke="True" StrokeColor="000000" Color="ffffff"/>
+            <draw:DrawText x:Name="textWaitImport" Grid.Row="19" Grid.Column="16" Grid.RowSpan="6" Grid.ColumnSpan="4" 
+                           Text="0" TextAlign="CENTER" FillRate="0.8" TextColor="000000"/>
+
+            <component:LogoBackground Icon="eTIMS_logo.png" Color="ffffff" Align="RIGHT"  
+                                      Grid.Row="30" Grid.Column="20" Grid.RowSpan="15" Grid.ColumnSpan="4"/>
+
+            <draw:BoxButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="45" Grid.ColumnSpan="24"
+                          ButtonClicked="OnBoxButtonClicked"/>
+
+            <draw:IconTextButton Grid.Row="0" Grid.Column="22" Grid.RowSpan="3" 
+                              ButtonClicked="OnFunctionLogout" Text="Logout" FillRate="0.2" FunctionID="Logout" ButtonColor="#ff000000" TextColor="ffffff"/>
+
+            <draw:ImageButton Grid.Row="0" Grid.Column="23" Grid.RowSpan="3"
+                              ButtonClicked="OnLocationButtonClicked" Icon="translation.png"/>
+
+            <draw:ImageButton Grid.Row="3" Grid.Column="0" Grid.RowSpan="4" Icon="Environment.png"/>
+            <draw:TextButton x:Name="textButtonEnvironment" 
+                             Grid.Row="3" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                             Text="  Environment" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                             ButtonClicked="OnFunctionSubMenuVisible"  FunctionID="Environment" ButtonColor="4e4e4e"/>
+
+            <draw:ImageButton Grid.Row="7" Grid.Column="0" Grid.RowSpan="4" Icon="ItemManagement.png"/>
+            <draw:TextButton x:Name="textButtonItem" Grid.Row="7" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                             Text="  Item Management" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                             ButtonClicked="OnFunctionSubMenuVisible"  FunctionID="Item" ButtonColor="4e4e4e"/>
+
+            <draw:ImageButton Grid.Row="11" Grid.Column="0" Grid.RowSpan="4" Icon="CustomerManagement.png"/>
+            <draw:TextButton x:Name="textButtonCustomer" Grid.Row="11" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                             Text="  Customer Management" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                             ButtonClicked="OnFunctionSubMenuVisible"  FunctionID="Customer" ButtonColor="4e4e4e"/>
+
+            <draw:ImageButton Grid.Row="15" Grid.Column="0" Grid.RowSpan="4" Icon="SalesManagement.png"/>
+            <draw:TextButton x:Name="textButtonSales" Grid.Row="15" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                             Text="  Sales Management" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                             ButtonClicked="OnFunctionSubMenu"  FunctionID="SalesManagement" ButtonColor="4e4e4e"/>
+
+            <draw:ImageButton Grid.Row="19" Grid.Column="0" Grid.RowSpan="4" Icon="PurchaseManagement.png"/>
+            <draw:TextButton x:Name="textButtonPurchase"
+                             Grid.Row="19" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                             Text="  Purchase Management" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                             ButtonClicked="OnFunctionSubMenu"  FunctionID="PurchaseManagement" ButtonColor="4e4e4e"/>
+
+            <draw:ImageButton Grid.Row="23" Grid.Column="0" Grid.RowSpan="4" Icon="ImportManagement.png"/>
+            <draw:TextButton x:Name="textButtonImport"
+                             Grid.Row="23" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                             Text="  Import Management" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                             ButtonClicked="OnFunctionSubMenu"  FunctionID="ImportManagement" ButtonColor="4e4e4e"/>
+
+            <draw:ImageButton Grid.Row="27" Grid.Column="0" Grid.RowSpan="4" Icon="StockManagement.png"/>
+            <draw:TextButton x:Name="textButtonStock" 
+                             Grid.Row="27" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                             Text="  Stock Management" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                             ButtonClicked="OnFunctionSubMenuVisible"  FunctionID="Stock" ButtonColor="4e4e4e"/>
+
+            <!-- Environment Sub menu -->
+            <draw:FixedGrid x:Name="fixedGridEnvironment" ColumnCount="5" RowCount="13"
+                            Grid.Row="3" Grid.Column="5" Grid.RowSpan="13" Grid.ColumnSpan="5">
+                <draw:TextButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="5" 
+                             Text="  >> Environment" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#f5b2b0"/>
+                <draw:TextButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="9" 
+                             Text="" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"/>
+
+                <draw:TextButton x:Name="textButtonUser" Grid.Row="4" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  User" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="UserManagement"/>
+                <draw:TextButton Grid.Row="7" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Change Password" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="ChangePassword"/>
+                <draw:TextButton x:Name="textButtonSetting" 
+                                 Grid.Row="10" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  System Setting" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="SystemSetting"/>
+            </draw:FixedGrid>
+
+            <!-- Item Sub menu -->
+            <draw:FixedGrid x:Name="fixedGridItem" ColumnCount="5" RowCount="7"
+                            Grid.Row="7" Grid.Column="5" Grid.RowSpan="7" Grid.ColumnSpan="5">
+                <draw:TextButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="5" 
+                             Text="  >> Item Management" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#f5b2b0"/>
+                <draw:TextButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="3" 
+                             Text="" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"/>
+
+                <draw:TextButton Grid.Row="4" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Item" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="ItemManagement"/>
+            </draw:FixedGrid>
+
+            <!-- Customer Sub menu -->
+            <draw:FixedGrid x:Name="fixedGridCustomer" ColumnCount="5" RowCount="10"
+                            Grid.Row="11" Grid.Column="5" Grid.RowSpan="10" Grid.ColumnSpan="5">
+                <draw:TextButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="5" 
+                             Text="  >> Customer Management" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#f5b2b0"/>
+                <draw:TextButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="6" 
+                             Text="" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"/>
+
+                <draw:TextButton Grid.Row="4" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Customer" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="CustomerManagement"/>
+                <draw:TextButton Grid.Row="7" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Insurer" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="InsurerManagement"/>
+            </draw:FixedGrid>
+
+            <!-- Stock Sub menu -->
+            <draw:FixedGrid x:Name="fixedGridStock" ColumnCount="5" RowCount="16"
+                            Grid.Row="27" Grid.Column="5" Grid.RowSpan="16" Grid.ColumnSpan="5">
+                <draw:TextButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="5" 
+                             Text="  >> Stock Management" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#f5b2b0"/>
+                <draw:TextButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="12" 
+                             Text="" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"/>
+
+                <draw:TextButton Grid.Row="4" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Opening/Closing" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="OpeningClosingStock"/>
+                <draw:TextButton Grid.Row="7" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Stock status" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="StockStatus"/>
+                <draw:TextButton Grid.Row="10" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Stock In History" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="StockInHistory"/>
+                <draw:TextButton Grid.Row="13" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="4" 
+                             Text="  Stock Out History" TextAlign="LEFT" FillRate="0.3" TextColor="000000" BorderColor="000000" ButtonColor="#fad0cf"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="StockOutHistory"/>
+            </draw:FixedGrid>
+
+            <!-- Admin -->
+            <draw:FixedGrid x:Name="fixedGridAdmin" ColumnCount="24" RowCount="45"
+                            Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="24" Grid.RowSpan="45" >
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="24" Color="#E30613"/>
+                <draw:DrawBox Grid.Row="3" Grid.Column="0" Grid.RowSpan="42" Grid.ColumnSpan="1" Color="#E30613"/>
+                <draw:DrawBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="42" Grid.ColumnSpan="4" Color="d4f0cd"/>
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" Color="3f922b"/>
+                <draw:DrawText Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" 
+                               Text="ETIMS" TextAlign="CENTER" FillRate="0.6" TextColor="ffffff"/>
+                <component:LogoBackground Icon="EBM2x.png" Color="ffffff" Align="RIGHT"  
+                                          Grid.Row="25" Grid.Column="14" Grid.RowSpan="20" Grid.ColumnSpan="10"/>
+
+                <draw:BoxButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="45" Grid.ColumnSpan="24"
+                              ButtonClicked="OnBoxButtonClicked"/>
+                
+                <draw:IconTextButton Grid.Row="0" Grid.Column="22" Grid.RowSpan="3" 
+                              ButtonClicked="OnFunctionLogout" Text="Logout" FillRate="0.2" FunctionID="Logout" Icon="EBM2x.png"/>
+
+                <draw:ImageButton Grid.Row="0" Grid.Column="23" Grid.RowSpan="3"
+                              ButtonClicked="OnLocationButtonClicked" Icon="translation.png"/>
+
+                <draw:ImageButton Grid.Row="3" Grid.Column="0" Grid.RowSpan="4" Icon="Environment.png"/>
+                <draw:TextButton Grid.Row="3" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="4" 
+                                 Text="  User" TextAlign="LEFT" FillRate="0.3" TextColor="ffffff"
+                                 ButtonClicked="OnFunctionSubMenu"  FunctionID="UserManagement"/>
+            </draw:FixedGrid>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

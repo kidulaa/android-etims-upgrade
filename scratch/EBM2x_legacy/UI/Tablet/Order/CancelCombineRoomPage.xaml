@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.Order.CancelCombineRoomPage">
+    <ContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderNonPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:HotelRoomManagementPanel x:Name="hotelRoomManagementPanel" FunctionCalled="OnFunctionCalled"
+                              Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="21"/>
+
+            <draw:IconTextButton Grid.Row="36" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="returnpage.png"                     
+                              ButtonClicked="OnFunctionCalled" Text="Cancel" FillRate="0.2" FunctionID="Cancel"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

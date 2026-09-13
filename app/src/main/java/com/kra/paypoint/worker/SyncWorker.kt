@@ -1,0 +1,142 @@
+package com.kra.paypoint.worker
+
+import android.content.Context
+import android.util.Log
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import com.google.gson.Gson
+import com.kra.paypoint.data.local.dao.TransactionDao
+import com.kra.paypoint.data.remote.api.TransactionService
+import com.kra.paypoint.data.remote.model.transaction.TrnsSalesRes
+import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import retrofit2.HttpException
+import java.io.IOException
+
+class SyncWorker(
+    appContext: Context,
+    workerParams: WorkerParameters
+) : CoroutineWorker(appContext, workerParams) {
+
+    companion object {
+        const val TAG = "SyncWorker"
+        const val WORK_NAME_PERIODIC = "etims_periodic_sync_work"
+        const val WORK_NAME_ONETIME = "etims_onetime_sync_work"
+        private const val MAX_ATTEMPTS_BEFORE_GIVE_UP = 10
+    }
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface SyncWorkerEntryPoint {
+        fun transactionDao(): TransactionDao
+        fun transactionService(): TransactionService
+        fun gson(): Gson
+    }
+
+    override suspend fun doWork(): Result {
+        val entryPoint = EntryPointAccessors.fromApplication(
+            applicationContext,
+            SyncWorkerEntryPoint::class.java
+        )
+        val transactionDao = entryPoint.transactionDao()
+        val transactionService = entryPoint.transactionService()
+        val gson = entryPoint.gson()
+
+        return try {
+            val pendingTransactions = transactionDao.getPendingTransactionsList()
+
+            if (pendingTransactions.isEmpty()) {
+                Log.d(TAG, "No pending eTIMS transactions to sync.")
+                return Result.success()
+            }
+
+            Log.i(TAG, "Found ${pendingTransactions.size} pending transactions to sync.")
+            var anyRetryable = false
+
+            for (transaction in pendingTransactions) {
+                val attemptNumber = transaction.syncAttempts + 1
+                try {
+                    transactionDao.updateSyncStatus(
+                        id = transaction.id,
+                        status = "SYNCING",
+                        attempts = attemptNumber,
+                        error = null
+                    )
+
+                    val payload = gson.fromJson(transaction.payloadJson, TrnsSalesSaveReq::class.java)
+                    val response = transactionService.saveSalesTransaction(payload)
+
+                    if (response.isSuccess) {
+                        Log.i(TAG, "Invoice #${transaction.invoiceNumber} accepted by eTIMS (${response.resultCd}).")
+                        transactionDao.updateSyncStatus(
+                            id = transaction.id,
+                            status = "SYNCED",
+                            attempts = attemptNumber,
+                            error = null,
+                            syncedAt = System.currentTimeMillis(),
+                            receiptUrl = response.data?.rcptNo?.toString(),
+                            qrCodeData = response.data?.rcptSign
+                        )
+                    } else {
+                        // A business rejection (bad TIN, invalid item, duplicate invoice, ...)
+                        // is not a transient failure: retrying the same payload will keep
+                        // failing, so this is terminal, but it must stay visible as FAILED,
+                        // never silently marked SYNCED like the old `Any`-typed response did.
+                        val reason = "Rejected by eTIMS: ${response.resultCd} ${response.resultMsg.orEmpty()}"
+                        Log.e(TAG, "Invoice #${transaction.invoiceNumber} rejected: $reason")
+                        transactionDao.updateSyncStatus(
+                            id = transaction.id,
+                            status = "FAILED",
+                            attempts = attemptNumber,
+                            error = reason,
+                            syncedAt = null
+                        )
+                    }
+                } catch (e: IOException) {
+                    // Network-level failure: transient, worth retrying.
+                    Log.e(TAG, "Network error syncing invoice #${transaction.invoiceNumber}: ${e.message}")
+                    anyRetryable = true
+                    transactionDao.updateSyncStatus(
+                        id = transaction.id,
+                        status = "FAILED",
+                        attempts = attemptNumber,
+                        error = "Network error: ${e.localizedMessage ?: "no connection"}",
+                        syncedAt = null
+                    )
+                } catch (e: HttpException) {
+                    // 4xx/5xx from KRA. 5xx is worth retrying; 4xx generally isn't, but without
+                    // a parsed error body we can't tell definitively, so retry with a cap.
+                    Log.e(TAG, "HTTP ${e.code()} syncing invoice #${transaction.invoiceNumber}")
+                    if (e.code() >= 500 && attemptNumber < MAX_ATTEMPTS_BEFORE_GIVE_UP) {
+                        anyRetryable = true
+                    }
+                    transactionDao.updateSyncStatus(
+                        id = transaction.id,
+                        status = "FAILED",
+                        attempts = attemptNumber,
+                        error = "eTIMS server error (HTTP ${e.code()})",
+                        syncedAt = null
+                    )
+                } catch (e: Exception) {
+                    Log.e(TAG, "Unexpected error syncing invoice #${transaction.invoiceNumber}: ${e.message}", e)
+                    anyRetryable = attemptNumber < MAX_ATTEMPTS_BEFORE_GIVE_UP
+                    transactionDao.updateSyncStatus(
+                        id = transaction.id,
+                        status = "FAILED",
+                        attempts = attemptNumber,
+                        error = e.localizedMessage ?: "Unknown sync error",
+                        syncedAt = null
+                    )
+                }
+            }
+
+            if (anyRetryable) Result.retry() else Result.success()
+        } catch (e: Exception) {
+            Log.e(TAG, "SyncWorker execution failure: ${e.message}", e)
+            Result.retry()
+        }
+    }
+}

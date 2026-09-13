@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"  
+             xmlns:entry="clr-namespace:EBM2x.UI.EntryPanel;assembly=EBM2x"    
+             x:Class="EBM2x.UI.Popup.Notice.NoticePopupPage">
+    <ContentPage.Content>
+        <draw:FixedGrid x:Name="fixedGrid" ColumnCount="33" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="33"
+                                        OffEventHandler="True"/>
+
+            <!--entry:DatePickerEntryPanel x:Name="salesDateEntry" Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="10"/-->
+            <draw:IconTextButton Grid.Row="3" Grid.Column="26" Grid.RowSpan="3" Grid.ColumnSpan="3"
+                                Text="Query" FillRate="0.3" ButtonClicked="OnQueryButtonClicked" Icon="query.png"/>
+            <draw:IconTextButton Grid.Row="3" Grid.Column="29" Grid.RowSpan="3" Grid.ColumnSpan="3"
+                                Text="Back" FillRate="0.3" ButtonClicked="OnCancelButtonClicked" Icon="back.png"/>
+
+            <draw:DrawBox Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="33" Color="#E30613"/>
+            <draw:DrawGridHead Grid.Row="6" Grid.Column="0"  Grid.RowSpan="2" Grid.ColumnSpan="10" Text= "Title"/>
+            <draw:DrawGridHead Grid.Row="6" Grid.Column="10"  Grid.RowSpan="2" Grid.ColumnSpan="23" Text= "Cont"/>
+            <ListView  x:Name="listView" ItemSelected="OnSelectedItem"
+                    RowHeight="42" Grid.Row="8" Grid.Column="0" Grid.RowSpan="32" Grid.ColumnSpan="33">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <draw:DrawGridCell Grid.Column="0"  Grid.ColumnSpan="10" Text="{Binding Title}" />
+                                <draw:DrawGridCell Grid.Column="10"  Grid.ColumnSpan="23" Text="{Binding Cont}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

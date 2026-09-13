@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Popup.TabletLocationPopupPage">
+    <ContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"
+                                        OffEventHandler="True"/>
+            
+            <draw:DrawBox Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="23" Color="ffffff"/>
+
+            <draw:ImageButton Grid.Row="3" Grid.Column="21" Grid.RowSpan="6" Grid.ColumnSpan="2"
+                            ButtonClicked="OnLocationButtonClicked" FunctionID="rw" Icon="rw.png"/>
+            <draw:ImageButton Grid.Row="9" Grid.Column="21" Grid.RowSpan="6" Grid.ColumnSpan="2"
+                            ButtonClicked="OnLocationButtonClicked" FunctionID="en"  Icon="en.png"/>
+            <draw:ImageButton Grid.Row="15" Grid.Column="21" Grid.RowSpan="6" Grid.ColumnSpan="2"
+                            ButtonClicked="OnLocationButtonClicked" FunctionID="fr" Icon="fr.png" IsVisible="false"/>
+            <!--draw:ImageButton Grid.Row="21" Grid.Column="21" Grid.RowSpan="6" Grid.ColumnSpan="2"
+                            ButtonClicked="OnLocationButtonClicked" FunctionID="ko" Icon="ko.png"/-->
+
+            <draw:IconTextButton Grid.Row="36" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2"
+                            Text="Back" FillRate="0.3" ButtonClicked="OnCancelButtonClicked" Icon="back.png"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

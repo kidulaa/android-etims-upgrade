@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.SalesManagement.ZReportPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="90" Color="ffffff"/>
+            <drawbase:DrawBox Grid.Row="5" Grid.Column="0" Grid.RowSpan="15" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Z Report" TextAlign="Left" FillRate="0.5"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="66" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnQuery" Text="Query" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionQuery"/>
+            <drawbase:IconTextButton Grid.Column="74" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnExport" Text="Export" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionExport"/>
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnClose" Text="Close" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionClose"/>
+            <!--===========================================================================================-->
+
+            <!--Grid Search Bar============================================================================-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Date" FillRate="0.4"/>
+            <entitybase:DatePickerEntryPanel Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etFromDate"/>
+            <drawbase:DrawText Grid.Column="15" Grid.Row="3" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="~" FillRate="0.6" TextAlign="CENTER"/>
+            <entitybase:DatePickerEntryPanel Grid.Column="20" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etToDate"/>
+            <drawbase:IconTextButton Grid.Column="31" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                             x:Name="btnPrintReport" Text="Print report" FillRate="0.4" Icon="i_printer.png"
+                             ButtonClicked="OnFunctionPrintReport"/>
+
+            <!-- ListView ===========================================================================================-->
+            <drawbase:DrawBox Grid.Row="5" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="5" Grid.Column="1"   Grid.ColumnSpan="30"  Text= "Data"/>
+            <ListView x:Name="listView" RowHeight="40" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="90" Grid.RowSpan="14">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <drawbase:DrawGridCell Grid.Column="1"   Grid.ColumnSpan="30" Text="{Binding Data}" />
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

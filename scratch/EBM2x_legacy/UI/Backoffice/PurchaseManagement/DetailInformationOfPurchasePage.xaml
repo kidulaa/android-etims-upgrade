@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.PurchaseManagement.DetailInformationOfPurchasePage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="18" Grid.ColumnSpan="40" Color="ffffff"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="40" Grid.RowSpan="18" Grid.ColumnSpan="50" Color="ffffff"/>
+            <drawbase:DrawBox Grid.Row="11" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Detail Information Of Purchase" TextAlign="Left" FillRate="0.5"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="74" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnExport" Text="Export" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionExport"/>
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnClose" Text="Close" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionClose"/>
+            <!--===========================================================================================-->
+
+            
+            <!--데이터 영역================================================================================-->
+            <!--Data Line 1-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Current Status" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="30" Grid.RowSpan="1"
+                            x:Name="etCurrentStatus" BorderColor="LightGray" BackColor="White"/>
+            <!--Button-->
+            <drawbase:IconTextButton Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnAccept" Text="Accept" FillRate="0.5" Icon="i_save.png"
+					                 ButtonClicked="OnFunctionAccept"/>
+            
+            <drawbase:IconTextButton Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnCancel" Text="Cancel" FillRate="0.5" Icon="i_save.png"
+					                 ButtonClicked="OnFunctionCancel"/>
+            <drawbase:IconTextButton Grid.Column="16" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnCancelSave" Text="Save" FillRate="0.5" Icon="i_save.png"
+					                 ButtonClicked="OnFunctionCancelSave"/>
+
+            <drawbase:IconTextButton Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnTransfer" Text="Transfer" FillRate="0.5" Icon="i_save.png"
+					                 ButtonClicked="OnFunctionTransfer"/>
+            <drawbase:IconTextButton Grid.Column="16" Grid.Row="3" Grid.ColumnSpan="8" Grid.RowSpan="1"
+                             x:Name="btnTransferSave" Text="Save" FillRate="0.5" Icon="i_save.png"
+					                 ButtonClicked="OnFunctionTransferSave"/>
+            <!--Data Line 2-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Invoice ID" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etInvoieID" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 3-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Supplier ID" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSupplierID" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 4-->
+            <drawbase:DrawText Grid.Column="20" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Supplier Name" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etSupplierName" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 5-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Total Amount" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etTotalAmount" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 6-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  VAT" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etTotalVAT" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 7-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  D/C Amount" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etTotalDCAmount" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 8-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Supply Amount" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etTotalSupplyAmount" BorderColor="LightGray" BackColor="White"/>
+
+
+            <!--==================================================================================-->
+            <!--Data Line 7-->
+            <drawbase:DrawText Grid.Column="20" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Purchase Date" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etPurchaseDate"/>
+            <!--Data Line 8-->
+            <drawbase:DrawText Grid.Column="20" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  AcceptDate" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etAcceptDate"/>
+            <!--Data Line 9-->
+            <drawbase:DrawText Grid.Column="20" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Cancel Request" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etCancelRequest"/>
+            <!--Data Line 10-->
+            <drawbase:DrawText Grid.Column="20" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  CancelDate" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etCancelDate"/>
+            <!--Data Line 11-->
+            <drawbase:DrawText Grid.Column="20" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Credit Note" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="30" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            x:Name="etRefund"/>
+            <!--Data Line 12-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Remark" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="10" Grid.Row="10" Grid.ColumnSpan="30" Grid.RowSpan="1"
+                            x:Name="etRemark" BorderColor="LightGray" BackColor="White"/>
+
+            <!--===========================================================================================-->
+
+            <!--Grid Search Bar============================================================================-->
+            <!--Data Line 1-->
+            <drawbase:DrawText Grid.Column="40" Grid.Row="3" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Item Code" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="3" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etItemCode" BorderColor="LightGray" BackColor="White"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="65" Grid.Row="3" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="etItemName" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 2-->
+            <drawbase:DrawText Grid.Column="40" Grid.Row="4" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Class Code" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="4" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etClassCode" BorderColor="LightGray" BackColor="White"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="65" Grid.Row="4" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="etClassName" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 3-->
+            <drawbase:DrawText Grid.Column="65" Grid.Row="5" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Expire Date" FillRate="0.4"/>
+            <drawbase:DrawImage Grid.Column="74" Grid.Row="5" Grid.RowSpan="1" Grid.ColumnSpan="1" Icon="star.png"/>
+            <entitybase:DatePickerEntryPanel Grid.Column="75" Grid.Row="5" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etExpireDate"/>
+            <!--Data Line 4-->
+            <drawbase:DrawText Grid.Column="40" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Unit Price" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="6" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etUnitPrice" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="65" Grid.Row="6" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Purchase Qty" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="75" Grid.Row="6" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etPurchaseQty" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 5-->
+            <drawbase:DrawText Grid.Column="40" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Tax Type" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="7" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etTaxType" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="65" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Vat" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="75" Grid.Row="7" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etVat" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 6-->
+            <drawbase:DrawText Grid.Column="40" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  D/C Rate (%)" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="8" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etDCRate" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="65" Grid.Row="8" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  D/C Amount" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="75" Grid.Row="8" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etDCAmount" BorderColor="LightGray" BackColor="White"/>
+            <!--Data Line 7-->
+            <drawbase:DrawText Grid.Column="40" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Purchase Price" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="50" Grid.Row="9" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etPurchasePrice" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="65" Grid.Row="9" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Total Price" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="75" Grid.Row="9" Grid.ColumnSpan="15" Grid.RowSpan="1"
+                            x:Name="etTotalPrice" BorderColor="LightGray" BackColor="White"/>
+
+            <!--Button-->
+            <drawbase:IconTextButton Grid.Column="80" Grid.Row="10" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                             x:Name="btnConfirm" Text="Confirm" FillRate="0.5" Icon="i_save.png" ButtonColor="0000CD"
+					                 ButtonClicked="OnFunctionConfirm"/>
+            <!-- ListView ===========================================================================================-->
+            <!-- JINIT_20191208, Sale ListView를 Purchase ListView로 수정  drawbase:DrawBox Grid.Row="11" Grid.Column="40" Grid.RowSpan="1" Grid.ColumnSpan="50" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="40"  Grid.ColumnSpan="12"  Text= "Item Code"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="52"  Grid.ColumnSpan="9"  Text= "Current Stock"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="61"  Grid.ColumnSpan="10"  Text= "Unit Price"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="71" Grid.ColumnSpan="9"  Text= "Sales Qty"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="80" Grid.ColumnSpan="10"  Text= "Sales Price"/>
+            <drawbase:DrawBox Grid.Row="12" Grid.Column="40" Grid.RowSpan="1" Grid.ColumnSpan="50" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="40"  Grid.ColumnSpan="21"  Text= "Item Name"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="61"  Grid.ColumnSpan="10"  Text= "VAT"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="71" Grid.ColumnSpan="9"  Text= "D/C Amount"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="80" Grid.ColumnSpan="10"  Text= "Total Price"/-->
+
+            <drawbase:DrawBox Grid.Row="11" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="0"  Grid.ColumnSpan="20"  Text= "Item Code"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="20"  Grid.ColumnSpan="10"  Text= "Unit Price"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="30" Grid.ColumnSpan="10"  Text= "Purchase Qty"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="40" Grid.ColumnSpan="10"  Text= "Purchase Price"/>
+            <drawbase:DrawBox Grid.Row="12" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="0"  Grid.ColumnSpan="20"  Text= "Item Name"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="20"  Grid.ColumnSpan="10"  Text= "VAT"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="30" Grid.ColumnSpan="10"  Text= "D/C Amount"/>
+            <drawbase:DrawGridHead Grid.Row="12" Grid.Column="40" Grid.ColumnSpan="10"  Text= "Total Price"/>
+
+            <ListView x:Name="listView" ItemSelected="OnSelectedTran"
+                      RowHeight="80" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="90" Grid.RowSpan="7">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <!-- JINIT_20191208, Sale ListView를 Purchase ListView로 수정  drawbase:DrawGridCell Grid.Column="0"  Grid.Row="0" Grid.ColumnSpan="12" Text="{Binding ItemCd}" />
+                                <drawbase:DrawGridCell Grid.Column="12"  Grid.Row="0" Grid.ColumnSpan="9" Text="{Binding CurrentStock}" />
+                                <drawbase:DrawGridCell Grid.Column="21"  Grid.Row="0" Grid.ColumnSpan="10" Text="{Binding Prc}" />
+                                <drawbase:DrawGridCell Grid.Column="31" Grid.Row="0" Grid.ColumnSpan="9" Text="{Binding Qty}" />
+                                <drawbase:DrawGridCell Grid.Column="40" Grid.Row="0" Grid.ColumnSpan="10" Text="{Binding SplyAmt}" />
+                                
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.Row="1" Grid.ColumnSpan="21" Text="{Binding ItemNm}" />
+                                <drawbase:DrawGridCell Grid.Column="21"  Grid.Row="1" Grid.ColumnSpan="10" Text="{Binding TaxAmt}" />
+                                <drawbase:DrawGridCell Grid.Column="31" Grid.Row="1" Grid.ColumnSpan="9" Text="{Binding DcAmt}" />
+                                <drawbase:DrawGridCell Grid.Column="40" Grid.Row="1" Grid.ColumnSpan="10" Text="{Binding TotAmt}" /-->
+
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.Row="0" Grid.ColumnSpan="20" Text="{Binding ItemCd}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="20"  Grid.Row="0" Grid.ColumnSpan="10" Text="{Binding Prc}" />
+                                <drawbase:DrawGridCellLong Grid.Column="30" Grid.Row="0" Grid.ColumnSpan="10" Text="{Binding Qty}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="40" Grid.Row="0" Grid.ColumnSpan="10" Text="{Binding SplyAmt}" />
+
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.Row="1" Grid.ColumnSpan="20" Text="{Binding ItemNm}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="20"  Grid.Row="1" Grid.ColumnSpan="10" Text="{Binding TaxAmt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="30" Grid.Row="1" Grid.ColumnSpan="10" Text="{Binding DcAmt}" />
+                                <drawbase:DrawGridCellDouble Grid.Column="40" Grid.Row="1" Grid.ColumnSpan="10" Text="{Binding TotAmt}" />
+
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

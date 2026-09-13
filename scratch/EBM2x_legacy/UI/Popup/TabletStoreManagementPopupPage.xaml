@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             xmlns:entry="clr-namespace:EBM2x.UI.EntryPanel;assembly=EBM2x" 
+             xmlns:popup="clr-namespace:EBM2x.UI.Popup;assembly=EBM2x"           
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x"
+             x:Class="EBM2x.UI.Popup.TabletStoreManagementPopupPage">
+    <ContentPage.Content>
+        <draw:FixedGrid x:Name="fixedGrid" ColumnCount="23" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"
+                                         OffEventHandler="True"/>
+            <draw:StretchFixedGrid x:Name="stretchFixedGrid" ColumnCount="23" RowCount="11"
+                                   Grid.Row="3" Grid.Column="0" Grid.RowSpan="36" Grid.ColumnSpan="23">
+
+                <draw:IconTextButton Grid.Row="0" Grid.Column="13" Grid.RowSpan="1" Grid.ColumnSpan="3"
+                                  Text="Query" FillRate="0.3" ButtonClicked="OnQueryButtonClicked" Icon="query.png"/>
+                <draw:IconTextButton Grid.Row="0" Grid.Column="16" Grid.RowSpan="1" Grid.ColumnSpan="3"
+                                  Text="Save" FillRate="0.3" ButtonClicked="OnSaveButtonClicked" Icon="save.png"/>
+                <draw:IconTextButton Grid.Row="0" Grid.Column="19" Grid.RowSpan="1" Grid.ColumnSpan="3"
+                                  Text="Back" FillRate="0.3" ButtonClicked="OnCancelButtonClicked" Icon="back.png"/>
+
+                <entry:StoreCodeMaskedEntryPanel x:Name="entityStoreCode" Text="Store Code" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityStoreName" Text="Store Name" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="23"/>
+
+                <entry:ExtendedEntryPanel x:Name="entityNameplateLine1" Text="Nameplate Line1" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityNameplateLine2" Text="Nameplate Line2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityNameplateLine3" Text="Nameplate Line3" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityNameplateLine4" Text="Nameplate Line4" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityStoreMessage1" Text="Store Message1" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityStoreMessage2" Text="Store Message2" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityMessage1" Text="Message1" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityMessage2" Text="Message2" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="23"/>
+                <entry:ExtendedEntryPanel x:Name="entityMessage3" Text="Message3" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="23"/>
+            </draw:StretchFixedGrid>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.AlphaKeypadPanel">
+    <ContentView.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="8">
+            <!-- Ext function panel -->
+            <draw:FixedGrid ColumnCount="16" RowCount="4" x:Name="alphaUppercase"
+                                    Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="16">
+                <draw:NumberButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="A" FunctionID="A"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="B" FunctionID="B"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="C" FunctionID="C"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="D"  FunctionID="D"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="E" FunctionID="E"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="F" FunctionID="F"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="G" FunctionID="G"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="H"  FunctionID="H"/>
+
+                <draw:NumberButton Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="I" FunctionID="I"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="J" FunctionID="J"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="K" FunctionID="K"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="L"  FunctionID="L"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="M" FunctionID="M"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="N" FunctionID="N"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="O" FunctionID="O"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="P"  FunctionID="P"/>
+
+                <draw:NumberButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="Q" FunctionID="Q"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="R" FunctionID="R"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="S" FunctionID="S"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="T"  FunctionID="T"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="U" FunctionID="U"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="V" FunctionID="V"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="W" FunctionID="W"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="X"  FunctionID="X"/>
+
+                <draw:NumberButton Grid.Row="3" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="Y" FunctionID="Y"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="Z" FunctionID="Z"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="Space" FunctionID=" " FillRate="0.3"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnUppercaseClicked"
+                                 Text="Uppercase" FunctionID="OnUppercaseClicked" FillRate="0.3"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnLowercaseClicked"
+                                 Text="Lowercase" FunctionID="OnLowercaseClicked" FillRate="0.3"/>
+            </draw:FixedGrid>
+            <draw:FixedGrid ColumnCount="16" RowCount="4" x:Name="alphaLowercase"
+                                    Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="16">
+                <draw:NumberButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="a" FunctionID="a"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="b" FunctionID="b"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="c" FunctionID="c"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="d"  FunctionID="d"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="e" FunctionID="e"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="f" FunctionID="f"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="g" FunctionID="g"/>
+                <draw:NumberButton Grid.Row="0" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="h"  FunctionID="h"/>
+
+                <draw:NumberButton Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="i" FunctionID="i"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="j" FunctionID="j"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="k" FunctionID="k"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="l"  FunctionID="l"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="m" FunctionID="m"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="n" FunctionID="n"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="o" FunctionID="o"/>
+                <draw:NumberButton Grid.Row="1" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="p"  FunctionID="p"/>
+
+                <draw:NumberButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="q" FunctionID="q"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="r" FunctionID="r"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="s" FunctionID="s"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="t"  FunctionID="t"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="u" FunctionID="u"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="v" FunctionID="v"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="w" FunctionID="w"/>
+                <draw:NumberButton Grid.Row="2" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="x"  FunctionID="x"/>
+
+                <draw:NumberButton Grid.Row="3" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="y" FunctionID="y"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="z" FunctionID="z"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnNumberButtonClicked"
+                                 Text="Space" FunctionID=" " FillRate="0.3"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnUppercaseClicked"
+                                 Text="Uppercase" FunctionID="OnUppercaseClicked" FillRate="0.3"/>
+                <draw:NumberButton Grid.Row="3" Grid.Column="14" Grid.RowSpan="1" Grid.ColumnSpan="2"  
+                                 ButtonClicked="OnLowercaseClicked"
+                                 Text="Lowercase" FunctionID="OnLowercaseClicked" FillRate="0.3"/>
+            </draw:FixedGrid>
+
+            <draw:NumberButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="7" FunctionID="7"/>
+            <draw:NumberButton Grid.Row="4" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="8" FunctionID="8"/>
+            <draw:NumberButton Grid.Row="4" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="9" FunctionID="9"/>
+            <draw:NumberButton Grid.Row="4" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnBackspaceClicked"
+                             Text="Backspace"  FunctionID="Backspace" FillRate="0.3"/>
+
+            <draw:NumberButton Grid.Row="5" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="4" FunctionID="4"/>
+            <draw:NumberButton Grid.Row="5" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="5" FunctionID="5"/>
+            <draw:NumberButton Grid.Row="5" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="6" FunctionID="6"/>
+            <draw:NumberButton Grid.Row="5" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnClearClicked"
+                             Text="Clear" FunctionID="Clear" FillRate="0.3"/>
+
+            <draw:NumberButton Grid.Row="6" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="1" FunctionID="1"/>
+            <draw:NumberButton Grid.Row="6" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="2" FunctionID="2"/>
+            <draw:NumberButton Grid.Row="6" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="3" FunctionID="3"/>
+            <draw:NumberButton Grid.Row="6" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnEnterClicked"
+                             Text="Enter" FunctionID="Enter" FillRate="0.3"/>
+
+            <draw:NumberButton Grid.Row="7" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="0" FunctionID="0"/>
+            <draw:NumberButton Grid.Row="7" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="00" FunctionID="00"/>
+            <draw:NumberButton Grid.Row="7" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnNumberButtonClicked"
+                             Text="." FunctionID="."/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"  
+             xmlns:entry="clr-namespace:EBM2x.UI.EntryPanel;assembly=EBM2x"      
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.Menu.EndOfDayMainPage">
+    <ContentPage.Content>
+        <draw:FixedGrid  x:Name="fixedGrid" ColumnCount="23" RowCount="40">
+            <component:TabletHeaderNonPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <listview:ZReportHeaderView Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="15"/>
+            <ListView  x:Name="detailListView" 
+                       RowHeight="36" Grid.Row="6" Grid.Column="0" Grid.RowSpan="34" Grid.ColumnSpan="15">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <listview:ZReportView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <component:LogoBackground Icon="EBM2x-72.png"  Align="LEFT"  
+                                      Grid.Row="3" Grid.Column="15" Grid.RowSpan="11" Grid.ColumnSpan="8"/>
+
+            <component:InformationPanel Grid.Row="14" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <component:EchoPanel Grid.Row="18" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox Grid.Row="22" Grid.Column="15" Grid.RowSpan="18" Grid.ColumnSpan="8" Color="4e4e4e"/>
+
+            <draw:FixedGrid  x:Name="fixedGrid01" ColumnCount="16" RowCount="4" 
+                            Grid.Row="22" Grid.Column="15" Grid.RowSpan="6" Grid.ColumnSpan="8">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Print" FunctionID="Print"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Back" FunctionID="Back"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4" TextColor="000000"   ButtonColor="00FF00" BorderColor="808080"
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Confirm" FunctionID="Confirm"/>
+            </draw:FixedGrid>
+
+            <component:KeypadPanel Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8"
+                               FunctionCalled="OnFunctionCalled"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+              xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.PersonalShopSalesPanel">
+    <ContentView.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="12">
+            <component:PhoneSalesHeader  x:Name="salesHeader" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <component:PhoneSalesItemView x:Name="itemNode01" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="0"
+                           Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:PhoneSalesItemView x:Name="itemNode02" ButtonClicked="OnBoxButtonClicked" FunctionID="1"
+                           Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:PhoneSalesItemView x:Name="itemNode03" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="2"
+                           Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:PhoneSalesItemView x:Name="itemNode04" ButtonClicked="OnBoxButtonClicked" FunctionID="3"
+                           Grid.Row="8" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:PhoneSalesItemView x:Name="itemNode05" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="4"
+                           Grid.Row="10" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+          <draw:ImageButton Grid.Row="2" Grid.Column="14" Grid.RowSpan="5" Grid.ColumnSpan="2"
+                            ButtonClicked="OnPageUpButtonClicked" Icon="uppage.png"/>
+          <draw:ImageButton Grid.Row="7" Grid.Column="14" Grid.RowSpan="5" Grid.ColumnSpan="2"
+                            ButtonClicked="OnPageDownButtonClicked" Icon="downpage.png"/>
+
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

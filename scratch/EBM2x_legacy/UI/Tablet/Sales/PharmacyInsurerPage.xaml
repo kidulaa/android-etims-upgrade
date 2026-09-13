@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x"
+             x:Class="EBM2x.UI.Tablet.Sales.PharmacyInsurerPage">
+    <ContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderNonPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:GroceryStoreSalesPanel x:Name="salesPanel"
+                              Grid.Row="3" Grid.Column="0" Grid.RowSpan="22" Grid.ColumnSpan="15"/>
+
+            <component:MembersPanel x:Name="membersPanel"
+                              Grid.Row="25" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="15"/>
+
+            <listview:SearchInsurerHeaderView Grid.Row="28" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="15"/>
+            <ListView  x:Name="listView" ItemSelected="OnSelectedItem" 
+                       RowHeight="38" Grid.Row="30" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="15">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <listview:SearchInsurerView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <draw:TextButton x:Name="holdTextButton"
+                             Grid.Row="3" Grid.Column="15" Grid.RowSpan="2" Grid.ColumnSpan="4" Text="Hold[00]"/>
+            <draw:TextButton x:Name="waitTextButton"
+                             Grid.Row="3" Grid.Column="19" Grid.RowSpan="2" Grid.ColumnSpan="4" Text="Wait[00]"/>
+
+            <component:PaymentReceiveView x:Name="salesReceive"
+                                Grid.Row="5" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8"/>
+            <component:PaymentChangeView x:Name="salesChange"
+                               Grid.Row="8" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8"/>
+            <component:SalesTotalView x:Name="salesTotal"
+                              Grid.Row="11" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8"/>
+
+            <component:InformationPanel Grid.Row="14" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <component:EchoPanel Grid.Row="18" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox Grid.Row="22" Grid.Column="15" Grid.RowSpan="18" Grid.ColumnSpan="8" Color="4e4e4e"/>
+
+            <component:KeypadPanel Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8"
+                               FunctionCalled="OnFunctionCalled"/>
+
+            <!-- ===========================================================================
+            ==== Function panel 
+            ================================================================================-->
+            <draw:FixedGrid ColumnCount="16" RowCount="4"
+                           Grid.Row="22" Grid.Column="15" Grid.RowSpan="6" Grid.ColumnSpan="8">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Insurence|Rate(%)" FunctionID="InsurerRate" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="cancel|Insurer" FunctionID="CancelInsurer" FillRate="0.3"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Back|to Sales" FunctionID="BackToSales" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Confirm" FunctionID="Payment"/>
+            </draw:FixedGrid>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

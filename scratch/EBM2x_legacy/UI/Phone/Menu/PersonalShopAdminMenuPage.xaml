@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"              
+             xmlns:local="clr-namespace:EBM2x.UI.Phone.SignOn;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Phone.Menu.PersonalShopAdminMenuPage">
+    <ContentPage.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="30">
+            <component:PhoneHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <!--<component:LogoBackground Grid.Row="2" Grid.Column="0" Grid.RowSpan="14" Grid.ColumnSpan="16"/>-->
+
+            <component:InformationPanel Grid.Row="16" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:EchoPanel Grid.Row="18" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <draw:DrawBox Grid.Row="20" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+            <component:KeypadPanel Grid.Row="22" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16"
+                               FunctionCalled="OnFunctionCalled"/>
+            
+            <!-- ===========================================================================
+            ==== Function panel 
+            ================================================================================-->
+            <draw:FixedGrid ColumnCount="16" RowCount="2" x:Name="functionPanel"
+                           Grid.Row="20" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16">
+                <draw:ExtMenuButton x:Name="extMenuButton"
+                                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                ButtonClicked="OnFunctionCalled" FunctionID="ExtMenu" ButtonColor="#E30613"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="#E30613"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="#E30613"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Back" FunctionID="Back" ButtonColor="#E30613" TextColor="FFFFFF"/>
+            </draw:FixedGrid>
+            <!-- Ext function panel -->
+            <draw:FixedGrid ColumnCount="16" RowCount="8" x:Name="extFunctionPanel"
+                            Grid.Row="22" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Adjust|Out" FunctionID="StockDate" ButtonColor="4e4e4e" TextColor="FFFFFF" />
+                <draw:FunctionButton  x:Name="extAdjustMenuButton"
+                             Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="" FunctionID="" ButtonColor="4e4e4e" TextColor="FFFFFF"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" 
+                             ButtonClicked="OnFunctionCalled"
+                             Text="System|Setting" FunctionID="SystemSetting" ButtonColor="4e4e4e" TextColor="FFFFFF"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="User|Management" FunctionID="UserManagement" ButtonColor="4e4e4e" TextColor="FFFFFF"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Item|Management" FunctionID="ItemManagement" ButtonColor="4e4e4e" TextColor="FFFFFF"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Customer|Management" FunctionID="CustomerManagement" ButtonColor="4e4e4e" TextColor="FFFFFF"/>
+
+                <draw:FunctionButton Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4" 
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Device|Setting" FunctionID="DeviceSetting" ButtonColor="4e4e4e" TextColor="FFFFFF"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4" ButtonColor="4e4e4e"/>
+            </draw:FixedGrid>
+
+        </draw:FixedGrid>
+        
+    </ContentPage.Content>
+</ContentPage>

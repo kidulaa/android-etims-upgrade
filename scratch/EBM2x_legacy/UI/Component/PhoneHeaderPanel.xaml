@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.PhoneHeaderPanel">
+    <ContentView.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="2">
+            <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16" Color="#E30613"/>
+
+            <draw:DrawImage Grid.Row="0" Grid.Column="0" Icon="carlendar.png"/>
+            <draw:DrawImage Grid.Row="1" Grid.Column="0" Icon="receipt.png"/>
+            <draw:DrawImage Grid.Row="0" Grid.Column="6" Icon="user.png"/>
+            <draw:DrawImage Grid.Row="1" Grid.Column="6" Icon="clock.png"/>
+            <draw:DrawText x:Name="businessDayText"
+                         Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" TextColor="ffffff"/>
+            <draw:DrawText x:Name="receiptInformationText"
+                         Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" TextColor="ffffff" />
+            <draw:DrawText x:Name="userInformationText"
+                         Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="6" TextColor="ffffff"/>
+            <draw:DrawDateTime Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="6" TextColor="ffffff"/>
+
+            <draw:ImageButton Grid.Row="0" Grid.Column="14" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                              ButtonClicked="OnLocationButtonClicked" Icon="translation.png" />
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             xmlns:entry="clr-namespace:EBM2x.UI.EntryPanel;assembly=EBM2x"      
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Popup.TabletSearchUserPopupPage">
+    <ContentPage.Content>
+        <draw:FixedGrid  x:Name="fixedGrid" ColumnCount="23" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"
+                                        OffEventHandler="True"/>
+
+            <draw:StretchFixedGrid x:Name="stretchFixedGrid" ColumnCount="23" RowCount="11"
+                                   Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="23">
+
+                <entry:ExtendedEntryPanel x:Name="searchEntry" Text="User Id, User Name"
+                                          Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="10"/>
+                <draw:IconTextButton Grid.Row="0" Grid.Column="16" Grid.RowSpan="1" Grid.ColumnSpan="3"
+                                  Text="Query" FillRate="0.3" ButtonClicked="OnQueryButtonClicked" Icon="query.png"/>
+                <draw:IconTextButton Grid.Row="0" Grid.Column="19" Grid.RowSpan="1" Grid.ColumnSpan="3"
+                                  Text="Back" FillRate="0.3" ButtonClicked="OnDeleteButtonClicked" Icon="cancel.png"/>
+
+                <listview:SearchUserHeaderView Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="23"/>
+                <ListView  x:Name="listView"  ItemSelected="OnSelectedItem" 
+                       RowHeight="36" Grid.Row="2" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="23">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <listview:SearchUserView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </draw:StretchFixedGrid>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

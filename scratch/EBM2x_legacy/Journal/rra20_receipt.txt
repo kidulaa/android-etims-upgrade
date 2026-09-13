@@ -1,0 +1,183 @@
+TEST Taxpayer 31
+Plot No. 203 Kenya Road
+TEL:
+EMAIL:
+PIN:999999999
+-----------------------------------
+CLIENT PIN:0799999999
+-----------------------------------
+
+testitem
+RW1AMX4BX0000004
+1000x1           1000
+
+RW1AMX4BX0000005
+1000x1           1000
+
+-----------------------------------
+Total                   1000.00
+Total A-EX              0.00
+Total B-16%             1000.00
+Total Tax E             1000.00
+Total Tax B             152.54
+Total Tax E             74.07
+Total Tax               226.61
+-----------------------------------
+CASH:                   2000.00
+ITEMS NUMBER:           2
+-----------------------------------
+          SDC INFORMATION
+Date :04/03/2019    Time: 16:47:24
+SDC ID:               SDC007009090
+RECEIPT NUMBER:                1/1NS
+          Internal Data: 
+2ZQS-U6NW-7NYF-MLWN-ZFHR-6FF5-AQ
+        Receipt Signature: 
+PE5K-66C7-RE3L-BZCB
+-----------------------------------
+RECEIPT NUMBER:                6
+Date :04/03/2019    Time: 16:47:24
+MRC : WIS01001222
+-----------------------------------
+End of Legal Receipt
+
+====================================
+====================================
+TEST Taxpayer 31
+Plot No. 203 Kenya Road
+TEL:
+EMAIL:
+PIN:999999999
+-----------------------------------
+CLIENT PIN:078999999
+-----------------------------------
+              REFUND              
+REF. NORMAL RECEIPT#:  6
+-------------------------------  
+REFUND IS APPROVED ONLY FOR    
+ORIGINAL SALES RECEIPT      
+-------------------------------  
+
+testitem
+RW1AMX4BX0000004
+-1000x1           -1000
+
+-----------------------------------
+Total                   -1000.00
+Total A-EX              -0.00
+Total B-16%             -1000.00
+Total E-8%              -0.00
+Total C                 -0.00
+Total D                 -0.00
+Total Tax B             -152.54
+Total Tax               -152.54
+-----------------------------------
+CASH:                   -1000.00
+ITEMS NUMBER:           1
+-----------------------------------
+          SDC INFORMATION
+Date :04/03/2019    Time: 16:47:53
+SDC ID:               SDC007009090
+RECEIPT NUMBER:                2/2NR
+          Internal Data: 
+QPSB-OXSN-AGKQ-Q2IZ-IARL-YJGD-RQ
+        Receipt Signature: 
+VEA7-T3XE-IODN-DMEP
+-----------------------------------
+RECEIPT NUMBER:                7
+Date :04/03/2019    Time: 16:47:53
+MRC : WIS01001222
+-----------------------------------
+End of Legal Receipt
+
+=====================================
+=====================================
+TEST Taxpayer 31
+Plot No. 203 Kenya Road
+TEL:
+EMAIL:
+PIN:999999999
+-----------------------------------
+CLIENT PIN:0799999999
+-----------------------------------
+
+testitem
+RW1AMX4BX0000004
+1000x1           1000
+
+-----------------------------------
+Total                   -1000.00
+Total A-EX              -0.00
+Total B-16%             -1000.00
+Total E-8%              -0.00
+Total C                 -0.00
+Total D                 -0.00
+Total Tax B             -152.54
+Total Tax               -152.54
+-----------------------------------
+CASH:                   1000.00
+ITEMS NUMBER:           1
+-----------------------------------
+          SDC INFORMATION
+Date :05/03/2019    Time: 14:08:41
+SDC ID:               SDC007001242
+RECEIPT NUMBER:                3/3NS
+          Internal Data: 
+NIYW-PPID-HFHI-OQG3-5XDB-RNBB-SE
+        Receipt Signature: 
+5GND-WIQI-IE3E-O3YY
+-----------------------------------
+RECEIPT NUMBER:                8
+Date :05/03/2019    Time: 14:08:41
+MRC : WIS01001222
+-----------------------------------
+End of Legal Receipt
+
+===================================
+===================================
+TEST Taxpayer 31
+Plot No. 203 Kenya Road
+TEL:
+EMAIL:
+PIN:999999999
+-----------------------------------
+CLIENT PIN:0799999999
+-----------------------------------
+              REFUND              
+REF. NORMAL RECEIPT#:  8
+-------------------------------  
+REFUND IS APPROVED ONLY FOR    
+ORIGINAL SALES RECEIPT      
+-------------------------------  
+
+testitem
+RW1AMX4BX0000004
+-1000x1           -1000
+
+-----------------------------------
+Total                   -1000.00
+Total A-EX              -0.00
+Total B-16%             -1000.00
+Total E-8%              -0.00
+Total C                 -0.00
+Total D                 -0.00
+Total Tax B             -152.54
+Total Tax               -152.54
+-----------------------------------
+CASH:                   -1000.00
+ITEMS NUMBER:           1
+-----------------------------------
+          SDC INFORMATION
+Date :05/03/2019    Time: 14:10:57
+SDC ID:               SDC007001242
+RECEIPT NUMBER:                4/4NR
+          Internal Data: 
+LXZM-5IIG-U2TQ-WNDE-PZOR-GFWB-6M
+        Receipt Signature: 
+ZFDQ-E34A-OS4K-3WUR
+-----------------------------------
+RECEIPT NUMBER:                9
+Date :05/03/2019    Time: 14:10:57
+MRC : WIS01001222
+-----------------------------------
+End of Legal Receipt

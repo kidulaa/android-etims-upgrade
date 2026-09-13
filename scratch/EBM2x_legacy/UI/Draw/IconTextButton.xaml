@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"  
+             xmlns:local="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Draw.IconTextButton">
+    <ContentView.Content>
+        <local:FixedGrid x:Name="fixedGrid" ColumnCount="32" RowCount="16">
+            <views:SKCanvasView  x:Name="skiaButton" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="30" Grid.RowSpan="14"
+                             PaintSurface="OnPainting"
+                             VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            </views:SKCanvasView>
+        </local:FixedGrid>
+    </ContentView.Content>
+</ContentView>

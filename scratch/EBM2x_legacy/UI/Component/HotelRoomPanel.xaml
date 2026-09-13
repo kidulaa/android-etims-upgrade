@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.HotelRoomPanel">
+    <ContentView.Content>
+      <draw:FixedGrid ColumnCount="8" RowCount="5">
+            <draw:DrawBox x:Name="backgroungBox" Color="482e4c"
+                          Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="8"/>
+            <draw:DrawText x:Name="roomNumber" TextAlign="LEFT"
+                             Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2"  Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox x:Name="groupBox"  Color="f10218"
+                          Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+            <draw:DrawText x:Name="groupNum" TextAlign="CENTER" FillRate="0.2"
+                          Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+            <draw:DrawText  x:Name="arrivalDate" TextAlign="LEFT" FillRate="0.6"
+                           Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
+            <draw:DrawText  x:Name="departureDate" TextAlign="LEFT" FillRate="0.6"
+                           Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"/>
+            <draw:DrawText  x:Name="numberOfNights" TextAlign="LEFT" FillRate="0.6"
+                           Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"/>
+
+            <draw:DrawText x:Name="totalTitle" Text="Total:" TextAlign="LEFT" FillRate="0.9"
+                           Grid.Row="3" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+            <draw:DrawNumber x:Name="totalNumber" FillRate="0.9"
+                             Grid.Row="3" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4" Format="#,##0.00"/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

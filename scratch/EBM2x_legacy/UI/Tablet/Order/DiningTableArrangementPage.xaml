@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.Order.DiningTableArrangementPage">
+    <ContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:DiningTableManagementPanel x:Name="diningTableManagementPanel" FunctionCalled="OnFunctionCalled"
+                              Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="21"/>
+
+            <draw:FunctionButton Grid.Row="3" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2"  ButtonColor="ffffff" BorderColor="793e83" TextColor="000000"
+                                 Text="Move seat" FillRate="0.15" ButtonClicked="OnMoveButtonClicked"/>
+            <draw:FunctionButton Grid.Row="7" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2"  ButtonColor="ffffff" BorderColor="793e83" TextColor="000000"
+                                 Text="Merge bill" FillRate="0.15" ButtonClicked="OnMergeBillButtonClicked"/>
+            <draw:FunctionButton Grid.Row="11" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2"  ButtonColor="ffffff" BorderColor="793e83" TextColor="000000"
+                                 Text="Divide bill" FillRate="0.15" ButtonClicked="OnDivideBillButtonClicked"/>
+            <draw:FunctionButton Grid.Row="15" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2"  ButtonColor="ffffff" BorderColor="793e83" TextColor="000000"
+                                 Text="Combine|seat" FillRate="0.15" ButtonClicked="OnCombineButtonClicked"/>
+            <draw:FunctionButton Grid.Row="19" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2"  ButtonColor="ffffff" BorderColor="793e83" TextColor="000000"
+                                 Text="cancel|Combine" FillRate="0.15" ButtonClicked="OnCancelCombineButtonClicked"/>
+
+            <draw:IconTextButton Grid.Row="32" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="receipt.png"                     
+                                 ButtonClicked="OnFunctionCalled" Text="Search|Receipt" FillRate="0.2" FunctionID="SearchReceipt"/>
+            <draw:IconTextButton Grid.Row="36" Grid.Column="21" Grid.RowSpan="4" Grid.ColumnSpan="2" Icon="closepage.png"                     
+                                 ButtonClicked="OnFunctionCalled" Text="SignOff" FillRate="0.2" FunctionID="SignOff"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

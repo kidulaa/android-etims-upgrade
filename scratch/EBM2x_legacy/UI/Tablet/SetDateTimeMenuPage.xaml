@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<draw:ExtContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.SetDateTimeMenuPage">
+    <draw:ExtContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderExtPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:LogoBackground Icon="EBM2x.png" Color="ffffff" Align="LEFT"  
+                                      Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="15"/>
+
+          <component:LogoBackground Icon="EBM2x-72.png" Align="LEFT"
+                                      Grid.Row="3" Grid.Column="15" Grid.RowSpan="14" Grid.ColumnSpan="8"/>
+
+            <draw:DrawDateTime Grid.Row="5" Grid.Column="16" Grid.RowSpan="3" Grid.ColumnSpan="6" 
+                               TextAlign="CENTER" Format="dd/MM/yyyy"/>
+            <draw:DrawDateTime Grid.Row="8" Grid.Column="16" Grid.RowSpan="2" Grid.ColumnSpan="6" 
+                               TextAlign="CENTER" Format="HH:mm:ss"/>
+
+            <component:InformationPanel Grid.Row="17" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <component:EchoPanel Grid.Row="21" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox Grid.Row="25" Grid.Column="15" Grid.RowSpan="15" Grid.ColumnSpan="8" Color="4e4e4e"/>
+
+            <draw:FixedGrid ColumnCount="16" RowCount="2" Grid.Row="25" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8">
+                <draw:ExtMenuButton x:Name="extMenuButton"
+                                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                ButtonClicked="OnFunctionCalled" FunctionID="ExtMenu"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Back" FunctionID="Back"/>
+            </draw:FixedGrid>
+
+            <component:KeypadPanel Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8"
+                               FunctionCalled="OnFunctionCalled"/>
+
+            <draw:FixedGrid  x:Name="extFunctionPanel" ColumnCount="16" RowCount="8" 
+                            Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="DAY" FunctionID="SetDay" TextColor="FFFFFF" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="MONTH" FunctionID="SetMonth" TextColor="FFFFFF" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="YEAR" FunctionID="SetYear" TextColor="FFFFFF" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="HOUR" FunctionID="SetHour" TextColor="FFFFFF" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="MINUTE" FunctionID="SetMinute" TextColor="FFFFFF" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="SECOND" FunctionID="SetSecond" TextColor="FFFFFF" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+
+                <draw:FunctionButton Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="4" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+
+                <draw:FunctionButton Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="6" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+            </draw:FixedGrid>
+        </draw:FixedGrid>
+    </draw:ExtContentPage.Content>
+</draw:ExtContentPage>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Tablet.Sales.HotelRefundSalesPage">
+    <ContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderNonPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:SpecialStoreSalesPanel x:Name="salesPanel"
+                              Grid.Row="3" Grid.Column="0" Grid.RowSpan="12" Grid.ColumnSpan="15"/>
+
+            <component:MembersPanel x:Name="membersPanel"
+                              Grid.Row="15" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="15"/>
+
+            <!--component:ImagePresetMenuPanel x:Name="presetMenuPanel" FunctionCalled="OnFunctionCalled"
+                              Grid.Row="18" Grid.Column="0" Grid.RowSpan="22" Grid.ColumnSpan="15"/-->
+
+            <draw:TextButton x:Name="holdTextButton"
+                             Grid.Row="3" Grid.Column="15" Grid.RowSpan="2" Grid.ColumnSpan="4" Text="Hold[00]"/>
+            <draw:TextButton x:Name="waitTextButton"
+                             Grid.Row="3" Grid.Column="19" Grid.RowSpan="2" Grid.ColumnSpan="4" Text="Wait[00]"/>
+
+            <component:PaymentReceiveView x:Name="salesReceive"
+                                Grid.Row="5" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8"/>
+            <component:PaymentChangeView x:Name="salesChange"
+                               Grid.Row="8" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8"/>
+            <component:SalesTotalView x:Name="salesTotal"
+                              Grid.Row="11" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8"/>
+
+            <component:InformationPanel Grid.Row="14" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <component:EchoPanel Grid.Row="18" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox Grid.Row="22" Grid.Column="15" Grid.RowSpan="18" Grid.ColumnSpan="8" Color="4e4e4e"/>
+
+            <component:KeypadPanel Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8"
+                               FunctionCalled="OnFunctionCalled"/>
+
+            <!-- ===========================================================================
+            ==== Ready function panel 
+            ================================================================================-->
+            <draw:FixedGrid ColumnCount="16" RowCount="4" x:Name="readyFunctionPanel"
+                           Grid.Row="22" Grid.Column="15" Grid.RowSpan="6" Grid.ColumnSpan="8">
+                <draw:ExtMenuButton x:Name="readyExtMenuButton"
+                                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                ButtonClicked="OnFunctionCalled" FunctionID="ExtMenu"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+            </draw:FixedGrid>
+            <!-- Ext function panel -->
+            <draw:FixedGrid ColumnCount="16" RowCount="8" x:Name="readyExtFunctionPanel"
+                           Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Cancel|Refund" FunctionID="CancelRefund" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+            </draw:FixedGrid>
+
+            <!-- ===========================================================================
+            ==== EnteredItem function panel 
+            ================================================================================-->
+            <draw:FixedGrid ColumnCount="16" RowCount="4" x:Name="enteredItemFunctionPanel"
+                           Grid.Row="22" Grid.Column="15" Grid.RowSpan="6" Grid.ColumnSpan="8">
+                <draw:ExtMenuButton x:Name="enteredItemExtMenuButton"
+                                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                ButtonClicked="OnFunctionCalled" FunctionID="ExtMenu"/>
+               <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Cancel|Item" FunctionID="CancelItem" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"
+                                     ButtonClicked="OnFunctionCalled"
+                                 Text="Change|Quantity" FunctionID="Quantity" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"
+                                     ButtonClicked="OnFunctionCalled"
+                                 Text="Change|Price" FunctionID="ChangePrice" FillRate="0.3"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Cancel|Refund" FunctionID="CancelRefund" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Payment" FunctionID="Payment"/>
+            </draw:FixedGrid>
+            <!-- Ext function panel -->
+            <draw:FixedGrid ColumnCount="16" RowCount="8" x:Name="enteredItemExtFunctionPanel"
+                           Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8">
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+            </draw:FixedGrid>
+            <!-- ===========================================================================
+            ==== inputPriceFunctionPanel
+            ================================================================================-->
+            <draw:FixedGrid ColumnCount="16" RowCount="4" x:Name="inputPriceFunctionPanel"
+                           Grid.Row="22" Grid.Column="15" Grid.RowSpan="6" Grid.ColumnSpan="8">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Cancel|Item" FunctionID="CancelItem" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                                 ButtonClicked="OnFunctionCalled"
+                                 Text="Change|Price" FunctionID="ChangePrice" FillRate="0.3"/>
+
+                <draw:FunctionButton Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+                <draw:FunctionButton Grid.Row="2" Grid.Column="12" Grid.RowSpan="2" Grid.ColumnSpan="4"/>
+            </draw:FixedGrid>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

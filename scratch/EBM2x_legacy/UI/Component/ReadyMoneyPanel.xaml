@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+              xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.ReadyMoneyPanel">
+    <ContentView.Content>
+        <draw:FixedGrid ColumnCount="10" RowCount="22">
+            <component:ReadyMoneyHeader Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+
+            <component:ReadyMoneyItemView x:Name="itemNode01" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="1"
+                           Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode02" ButtonClicked="OnBoxButtonClicked" FunctionID="2"
+                           Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode03" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="3"
+                           Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode04" ButtonClicked="OnBoxButtonClicked" FunctionID="4"
+                           Grid.Row="8" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode05" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="5"
+                           Grid.Row="10" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode06" ButtonClicked="OnBoxButtonClicked" FunctionID="6"
+                           Grid.Row="12" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode07" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="7"
+                           Grid.Row="14" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode08" ButtonClicked="OnBoxButtonClicked" FunctionID="8"
+                           Grid.Row="16" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            <component:ReadyMoneyItemView x:Name="itemNode09" BoxColor="e2f4ec" ButtonClicked="OnBoxButtonClicked" FunctionID="9"
+                           Grid.Row="18" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+
+            <draw:FixedGrid ColumnCount="16" RowCount="2"
+                            Grid.Row="20" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="10">
+
+                <draw:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" Color="#E30613"/>
+                <draw:DrawText Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" 
+                               TextColor="fff915" TextAlign="CENTER" Text="Total :"/>
+
+                <draw:DrawBox Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="11" Color="#E30613"/>
+                <draw:DrawNumber x:Name="totalAmountNumber" Format="#,##0"
+                             Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Grid.ColumnSpan="10"/>
+            </draw:FixedGrid>
+
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

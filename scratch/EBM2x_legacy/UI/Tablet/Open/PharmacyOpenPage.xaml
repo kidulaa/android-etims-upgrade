@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+              xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"
+             x:Class="EBM2x.UI.Tablet.Open.PharmacyOpenPage">
+    <ContentPage.Content>
+      <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:TabletHeaderNonPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+
+            <component:LogoBackground Icon="EBM2x.png" Color="ffffff" Align="CENTER"  
+                                      Grid.Row="3" Grid.Column="0" Grid.RowSpan="37" Grid.ColumnSpan="15"/>
+
+            <component:LogoBackground Icon="EBM2x-72.png" Align="LEFT"
+                                      Grid.Row="3" Grid.Column="15" Grid.RowSpan="14" Grid.ColumnSpan="8"/>
+
+            <draw:DrawDateTime Grid.Row="5" Grid.Column="16" Grid.RowSpan="3" Grid.ColumnSpan="6" 
+                               TextAlign="CENTER" Format="dd/MM/yyyy"/>
+            <draw:DrawDateTime Grid.Row="8" Grid.Column="16" Grid.RowSpan="2" Grid.ColumnSpan="6" 
+                               TextAlign="CENTER" Format="HH:mm:ss"/>
+
+            <component:InformationPanel Grid.Row="17" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <component:EchoPanel Grid.Row="21" Grid.Column="15" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+
+            <draw:DrawBox Grid.Row="25" Grid.Column="15" Grid.RowSpan="15" Grid.ColumnSpan="8" Color="4e4e4e"/>
+
+            <draw:FixedGrid ColumnCount="16" RowCount="2" Grid.Row="25" Grid.Column="15" Grid.RowSpan="3" Grid.ColumnSpan="8">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Full|Menu" FunctionID="Exit" TextColor="FF3c00" FillRate="0.3" ButtonColor="581845" BorderColor="800C00"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="4"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Cancel|Close" FunctionID="CancelClose" FillRate="0.3"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="8"  
+                             ButtonClicked="OnFunctionCalled"
+                             Text="Open" FunctionID="Open" TextColor="000000" FillRate="0.5" ButtonColor="FFFF00" BorderColor="808080"/>
+            </draw:FixedGrid>
+
+            <component:KeypadPanel Grid.Row="28" Grid.Column="15" Grid.RowSpan="12" Grid.ColumnSpan="8"
+                               FunctionCalled="OnFunctionCalled"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

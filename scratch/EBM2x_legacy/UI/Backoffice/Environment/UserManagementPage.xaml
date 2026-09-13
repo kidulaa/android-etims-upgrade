@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Backoffice.Environment.UserManagementPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="7" Grid.ColumnSpan="90" Color="#ffffff"/>
+            <drawbase:DrawBox Grid.Row="9" Grid.Column="0" Grid.RowSpan="11" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="User Management" TextAlign="Left" FillRate="0.5" TextColor="#fff"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="42" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnImport" Text="Import" FillRate="0.3" Icon="i_import.png"
+                             ButtonClicked="OnFunctionImport"/>
+            <drawbase:IconTextButton Grid.Column="50" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnExport" Text="Export" FillRate="0.3" Icon="i_export.png"
+                             ButtonClicked="OnFunctionExport"/>
+            <drawbase:IconTextButton Grid.Column="58" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnNew" Text="New" FillRate="0.3" Icon="i_new.png"
+                             ButtonClicked="OnFunctionNew" ButtonColor="#FF000000" TextColor="FFFFFF"/>
+            <drawbase:IconTextButton Grid.Column="66" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnSave" Text="Save" FillRate="0.3" Icon="i_save.png"
+                             ButtonClicked="OnFunctionSave" ButtonColor="#ff000000" TextColor="FFFFFF"/>
+            <!--drawbase:IconTextButton Grid.Column="74" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnDelete" Text="Delete" FillRate="0.3" Icon="i_delete.png"
+                             ButtonClicked="OnFunctionDelete"/-->
+            <drawbase:IconTextButton Grid.Column="82" Grid.Row="0" Grid.ColumnSpan="8" Grid.RowSpan="2"
+                             x:Name="btnClose" Text="Close" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionClose" ButtonColor="#ff000000" TextColor="FFFFFF"/>
+            <!--===========================================================================================-->
+
+            <!--데이터 영역================================================================================-->
+            <!--이미지-->
+            <!--JINIT_20191210, 이미지 처리 수정 -->
+            <drawbase:DrawSystemImage Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="16" Grid.RowSpan="6"
+                                 x:Name="imgUser" Icon="Photo.png"/>
+            <drawbase:IconTextButton Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                             x:Name="btnImportPhoto" Text="Import Photo" FillRate="0.6" Icon="image.png"
+                             ButtonClicked="OnImportPhoto" ButtonColor="#ff000000" TextColor="fff"/>
+            <!--1-->
+            <drawbase:DrawText Grid.Column="18" Grid.Row="3" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  User ID" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel x:Name="etUserID" 
+                                               Grid.Column="36" Grid.Row="3" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                                               BorderColor="LightGray" BackColor="OldLace"/>
+            <drawbase:DrawText Grid.Column="54" Grid.Row="3" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  Password" FillRate="0.4"/>
+            <entitybase:PasswordMaskedEntryPanel x:Name="etPassword"
+                                                 Grid.Column="72" Grid.Row="3" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                                                 BorderColor="LightGray" BackColor="OldLace"/>
+            <!--2-->
+            <drawbase:DrawText Grid.Column="18" Grid.Row="4" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  User Name" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel x:Name="etUserName"
+                                           Grid.Column="36" Grid.Row="4" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                                           BorderColor="LightGray" BackColor="OldLace"/>
+            <drawbase:DrawText Grid.Column="54" Grid.Row="4" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  Phone Number" FillRate="0.4"/>
+            <entitybase:PhoneNumberMaskedEntryPanel x:Name="etPhoneNumber"
+                                                    Grid.Column="72" Grid.Row="4" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                                                    BorderColor="LightGray" BackColor="OldLace"/>
+            <!--3-->
+            <drawbase:DrawText Grid.Column="18" Grid.Row="5" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  Role" FillRate="0.4"/>
+            <entitybase:RolePickerEntryPanel x:Name="etRole" 
+                                             Grid.Column="36" Grid.Row="5" Grid.ColumnSpan="18" Grid.RowSpan="1"/>
+            <drawbase:DrawText Grid.Column="54" Grid.Row="5" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  Usable" FillRate="0.4"/>
+            <entitybase:UsablePickerEntryPanel x:Name="etUsable"
+                                               Grid.Column="72" Grid.Row="5" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                                               BorderColor="LightGray" BackColor="OldLace"/>
+            <!--4-->
+            <drawbase:DrawText Grid.Column="18" Grid.Row="6" Grid.ColumnSpan="18" Grid.RowSpan="1"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  Address" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel x:Name="etAddress"
+                                           Grid.Column="36" Grid.Row="6" Grid.ColumnSpan="54" Grid.RowSpan="1"
+                                           BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="18" Grid.Row="7" Grid.ColumnSpan="18" Grid.RowSpan="2"
+                               IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                               Text="  Authorization" FillRate="0.2"/>
+            <drawbase:DrawBox Grid.Column="36" Grid.Row="7" Grid.ColumnSpan="54" Grid.RowSpan="2"
+                              IsStroke="True" StrokeColor="000000"/>
+            <entitybase:CheckBoxPanel Grid.Column="36" Grid.Row="7" Grid.ColumnSpan="10" Grid.RowSpan="1" 
+                               x:Name="cbUseMgt"
+                               BackColor="GhostWhite"
+                               Text="UseMgt"/>
+            <entitybase:CheckBoxPanel Grid.Column="44" Grid.Row="7" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbRefund"
+                               BackColor="GhostWhite"
+                               Text="CreditNote"/>
+            <entitybase:CheckBoxPanel Grid.Column="52" Grid.Row="7" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbZReport"
+                               BackColor="GhostWhite"
+                               Text="ZReport"/>
+            <entitybase:CheckBoxPanel Grid.Column="60" Grid.Row="7" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbPrice"
+                               BackColor="GhostWhite"
+                               Text="Price"/>
+            <entitybase:CheckBoxPanel Grid.Column="68" Grid.Row="7" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbCustomer"
+                               BackColor="GhostWhite"
+                               Text="Customer"/>
+            <entitybase:CheckBoxPanel Grid.Column="76" Grid.Row="7" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbStock"
+                               BackColor="GhostWhite"
+                               Text="Stock"/>
+            <entitybase:CheckBoxPanel Grid.Column="36" Grid.Row="8" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbSaleRpt"
+                               BackColor="GhostWhite"
+                               Text="SaleRpt"/>
+            <entitybase:CheckBoxPanel Grid.Column="44" Grid.Row="8" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbSetting"
+                               BackColor="GhostWhite"
+                               Text="Setting"/>
+            <entitybase:CheckBoxPanel Grid.Column="52" Grid.Row="8" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbAdjust"
+                               BackColor="GhostWhite"
+                               Text="Adjust"/>
+            <entitybase:CheckBoxPanel Grid.Column="60" Grid.Row="8" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbProforma"
+                               BackColor="GhostWhite"
+                               Text="Proforma"/>
+            <entitybase:CheckBoxPanel Grid.Column="68" Grid.Row="8" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbImport"
+                               BackColor="GhostWhite"
+                               Text="Import"/>
+            <entitybase:CheckBoxPanel Grid.Column="76" Grid.Row="8" Grid.ColumnSpan="8" Grid.RowSpan="1" 
+                               x:Name="cbPurchase"
+                               BackColor="GhostWhite"
+                               Text="Purchase"/>
+            <!--===========================================================================================-->
+
+            <!--Grid Search Bar============================================================================-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  User Code, User Name" FillRate="0.4" TextColor="FFFFFF"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="10" Grid.ColumnSpan="40" Grid.RowSpan="1"
+                            x:Name="etLikeValue" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="60" Grid.Row="10" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="#E30613"
+                            Text="  Use" FillRate="0.4" TextColor="FFFFFF"/>
+            <drawbase:ImageButton Grid.Column="68" Grid.Row="10" Grid.RowSpan="1" Grid.ColumnSpan="2"
+                                 ButtonClicked="OnClearUse" Icon="delete.png"/>
+            <entitybase:UsablePickerEntryPanel Grid.Column="70" Grid.Row="10" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                              x:Name="etSearchUsable" BorderColor="LightGray"  BackColor="White"/>
+            <drawbase:IconTextButton Grid.Column="80" Grid.Row="10" Grid.ColumnSpan="10" Grid.RowSpan="1"
+                             x:Name="btnSearch" Text="Search" FillRate="0.6" Icon="query.png" ButtonColor="4169E1"
+                             ButtonClicked="OnSearch"/>
+            <!-- ListView ===========================================================================================-->
+            <drawbase:DrawBox Grid.Row="11" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="0"  Grid.ColumnSpan="6"  Text= " User ID"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="6"  Grid.ColumnSpan="6"  Text= " User Name"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="12"  Grid.ColumnSpan="6"  Text= " Role"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="18"  Grid.ColumnSpan="9"  Text= " Register|Date"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="27"  Grid.ColumnSpan="6"  Text= " Phone|Number"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="33" Grid.ColumnSpan="24"  Text= " Address"/>
+            <drawbase:DrawGridHead Grid.Row="11" Grid.Column="57" Grid.ColumnSpan="3"  Text= " Usable"/>
+
+            <ListView x:Name="listView" ItemSelected="OnSelectedItem"
+                      RowHeight="40" Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="90" Grid.RowSpan="8">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <drawbase:BackofficeLineGrid>
+                                <drawbase:DrawGridCell Grid.Column="0"  Grid.ColumnSpan="6" Text=" {Binding UserId}" />
+                                <drawbase:DrawGridCell Grid.Column="6"  Grid.ColumnSpan="6" Text=" {Binding UserNm}" />
+                                <drawbase:DrawGridCell Grid.Column="12"  Grid.ColumnSpan="6" Text=" {Binding RoleName}" />
+                                <drawbase:DrawGridCellDate Grid.Column="18"  Grid.ColumnSpan="9" Text=" {Binding RegDt}" />
+                                <drawbase:DrawGridCell Grid.Column="27"  Grid.ColumnSpan="6" Text=" {Binding Contact}" />
+                                <drawbase:DrawGridCell Grid.Column="33" Grid.ColumnSpan="24" Text=" {Binding Adrs}" />
+                                <drawbase:DrawGridCell Grid.Column="57" Grid.ColumnSpan="3" Text=" {Binding UseYn}" />
+                            </drawbase:BackofficeLineGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

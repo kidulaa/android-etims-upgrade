@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.PaymentHeader">
+    <ContentView.Content>
+        <draw:FixedGrid ColumnCount="16" RowCount="1">
+            <draw:DrawBox x:Name="drawBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16" Color="#E30613"/>
+
+            <draw:DrawText Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextColor="fff915" TextAlign="CENTER" Text="No"/>
+            <draw:DrawText Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="7" TextColor="fff915" Text="Payment"/>
+            <draw:DrawText Grid.Row="0" Grid.Column="9" Grid.ColumnSpan="5" TextColor="fff915" TextAlign="RIGHT" Text="Received"/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>

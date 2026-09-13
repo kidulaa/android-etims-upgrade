@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             xmlns:popup="clr-namespace:EBM2x.UI.Popup;assembly=EBM2x"         
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x"
+             x:Class="EBM2x.UI.Popup.PhoneTransferPopupPage">
+    <ContentPage.Content>
+      <draw:FixedGrid ColumnCount="16" RowCount="30">
+            <component:PhoneHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"
+                                        OffEventHandler="True"/>
+
+            <draw:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="28" Grid.ColumnSpan="16" Color="ffffff"/>
+
+            <draw:IconTextButton Grid.Row="2" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="3"
+                            Text="Back" FillRate="0.3" ButtonClicked="OnCancelButtonClicked" Icon="back.png"/>
+
+            <ListView  x:Name="listView" 
+                       RowHeight="68" Grid.Row="6" Grid.Column="0" Grid.RowSpan="22" Grid.ColumnSpan="16">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                          <listview:SearchItemView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <component:InformationPanel Grid.Row="28" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

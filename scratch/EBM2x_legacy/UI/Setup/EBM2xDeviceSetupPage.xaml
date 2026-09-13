@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawbase="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entitybase="clr-namespace:EBM2x.UI.BackofficeEntry;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Setup.EBM2xDeviceSetupPage">
+    <ContentPage.Content>
+        <drawbase:BackofficeBaseGrid BackgroundColor="White">
+            <drawbase:DrawBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="90" Color="#E30613"/>
+            <drawbase:DrawBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="18" Grid.ColumnSpan="90" Color="ffffff"/>
+            <!--타이틀=====================================================================================-->
+            <drawbase:DrawImage Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"
+                                Icon="TitleIcon.png"/>
+            <drawbase:DrawText Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="86" Grid.RowSpan="1"
+                               Text="Device setting" TextAlign="Left" FillRate="0.5"/>
+
+            <!--버튼=======================================================================================-->
+            <drawbase:IconTextButton Grid.Column="70" Grid.Row="0" Grid.ColumnSpan="10" Grid.RowSpan="2"
+                             x:Name="btnInitializeRraSdc" Text="Save" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionInitializeRraSdc"/>
+            <drawbase:IconTextButton Grid.Column="80" Grid.Row="0" Grid.ColumnSpan="10" Grid.RowSpan="2"
+                             Text="Back" FillRate="0.3" Icon="i_close.png"
+                             ButtonClicked="OnFunctionBack"/>
+            <!--데이터 영역================================================================================-->
+
+            <!--1-->
+            <drawbase:DrawText Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  TIN" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="2" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryTin" BorderColor="LightGray" BackColor="White"/>
+            <drawbase:DrawText Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  BHF" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="3" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryBhfId" BorderColor="LightGray" BackColor="White" />
+            <!--drawbase:DrawText Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  SerialNo" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="5" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryGblSerialNo" BorderColor="LightGray" BackColor="White" /-->
+
+            <!--drawbase:DrawText Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  StoreCode" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="6" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryStoreCode" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  PosNumber" FillRate="0.4"/>
+            <entitybase:POSNumPickerEntryPanel Grid.Column="20" Grid.Row="7" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryPosNumber" /-->
+            <!--3-->
+            <!--drawbase:DrawText Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Url0001" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="8" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryUrl0001" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Url0002" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="9" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryUrl0002" BorderColor="LightGray" BackColor="White" /-->
+
+            <drawbase:DrawText Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Printing Logo" FillRate="0.4"/>
+            <entitybase:UsablePickerEntryPanel Grid.Column="20" Grid.Row="5" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryPrintingLogo" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  PORT or Printer name" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="6" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryPort" BorderColor="LightGray" BackColor="White" />
+            
+            <drawbase:DrawText Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Baud Rate" FillRate="0.4"/>
+            <entitybase:BaudRatePickerEntryPanel Grid.Column="20" Grid.Row="7" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="etBaudRate"/>
+            <drawbase:DrawText Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  Paper size" FillRate="0.4"/>
+            <entitybase:PaperSizePickerEntryPanel Grid.Column="20" Grid.Row="8" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="etPaperSize"/>
+            
+            <!--drawbase:IconTextButton Grid.Column="15" Grid.Row="9" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                             x:Name="btnPrinterTest" Text="Test" FillRate="0.3" Icon=""
+                             ButtonClicked="OnFunctionPrinterTest"/-->
+
+            <drawbase:DrawText Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  LocationType" FillRate="0.4"/>
+            <entitybase:LocationPickerEntryPanel Grid.Column="20" Grid.Row="10" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryLocation"/>
+            <drawbase:DrawText Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  OfflineDays" FillRate="0.4"/>
+            <entitybase:RateMaskedEntryPanel Grid.Column="20" Grid.Row="11" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryOfflineDays"/>
+            <drawbase:DrawText Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            Text="  OfflineAmount" FillRate="0.4"/>
+            <entitybase:AmountMaskedEntryPanel Grid.Column="20" Grid.Row="12" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryOfflineAmount"/>
+
+            <drawbase:DrawText Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            x:Name="textMySQLServerType" Text="  MySQL Server type" FillRate="0.4"/>
+            <entitybase:MySQLServerTypePickerEntryPanel Grid.Column="20" Grid.Row="14" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryMySQLServerType" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            x:Name="textMySQLServer" Text="  MySQL Server" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="15" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryMySQLServer" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            x:Name="textMySQLDatabase" Text="  MySQL Database" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="16" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryMySQLDatabase" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="17" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            x:Name="textMySQLUid" Text="  MySQL Uid" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="17" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryMySQLUid" BorderColor="LightGray" BackColor="White" />
+            <drawbase:DrawText Grid.Column="0" Grid.Row="18" Grid.ColumnSpan="20" Grid.RowSpan="1"
+                            IsStroke="True" StrokeColor="000000" BoxColor="95a8b6"
+                            x:Name="textMySQLPwd" Text="  MySQL Pwd" FillRate="0.4"/>
+            <entitybase:ExtendedEntryPanel Grid.Column="20" Grid.Row="18" Grid.ColumnSpan="25" Grid.RowSpan="1"
+                            x:Name="entryMySQLPwd" BorderColor="LightGray" BackColor="White" />
+
+            <!--drawbase:IconTextButton Grid.Column="15" Grid.Row="19" Grid.ColumnSpan="5" Grid.RowSpan="1"
+                             x:Name="btnMySQLTest" Text="Test" FillRate="0.3" Icon=""
+                             ButtonClicked="OnFunctionMySQLTest"/-->
+
+        </drawbase:BackofficeBaseGrid>
+    </ContentPage.Content>
+</ContentPage>

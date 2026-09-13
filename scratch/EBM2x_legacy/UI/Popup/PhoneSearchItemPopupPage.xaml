@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:entry="clr-namespace:EBM2x.UI.EntryPanel;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x" 
+             xmlns:popup="clr-namespace:EBM2x.UI.Popup;assembly=EBM2x"             
+             xmlns:listview="clr-namespace:EBM2x.UI.ListViewComponent;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Popup.PhoneSearchItemPopupPage">
+    <ContentPage.Content>
+        <draw:FixedGrid ColumnCount="23" RowCount="40">
+            <component:PhoneHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"
+                                        OffEventHandler="True"/>
+
+            <draw:DrawBox Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23" Color="ffffff"/>
+            <draw:FixedGrid x:Name="searchFixedGrid" ColumnCount="16" RowCount="11"
+                            Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23">
+                <draw:DrawText Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="4" 
+                               TextColor="000000" TextAlign="CENTER" FillRate="0.9" Text="Item Code, Name"/>
+                <draw:DrawText Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="4" 
+                               TextColor="000000" TextAlign="RIGHT" FillRate="0.9" Text="or Barcode:"/>
+                <entry:ExtendedEntryPanel x:Name="searchEntry" Grid.Row="1" Grid.Column="4" Grid.RowSpan="9" Grid.ColumnSpan="9"/>
+                <draw:FixedGrid x:Name="buttonsFixedGrid" ColumnCount="2" RowCount="1"
+                            Grid.Row="0" Grid.Column="13" Grid.RowSpan="11" Grid.ColumnSpan="3">
+                    <draw:IconTextButton Grid.Row="0" Grid.Column="0"
+                            Text ="Query" FillRate="0.3" ButtonClicked="OnQueryButtonClicked" Icon="query.png"/>
+                    <draw:IconTextButton Grid.Row="0" Grid.Column="1"
+                            Text="Back" FillRate="0.3" ButtonClicked="OnCancelButtonClicked" Icon="back.png"/>
+                </draw:FixedGrid>
+            </draw:FixedGrid>
+
+            <listview:SearchItemHeaderView Grid.Row="6" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="23"/>
+            <ListView  x:Name="listView" ItemSelected="OnSelectedItem" 
+                       RowHeight="68" Grid.Row="9" Grid.Column="0" Grid.RowSpan="31" Grid.ColumnSpan="23">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                          <listview:SearchItemView HorizontalOptions="Fill" Node="{Binding Node}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

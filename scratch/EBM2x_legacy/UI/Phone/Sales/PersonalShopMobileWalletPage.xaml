@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             xmlns:component="clr-namespace:EBM2x.UI.Component;assembly=EBM2x"              
+             xmlns:local="clr-namespace:EBM2x.UI.Phone.SignOn;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Phone.Sales.PersonalShopMobileWalletPage">
+    <ContentPage.Content>
+        <draw:FixedGrid x:Name="fixedGrid00" ColumnCount="16" RowCount="30">
+            <component:PhoneHeaderPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+
+            <!--<component:LogoBackground Grid.Row="2" Grid.Column="0" Grid.RowSpan="14" Grid.ColumnSpan="16"/>-->
+
+            <draw:DrawText Text="The amount to be receive"
+                           Grid.Row="4" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="14"/>
+            <draw:DrawBox StrokeColor="ff1700" IsStroke="false"
+                          Grid.Row="5" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14" Color="#fad0cf"/>
+            <draw:DrawNumber x:Name="amountToReceive"
+                          Grid.Row="5" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14"/>
+
+            <draw:DrawText Text="Receive"
+                           Grid.Row="7" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="14"/>
+            <draw:DrawBox x:Name="payNowBox"  StrokeColor="ff1700" IsStroke="true"
+                          Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14" Color="#fad0cf"/>
+            <draw:DrawNumber x:Name="payNowEntry"
+                             Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14"/>
+            <draw:BoxButton Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14"
+                            ButtonClicked="OnFunctionCalled" FunctionID="FocuePayNow"/>
+
+            <draw:DrawText Text="Phone number"
+                           Grid.Row="10" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="14"/>
+            <draw:DrawBox x:Name="phoneNumberBox" StrokeColor="ff1700" IsStroke="false"
+                          Grid.Row="11" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14" Color="#fad0cf"/>
+            <draw:DrawText x:Name="phoneNumberEntry"
+                           Grid.Row="11" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14"/>
+            <draw:BoxButton Grid.Row="11" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="14"
+                            ButtonClicked="OnFunctionCalled" FunctionID="FocuePhoneNumber"/>
+
+            <component:InformationPanel Grid.Row="16" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:EchoPanel Grid.Row="18" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16"/>
+            <component:PhoneMembersPanel x:Name="membersPanel"
+                              Grid.Row="18" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="16"/>
+
+            <draw:DrawBox Grid.Row="20" Grid.Column="0" Grid.RowSpan="10" Grid.ColumnSpan="16" Color="4e4e4e"/>
+
+            <draw:FixedGrid x:Name="fixedGrid01" ColumnCount="16" RowCount="2"
+                            Grid.Row="20" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="8"  
+                             ButtonClicked="OnApprovedCancelButtonClicked"
+                             Text="Cancel" FunctionID="Cancel" TextColor="FFFFFF" FillRate="0.5" ButtonColor="FF0C00" BorderColor="800C00"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="8"  
+                             ButtonClicked="OnConfirmButtonClicked"
+                             Text="Confirm" FunctionID="Confirm" TextColor="000000" FillRate="0.5" ButtonColor="00FF00" BorderColor="808080"/>
+            </draw:FixedGrid>
+
+            <draw:FixedGrid x:Name="fixedGrid02" ColumnCount="16" RowCount="2"
+                            Grid.Row="20" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="16">
+                <draw:FunctionButton Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="8"  
+                             ButtonClicked="OnCancelButtonClicked"
+                             Text="Cancel" FunctionID="Cancel" TextColor="FFFFFF" FillRate="0.5" ButtonColor="FF0C00" BorderColor="800C00"/>
+                <draw:FunctionButton Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="8"  
+                             ButtonClicked="OnApprovedButtonClicked"
+                             Text="Approved" FunctionID="Approved" TextColor="000000" FillRate="0.5" ButtonColor="00FF00" BorderColor="808080"/>
+            </draw:FixedGrid>
+
+            <component:KeypadPanel Grid.Row="22" Grid.Column="0" Grid.RowSpan="8" Grid.ColumnSpan="16"
+                               FunctionCalled="OnFunctionCalled"/>
+        </draw:FixedGrid>
+    </ContentPage.Content>
+</ContentPage>

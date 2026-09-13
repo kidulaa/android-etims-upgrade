@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:draw="clr-namespace:EBM2x.UI.Draw;assembly=EBM2x" 
+             x:Class="EBM2x.UI.Component.ImagePresetGroupButton">
+    <ContentView.Content>
+      <draw:FixedGrid ColumnCount="8" RowCount="4">
+            <draw:DrawBox x:Name="backgroungBox" Color="c3e0bc" IsRound="True"
+                          Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="8"/>
+            <draw:DrawPresetImage x:Name="presetImage"
+                          Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="6"/>
+
+            <draw:DrawNumber x:Name="noNumber" FillRate="0.4"
+                             Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="1" Format="00"/>
+           
+            <draw:DrawText x:Name="itemNameText"
+                           Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="8"/>
+
+            <draw:DrawImage x:Name="selectOwner"  Icon="selectowner.png"
+                              Grid.Row="0" Grid.Column="0" Grid.RowSpan="4"  Grid.ColumnSpan="8"/>
+
+            <draw:BoxButton x:Name="buttonEvent"
+                            Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="8"
+                            ButtonClicked="OnBoxButtonClicked"/>
+        </draw:FixedGrid>
+    </ContentView.Content>
+</ContentView>
