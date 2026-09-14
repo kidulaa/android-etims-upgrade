@@ -15,6 +15,7 @@ data class UserEntity(
     val authorityCode: String,
     val branchId: String,
     val tin: String,
+    val deviceSerial: String = "",
     val passwordHash: String,
     val passwordSalt: String,
     val isActive: Boolean = true,

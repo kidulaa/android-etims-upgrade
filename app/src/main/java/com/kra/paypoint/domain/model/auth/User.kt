@@ -5,5 +5,6 @@ data class User(
     val name: String,
     val authorityCode: String,
     val branchId: String,
-    val tin: String
+    val tin: String,
+    val deviceSerial: String = ""
 )

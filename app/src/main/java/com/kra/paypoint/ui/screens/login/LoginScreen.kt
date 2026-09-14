@@ -224,6 +224,15 @@ private fun FirstRunSetupForm(uiState: LoginUiState, viewModel: LoginViewModel) 
     )
     Spacer(modifier = Modifier.height(12.dp))
     OutlinedTextField(
+        value = uiState.deviceSerial,
+        onValueChange = viewModel::onDeviceSerialChanged,
+        label = { Text("Device Serial Number") },
+        modifier = Modifier.fillMaxWidth(),
+        singleLine = true,
+        enabled = !uiState.isLoading
+    )
+    Spacer(modifier = Modifier.height(12.dp))
+    OutlinedTextField(
         value = uiState.password,
         onValueChange = viewModel::onPasswordChanged,
         label = { Text("Password") },

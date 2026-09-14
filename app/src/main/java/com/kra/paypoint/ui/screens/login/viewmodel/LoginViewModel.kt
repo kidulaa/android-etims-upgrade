@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kra.paypoint.domain.repository.AuthRepository
 import com.kra.paypoint.domain.repository.DeviceRepository
+import com.kra.paypoint.domain.repository.MasterDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +22,7 @@ data class LoginUiState(
     val confirmPassword: String = "",
     val branchTin: String = "",
     val branchId: String = "",
+    val deviceSerial: String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val deviceWarning: String? = null,
@@ -30,7 +32,8 @@ data class LoginUiState(
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val deviceRepository: DeviceRepository
+    private val deviceRepository: DeviceRepository,
+    private val masterDataRepository: MasterDataRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -58,6 +61,7 @@ class LoginViewModel @Inject constructor(
     fun onConfirmPasswordChanged(value: String) = _uiState.update { it.copy(confirmPassword = value, errorMessage = null) }
     fun onBranchTinChanged(value: String) = _uiState.update { it.copy(branchTin = value, errorMessage = null) }
     fun onBranchIdChanged(value: String) = _uiState.update { it.copy(branchId = value, errorMessage = null) }
+    fun onDeviceSerialChanged(value: String) = _uiState.update { it.copy(deviceSerial = value, errorMessage = null) }
 
     fun login() {
         val state = _uiState.value
@@ -93,8 +97,8 @@ class LoginViewModel @Inject constructor(
                 _uiState.update { it.copy(errorMessage = "Full name and username are required.") }
                 return
             }
-            state.branchTin.isBlank() || state.branchId.isBlank() -> {
-                _uiState.update { it.copy(errorMessage = "Branch TIN and branch ID are required.") }
+            state.branchTin.isBlank() || state.branchId.isBlank() || state.deviceSerial.isBlank() -> {
+                _uiState.update { it.copy(errorMessage = "Branch TIN, ID and Device Serial are required.") }
                 return
             }
             state.password.length < 6 -> {
@@ -115,7 +119,8 @@ class LoginViewModel @Inject constructor(
                 fullName = state.fullName,
                 authorityCode = "ROLE_ADMIN",
                 branchId = state.branchId,
-                tin = state.branchTin
+                tin = state.branchTin,
+                deviceSerial = state.deviceSerial
             )
             registerResult.fold(
                 onSuccess = {
@@ -127,7 +132,18 @@ class LoginViewModel @Inject constructor(
                             // must not block account creation — it blocks signed sales
                             // later instead (see DeviceRepository.signReceipt), with a
                             // clear warning surfaced now so it isn't a silent gap.
-                            val deviceResult = deviceRepository.registerDevice(state.branchTin, state.branchId)
+                            val deviceResult = deviceRepository.registerDevice(state.branchTin, state.branchId, state.deviceSerial)
+                            
+                            // Background background sync of master data if device registration succeeded
+                            deviceResult.onSuccess {
+                                viewModelScope.launch {
+                                    masterDataRepository.syncReferenceCodesFromEtims(state.branchTin, state.branchId)
+                                    masterDataRepository.syncItemClassificationsFromEtims(state.branchTin, state.branchId)
+                                    masterDataRepository.syncItemsFromEtims(state.branchTin, state.branchId)
+                                    masterDataRepository.syncCustomersFromEtims(state.branchTin, state.branchId)
+                                }
+                            }
+
                             _uiState.update {
                                 it.copy(
                                     isLoading = false,

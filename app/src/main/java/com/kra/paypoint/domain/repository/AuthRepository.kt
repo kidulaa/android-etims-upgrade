@@ -25,6 +25,7 @@ interface AuthRepository {
         fullName: String,
         authorityCode: String,
         branchId: String,
-        tin: String
+        tin: String,
+        deviceSerial: String
     ): Result<Unit>
 }

@@ -1,14 +1,15 @@
 package com.kra.paypoint.data.repository
 
+import com.kra.paypoint.data.local.dao.CodeDao
 import com.kra.paypoint.data.local.dao.CustomerDao
+import com.kra.paypoint.data.local.dao.ItemClsDao
 import com.kra.paypoint.data.local.dao.ItemDao
+import com.kra.paypoint.data.local.entity.CodeEntity
 import com.kra.paypoint.data.local.entity.CustomerEntity
+import com.kra.paypoint.data.local.entity.ItemClsEntity
 import com.kra.paypoint.data.local.entity.ItemEntity
 import com.kra.paypoint.data.remote.api.MasterDataService
-import com.kra.paypoint.data.remote.model.master.CustomerListReq
-import com.kra.paypoint.data.remote.model.master.ItemListReq
-import com.kra.paypoint.data.remote.model.master.RemoteCustomer
-import com.kra.paypoint.data.remote.model.master.RemoteItem
+import com.kra.paypoint.data.remote.model.master.*
 import com.kra.paypoint.domain.repository.MasterDataRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -18,6 +19,8 @@ import javax.inject.Singleton
 class MasterDataRepositoryImpl @Inject constructor(
     private val itemDao: ItemDao,
     private val customerDao: CustomerDao,
+    private val codeDao: CodeDao,
+    private val itemClsDao: ItemClsDao,
     private val masterDataService: MasterDataService
 ) : MasterDataRepository {
 
@@ -75,6 +78,55 @@ class MasterDataRepositoryImpl @Inject constructor(
         val remoteCustomers = response.data?.custList.orEmpty()
         customerDao.insertCustomers(remoteCustomers.map { it.toEntity(bhfId) })
         remoteCustomers.size
+    }
+
+    override suspend fun syncReferenceCodesFromEtims(tin: String, bhfId: String): Result<Int> = runCatching {
+        val response = masterDataService.selectCodeList(SelectCodeListReq(tin = tin, bhfId = bhfId, lastReqDt = "20230101000000"))
+        if (!response.isSuccess) {
+            throw IllegalStateException("eTIMS rejected code list request: ${response.resultCd}")
+        }
+        
+        val allCodes = mutableListOf<CodeEntity>()
+        response.data?.clsList?.forEach { category ->
+            category.dtlList.forEachIndexed { index, code ->
+                allCodes.add(
+                    CodeEntity(
+                        classCode = category.cdCls,
+                        detailCode = code.cd,
+                        detailName = code.cdNm,
+                        isUsed = code.useYn == "Y",
+                        sortOrder = index
+                    )
+                )
+            }
+        }
+        
+        if (allCodes.isNotEmpty()) {
+            codeDao.insertCodes(allCodes)
+        }
+        allCodes.size
+    }
+
+    override suspend fun syncItemClassificationsFromEtims(tin: String, bhfId: String): Result<Int> = runCatching {
+        val response = masterDataService.selectItemClsList(ItemClsListReq(tin = tin, bhfId = bhfId, lastReqDt = "20230101000000"))
+        if (!response.isSuccess) {
+            throw IllegalStateException("eTIMS rejected item classification request: ${response.resultCd}")
+        }
+        
+        val entities = response.data?.itemClsList?.map { 
+            ItemClsEntity(
+                code = it.itemClsCd,
+                name = it.itemClsNm,
+                level = it.itemClsLvl ?: 1,
+                taxTypeCode = it.taxTyCd,
+                isUsed = it.useYn == "Y"
+            )
+        }.orEmpty()
+        
+        if (entities.isNotEmpty()) {
+            itemClsDao.insertAll(entities)
+        }
+        entities.size
     }
 
     private fun RemoteItem.toEntity(): ItemEntity = ItemEntity(

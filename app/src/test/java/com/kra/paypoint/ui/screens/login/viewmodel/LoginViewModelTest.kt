@@ -3,6 +3,7 @@ package com.kra.paypoint.ui.screens.login.viewmodel
 import com.kra.paypoint.domain.model.auth.User
 import com.kra.paypoint.domain.repository.AuthRepository
 import com.kra.paypoint.domain.repository.DeviceRepository
+import com.kra.paypoint.domain.repository.MasterDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,7 @@ class LoginViewModelTest {
 
     private lateinit var authRepository: AuthRepository
     private lateinit var deviceRepository: DeviceRepository
+    private lateinit var masterDataRepository: MasterDataRepository
     private lateinit var viewModel: LoginViewModel
     // Unconfined so viewModelScope's two independent init{} coroutines (session restore +
     // setup-state check) and login()'s coroutine all run eagerly to completion, instead of
@@ -39,6 +41,7 @@ class LoginViewModelTest {
         Dispatchers.setMain(testDispatcher)
         authRepository = mock(AuthRepository::class.java)
         deviceRepository = mock(DeviceRepository::class.java)
+        masterDataRepository = mock(MasterDataRepository::class.java)
         `when`(authRepository.currentUser).thenReturn(userFlow)
     }
 
@@ -50,7 +53,7 @@ class LoginViewModelTest {
     @Test
     fun `when an operator account already exists, sign-in mode is shown, not setup`() = runTest {
         `when`(authRepository.hasAnyUsers()).thenReturn(true)
-        viewModel = LoginViewModel(authRepository, deviceRepository)
+        viewModel = LoginViewModel(authRepository, deviceRepository, masterDataRepository)
         testScheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
@@ -61,7 +64,7 @@ class LoginViewModelTest {
     @Test
     fun `when no operator account exists yet, first-run setup mode is shown`() = runTest {
         `when`(authRepository.hasAnyUsers()).thenReturn(false)
-        viewModel = LoginViewModel(authRepository, deviceRepository)
+        viewModel = LoginViewModel(authRepository, deviceRepository, masterDataRepository)
         testScheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
@@ -72,7 +75,7 @@ class LoginViewModelTest {
     @Test
     fun `empty credentials sets error message`() = runTest {
         `when`(authRepository.hasAnyUsers()).thenReturn(true)
-        viewModel = LoginViewModel(authRepository, deviceRepository)
+        viewModel = LoginViewModel(authRepository, deviceRepository, masterDataRepository)
         testScheduler.advanceUntilIdle()
 
         viewModel.login()
@@ -84,7 +87,7 @@ class LoginViewModelTest {
     @Test
     fun `successful login updates isAuthenticated to true`() = runTest {
         `when`(authRepository.hasAnyUsers()).thenReturn(true)
-        viewModel = LoginViewModel(authRepository, deviceRepository)
+        viewModel = LoginViewModel(authRepository, deviceRepository, masterDataRepository)
         testScheduler.advanceUntilIdle()
 
         val testUser = User(
@@ -92,7 +95,8 @@ class LoginViewModelTest {
             name = "Test Cashier",
             authorityCode = "ROLE_CASHIER",
             branchId = "00",
-            tin = "P012345678X"
+            tin = "P012345678X",
+            deviceSerial = "SN123456"
         )
         `when`(authRepository.login("CASHIER01", "pin1234")).thenReturn(Result.success(testUser))
 

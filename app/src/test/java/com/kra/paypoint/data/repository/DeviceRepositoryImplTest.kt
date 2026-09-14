@@ -61,7 +61,7 @@ class DeviceRepositoryImplTest {
             DeviceInitRes(resultCd = "000", resultMsg = "OK", resultDt = null, data = successData)
         )
 
-        val result = repository.registerDevice(tin = "P012345678X", branchId = "00")
+        val result = repository.registerDevice(tin = "P012345678X", branchId = "00", deviceSerial = "SN123456")
 
         assertTrue(result.isSuccess)
         assertTrue(repository.isRegistered())
@@ -77,7 +77,7 @@ class DeviceRepositoryImplTest {
             DeviceInitRes(resultCd = "999", resultMsg = "Unknown TIN", resultDt = null, data = null)
         )
 
-        val result = repository.registerDevice(tin = "P000000000X", branchId = "00")
+        val result = repository.registerDevice(tin = "P000000000X", branchId = "00", deviceSerial = "SN123456")
 
         assertTrue(result.isFailure)
         assertFalse(repository.isRegistered())
@@ -107,6 +107,13 @@ private class FakeDeviceConfigStore : DeviceConfigStore {
     override fun readBhfId(): String? = values["bhfId"] as String?
     override fun readSdcId(): String? = values["sdcId"] as String?
     override fun readMrcNo(): String? = values["mrcNo"] as String?
+    override fun readTaxprNm(): String? = values["taxprNm"] as String?
+    override fun readBsnsActv(): String? = values["bsnsActv"] as String?
+    override fun readBhfNm(): String? = values["bhfNm"] as String?
+    override fun readMgrNm(): String? = values["mgrNm"] as String?
+    override fun readMgrTelNo(): String? = values["mgrTelNo"] as String?
+    override fun readMgrEmail(): String? = values["mgrEmail"] as String?
+    override fun readLocDesc(): String? = values["locDesc"] as String?
     override fun readSignKey(): String? = values["signKey"] as String?
     override fun readIntrlKey(): String? = values["intrlKey"] as String?
     override fun readCmcKey(): String? = values["cmcKey"] as String?

@@ -70,12 +70,14 @@ android {
             dimension = "environment"
             applicationIdSuffix = ".sandbox"
             versionNameSuffix = "-sbx"
-            buildConfigField("String", "BASE_URL", "\"https://etims-api-sbx.kra.go.ke/\"")
+            buildConfigField("String", "BASE_URL", "\"https://etims-test-api.kra.go.ke/etims-api/\"")
+            buildConfigField("String", "RECEIPT_URL", "\"https://etims-portal-test.kra.go.ke/\"")
             buildConfigField("Boolean", "IS_SANDBOX", "true")
         }
         create("production") {
             dimension = "environment"
             buildConfigField("String", "BASE_URL", "\"https://etims-api.kra.go.ke/\"")
+            buildConfigField("String", "RECEIPT_URL", "\"https://etims.kra.go.ke/\"")
             buildConfigField("Boolean", "IS_SANDBOX", "false")
         }
     }
@@ -114,7 +116,7 @@ ksp {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

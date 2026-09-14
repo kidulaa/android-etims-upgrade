@@ -9,7 +9,7 @@ interface DeviceRepository {
     suspend fun isRegistered(): Boolean
 
     /** Calls eTIMS device initialization (`selectInitInfo`) and persists the returned keys/counters. */
-    suspend fun registerDevice(tin: String, branchId: String): Result<DeviceRegistration>
+    suspend fun registerDevice(tin: String, branchId: String, deviceSerial: String): Result<DeviceRegistration>
 
     /**
      * Signs a receipt data string using this device's provisioned keys.

@@ -18,6 +18,7 @@ import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.domain.model.device.DeviceRegistration
 import com.kra.paypoint.ui.components.QRCodeGenerator
+import com.kra.paypoint.BuildConfig
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -199,7 +200,11 @@ object PdfGenerator {
 
         // Note: In real scenarios, internalData and rcptSign are part of the transaction payload
         // For this demo, we use the qrCodeData if available or placeholders
-        val qrUrl = transaction.qrCodeData ?: "https://etims.kra.go.ke"
+        val qrUrl = if (transaction.qrCodeData != null) {
+            "${BuildConfig.RECEIPT_URL}common/link/etims/receipt/indexEtimsReceiptData?Data=${registration?.tin}${registration?.branchId}${transaction.qrCodeData}"
+        } else {
+            "https://etims.kra.go.ke"
+        }
         
         table.addCell(Cell().add(infoTable).setBorder(Border.NO_BORDER))
 

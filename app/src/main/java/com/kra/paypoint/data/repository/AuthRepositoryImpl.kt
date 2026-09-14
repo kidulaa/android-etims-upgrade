@@ -111,7 +111,8 @@ class AuthRepositoryImpl @Inject constructor(
         fullName: String,
         authorityCode: String,
         branchId: String,
-        tin: String
+        tin: String,
+        deviceSerial: String
     ): Result<Unit> = withContext(Dispatchers.IO) {
         val trimmedUsername = username.trim()
         if (trimmedUsername.isBlank() || fullName.isBlank()) {
@@ -137,6 +138,7 @@ class AuthRepositoryImpl @Inject constructor(
                 authorityCode = authorityCode,
                 branchId = branchId.trim(),
                 tin = tin.trim(),
+                deviceSerial = deviceSerial.trim(),
                 passwordHash = hash,
                 passwordSalt = java.util.Base64.getEncoder().encodeToString(salt)
             )
@@ -149,7 +151,8 @@ class AuthRepositoryImpl @Inject constructor(
         name = fullName,
         authorityCode = authorityCode,
         branchId = branchId,
-        tin = tin
+        tin = tin,
+        deviceSerial = deviceSerial
     )
 
     private companion object {

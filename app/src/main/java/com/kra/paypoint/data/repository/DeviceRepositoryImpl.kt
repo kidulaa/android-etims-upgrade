@@ -28,10 +28,10 @@ class DeviceRepositoryImpl @Inject constructor(
 
     override suspend fun isRegistered(): Boolean = deviceConfigStore.isRegistered()
 
-    override suspend fun registerDevice(tin: String, branchId: String): Result<DeviceRegistration> =
+    override suspend fun registerDevice(tin: String, branchId: String, deviceSerial: String): Result<DeviceRegistration> =
         withContext(Dispatchers.IO) {
             runCatching {
-                val response = authService.initializeDevice(DeviceInitReq(tin = tin, bhfId = branchId))
+                val response = authService.initializeDevice(DeviceInitReq(tin = tin, bhfId = branchId, dvcId = deviceSerial))
                 if (!response.isSuccess || response.data == null) {
                     throw DeviceRegistrationException(
                         "Device registration rejected by eTIMS: ${response.resultCd} ${response.resultMsg.orEmpty()}"

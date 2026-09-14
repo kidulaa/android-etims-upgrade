@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.kra.paypoint.data.local.dao.CodeDao
 import com.kra.paypoint.data.local.dao.CustomerDao
+import com.kra.paypoint.data.local.dao.ItemClsDao
 import com.kra.paypoint.data.local.dao.ItemDao
 import com.kra.paypoint.data.local.dao.StockMovementDao
 import com.kra.paypoint.data.local.dao.TransactionDao
@@ -59,6 +60,11 @@ object DatabaseModule {
     @Provides
     fun provideCodeDao(database: PayPointDatabase): CodeDao {
         return database.codeDao()
+    }
+
+    @Provides
+    fun provideItemClsDao(database: PayPointDatabase): ItemClsDao {
+        return database.itemClsDao()
     }
 
     @Provides

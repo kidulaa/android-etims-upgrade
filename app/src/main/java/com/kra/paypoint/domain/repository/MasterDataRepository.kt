@@ -20,4 +20,10 @@ interface MasterDataRepository {
 
     /** Pulls this branch's registered customers from eTIMS (`selectCustomerList`). */
     suspend fun syncCustomersFromEtims(tin: String, bhfId: String): Result<Int>
+
+    /** Pulls reference code lists (tax types, unit codes, etc.) from eTIMS. */
+    suspend fun syncReferenceCodesFromEtims(tin: String, bhfId: String): Result<Int>
+
+    /** Pulls item classification standards from eTIMS. */
+    suspend fun syncItemClassificationsFromEtims(tin: String, bhfId: String): Result<Int>
 }

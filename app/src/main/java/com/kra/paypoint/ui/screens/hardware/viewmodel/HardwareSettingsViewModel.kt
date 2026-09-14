@@ -62,7 +62,7 @@ class HardwareSettingsViewModel @Inject constructor(
         }
         viewModelScope.launch {
             _uiState.update { it.copy(isRegisteringDevice = true, statusMessage = null) }
-            val result = deviceRepository.registerDevice(user.tin, user.branchId)
+            val result = deviceRepository.registerDevice(user.tin, user.branchId, user.deviceSerial)
             _uiState.update {
                 it.copy(
                     isRegisteringDevice = false,
