@@ -22,6 +22,16 @@ data class DeviceInitData(
     @SerializedName("signKey") val signKey: String,
     @SerializedName("intrlKey") val intrlKey: String,
     @SerializedName("cmcKey") val cmcKey: String,
+    
+    // Additional System Setting Fields
+    @SerializedName("taxprNm") val taxprNm: String?,
+    @SerializedName("bsnsActv") val bsnsActv: String?,
+    @SerializedName("bhfNm") val bhfNm: String?,
+    @SerializedName("mgrNm") val mgrNm: String?,
+    @SerializedName("mgrTelNo") val mgrTelNo: String?,
+    @SerializedName("mgrEmail") val mgrEmail: String?,
+    @SerializedName("locDesc") val locDesc: String?,
+    
     @SerializedName("lastSaleInvcNo") val lastSaleInvcNo: Long = 0L,
     @SerializedName("lastPchsInvcNo") val lastPchsInvcNo: Long = 0L,
     @SerializedName("lastRcptNo") val lastRcptNo: Long = 0L,

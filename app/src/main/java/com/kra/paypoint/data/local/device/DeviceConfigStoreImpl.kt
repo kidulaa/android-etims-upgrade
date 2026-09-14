@@ -33,6 +33,13 @@ class DeviceConfigStoreImpl @Inject constructor(
             .putString(KEY_BHF_ID, data.bhfId)
             .putString(KEY_SDC_ID, data.sdcId.orEmpty())
             .putString(KEY_MRC_NO, data.mrcNo.orEmpty())
+            .putString(KEY_TAXPR_NM, data.taxprNm)
+            .putString(KEY_BSNS_ACTV, data.bsnsActv)
+            .putString(KEY_BHF_NM, data.bhfNm)
+            .putString(KEY_MGR_NM, data.mgrNm)
+            .putString(KEY_MGR_TEL_NO, data.mgrTelNo)
+            .putString(KEY_MGR_EMAIL, data.mgrEmail)
+            .putString(KEY_LOC_DESC, data.locDesc)
             .putString(KEY_SIGN_KEY, data.signKey)
             .putString(KEY_INTRL_KEY, data.intrlKey)
             .putString(KEY_CMC_KEY, data.cmcKey)
@@ -49,6 +56,14 @@ class DeviceConfigStoreImpl @Inject constructor(
     override fun readBhfId(): String? = prefs.getString(KEY_BHF_ID, null)
     override fun readSdcId(): String? = prefs.getString(KEY_SDC_ID, null)
     override fun readMrcNo(): String? = prefs.getString(KEY_MRC_NO, null)
+    override fun readTaxprNm(): String? = prefs.getString(KEY_TAXPR_NM, null)
+    override fun readBsnsActv(): String? = prefs.getString(KEY_BSNS_ACTV, null)
+    override fun readBhfNm(): String? = prefs.getString(KEY_BHF_NM, null)
+    override fun readMgrNm(): String? = prefs.getString(KEY_MGR_NM, null)
+    override fun readMgrTelNo(): String? = prefs.getString(KEY_MGR_TEL_NO, null)
+    override fun readMgrEmail(): String? = prefs.getString(KEY_MGR_EMAIL, null)
+    override fun readLocDesc(): String? = prefs.getString(KEY_LOC_DESC, null)
+    
     override fun readSignKey(): String? = prefs.getString(KEY_SIGN_KEY, null)
     override fun readIntrlKey(): String? = prefs.getString(KEY_INTRL_KEY, null)
     override fun readCmcKey(): String? = prefs.getString(KEY_CMC_KEY, null)
@@ -62,6 +77,13 @@ class DeviceConfigStoreImpl @Inject constructor(
         const val KEY_BHF_ID = "bhf_id"
         const val KEY_SDC_ID = "sdc_id"
         const val KEY_MRC_NO = "mrc_no"
+        const val KEY_TAXPR_NM = "taxpr_nm"
+        const val KEY_BSNS_ACTV = "bsns_actv"
+        const val KEY_BHF_NM = "bhf_nm"
+        const val KEY_MGR_NM = "mgr_nm"
+        const val KEY_MGR_TEL_NO = "mgr_tel_no"
+        const val KEY_MGR_EMAIL = "mgr_email"
+        const val KEY_LOC_DESC = "loc_desc"
         const val KEY_SIGN_KEY = "sign_key"
         const val KEY_INTRL_KEY = "intrl_key"
         const val KEY_CMC_KEY = "cmc_key"

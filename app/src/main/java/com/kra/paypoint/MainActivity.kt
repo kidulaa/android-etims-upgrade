@@ -39,6 +39,8 @@ import com.kra.paypoint.ui.screens.receipts.ReceiptsScreen
 import com.kra.paypoint.ui.screens.receipts.viewmodel.ReceiptsViewModel
 import com.kra.paypoint.ui.screens.sales.SalesScreen
 import com.kra.paypoint.ui.screens.sales.viewmodel.SalesViewModel
+import com.kra.paypoint.ui.screens.systemsetting.SystemSettingsScreen
+import com.kra.paypoint.ui.screens.systemsetting.viewmodel.SystemSettingsViewModel
 import com.kra.paypoint.ui.theme.PayPointTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -114,6 +116,7 @@ fun PayPointApp(hasSeenOnboarding: Boolean) {
                 onNavigateToCloseout = { navController.navigate("closeout") },
                 onNavigateToInventory = { navController.navigate("inventory") },
                 onNavigateToCreditNote = { navController.navigate("creditNote") },
+                onNavigateToSystemSetting = { navController.navigate("systemSetting") },
                 onLogout = {
                     navController.navigate("login") {
                         popUpTo("dashboard") { inclusive = true }
@@ -178,6 +181,13 @@ fun PayPointApp(hasSeenOnboarding: Boolean) {
             CreditNoteScreen(
                 viewModel = creditNoteViewModel,
                 initialInvoiceNumber = invoiceNumber,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable("systemSetting") {
+            val systemSettingsViewModel: SystemSettingsViewModel = hiltViewModel()
+            SystemSettingsScreen(
+                viewModel = systemSettingsViewModel,
                 onNavigateBack = { navController.popBackStack() }
             )
         }

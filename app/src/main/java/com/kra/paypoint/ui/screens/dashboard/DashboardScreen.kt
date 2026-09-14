@@ -31,6 +31,7 @@ fun DashboardScreen(
     onNavigateToCloseout: () -> Unit = {},
     onNavigateToInventory: () -> Unit = {},
     onNavigateToCreditNote: () -> Unit = {},
+    onNavigateToSystemSetting: () -> Unit = {},
     onLogout: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -271,6 +272,14 @@ fun DashboardScreen(
                         subtitle = "Refunds & Reversals",
                         icon = Icons.Default.RemoveCircleOutline,
                         onClick = onNavigateToCreditNote
+                    )
+                }
+                item {
+                    DashboardActionCard(
+                        title = "System Setting",
+                        subtitle = "Device Information & Config",
+                        icon = Icons.Default.Settings,
+                        onClick = onNavigateToSystemSetting
                     )
                 }
             }

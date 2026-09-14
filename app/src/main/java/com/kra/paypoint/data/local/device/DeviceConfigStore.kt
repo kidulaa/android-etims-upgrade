@@ -15,6 +15,14 @@ interface DeviceConfigStore {
     fun readBhfId(): String?
     fun readSdcId(): String?
     fun readMrcNo(): String?
+    fun readTaxprNm(): String?
+    fun readBsnsActv(): String?
+    fun readBhfNm(): String?
+    fun readMgrNm(): String?
+    fun readMgrTelNo(): String?
+    fun readMgrEmail(): String?
+    fun readLocDesc(): String?
+    
     fun readSignKey(): String?
     fun readIntrlKey(): String?
     fun readCmcKey(): String?
