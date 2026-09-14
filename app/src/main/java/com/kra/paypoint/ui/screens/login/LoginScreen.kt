@@ -14,6 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.kra.paypoint.R
 import com.kra.paypoint.ui.screens.login.viewmodel.LoginUiState
 import com.kra.paypoint.ui.screens.login.viewmodel.LoginViewModel
 
@@ -59,6 +62,13 @@ fun LoginScreen(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.etims_logo),
+                    contentDescription = "eTIMS Logo",
+                    modifier = Modifier
+                        .height(80.dp)
+                        .padding(bottom = 16.dp)
+                )
                 Text(
                     text = "eTIMS PayPoint",
                     style = MaterialTheme.typography.headlineMedium.copy(

@@ -8,8 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kra.paypoint.domain.repository.PreferencesRepository
+import javax.inject.Inject
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +33,8 @@ import com.kra.paypoint.ui.screens.login.LoginScreen
 import com.kra.paypoint.ui.screens.login.viewmodel.LoginViewModel
 import com.kra.paypoint.ui.screens.master.MasterDataScreen
 import com.kra.paypoint.ui.screens.master.viewmodel.MasterDataViewModel
+import com.kra.paypoint.ui.screens.onboarding.OnboardingScreen
+import com.kra.paypoint.ui.screens.onboarding.viewmodel.OnboardingViewModel
 import com.kra.paypoint.ui.screens.receipts.ReceiptsScreen
 import com.kra.paypoint.ui.screens.receipts.viewmodel.ReceiptsViewModel
 import com.kra.paypoint.ui.screens.sales.SalesScreen
@@ -38,16 +44,27 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             PayPointTheme {
+                val hasSeenOnboarding by preferencesRepository.hasSeenOnboarding.collectAsState()
+                
+                if (hasSeenOnboarding == null) {
+                    // Loading state while DataStore is resolved
+                    return@PayPointTheme
+                }
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PayPointApp()
+                    PayPointApp(hasSeenOnboarding = hasSeenOnboarding!!)
                 }
             }
         }
@@ -55,13 +72,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PayPointApp() {
+fun PayPointApp(hasSeenOnboarding: Boolean) {
     val navController = rememberNavController()
+
+    val startDestination = if (hasSeenOnboarding) "login" else "onboarding"
 
     // "login" also serves as the splash/session-resolution gate: LoginScreen shows a
     // spinner while AuthRepository restores (or fails to restore) a saved session, then
     // routes to sign-in, first-run setup, or straight through to the dashboard.
-    NavHost(navController = navController, startDestination = "login") {
+    NavHost(navController = navController, startDestination = startDestination) {
+        composable("onboarding") {
+            val onboardingViewModel: OnboardingViewModel = hiltViewModel()
+            OnboardingScreen(
+                viewModel = onboardingViewModel,
+                onNavigateToLogin = {
+                    navController.navigate("login") {
+                        popUpTo("onboarding") { inclusive = true }
+                    }
+                }
+            )
+        }
         composable("login") {
             val loginViewModel: LoginViewModel = hiltViewModel()
             LoginScreen(

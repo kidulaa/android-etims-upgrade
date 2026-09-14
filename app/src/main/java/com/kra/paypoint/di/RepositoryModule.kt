@@ -14,6 +14,8 @@ import com.kra.paypoint.domain.repository.InventoryRepository
 import com.kra.paypoint.domain.repository.MasterDataRepository
 import com.kra.paypoint.domain.repository.TransactionRepository
 import com.kra.paypoint.domain.repository.ZReportRepository
+import com.kra.paypoint.domain.repository.PreferencesRepository
+import com.kra.paypoint.data.repository.PreferencesRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -65,4 +67,10 @@ abstract class RepositoryModule {
     abstract fun bindDeviceConfigStore(
         impl: DeviceConfigStoreImpl
     ): DeviceConfigStore
+
+    @Binds
+    @Singleton
+    abstract fun bindPreferencesRepository(
+        impl: PreferencesRepositoryImpl
+    ): PreferencesRepository
 }
