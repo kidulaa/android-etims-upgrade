@@ -64,6 +64,10 @@ interface TransactionDao {
     fun getAllTransactions(): Flow<List<TransactionEntity>>
 
     @Transaction
+    @Query("SELECT * FROM transactions ORDER BY createdAt DESC")
+    suspend fun getAllTransactionsWithItems(): List<TransactionWithItems>
+
+    @Transaction
     @Query("SELECT * FROM transactions WHERE id = :id LIMIT 1")
     suspend fun getTransactionWithItems(id: Long): TransactionWithItems?
 

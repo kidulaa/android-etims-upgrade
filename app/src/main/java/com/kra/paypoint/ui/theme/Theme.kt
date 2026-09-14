@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val LightColorScheme = lightColorScheme(
-    primary = PrimaryBlue,
-    secondary = PrimaryBlueLight,
+    primary = PrimaryRed,
+    secondary = PrimaryRedLight,
     tertiary = AccentOrange,
     background = BackgroundLight,
     surface = SurfaceLight,
@@ -26,8 +26,8 @@ private val LightColorScheme = lightColorScheme(
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = PrimaryBlueDark,
-    secondary = PrimaryBlueLightDark,
+    primary = PrimaryRedDark,
+    secondary = PrimaryRedLightDark,
     tertiary = AccentOrangeDark,
     background = BackgroundDark,
     surface = SurfaceDark,
@@ -42,7 +42,7 @@ private val DarkColorScheme = darkColorScheme(
 @Composable
 fun PayPointTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.receipts
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,13 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.FileProvider
 import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.TransactionWithItems
 import com.kra.paypoint.ui.screens.receipts.viewmodel.ReceiptsViewModel
 import com.kra.paypoint.ui.screens.receipts.viewmodel.SyncFilter
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,6 +36,15 @@ fun ReceiptsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val transactions by viewModel.filteredTransactions.collectAsState()
+    val context = LocalContext.current
+
+    // Handle PDF Sharing
+    LaunchedEffect(uiState.generatedPdf) {
+        uiState.generatedPdf?.let { file ->
+            sharePdfFile(context, file)
+            viewModel.clearGeneratedPdf()
+        }
+    }
 
     // Receipt Detail Modal Dialog
     if (uiState.selectedTransactionWithItems != null) {
@@ -42,6 +55,7 @@ fun ReceiptsScreen(
             printMessage = uiState.printMessage,
             onDismiss = viewModel::clearSelectedTransaction,
             onReprint = { viewModel.reprintReceipt(details) },
+            onSharePdf = { viewModel.generateInvoicePdf(details) },
             onIssueRefund = onIssueRefund
         )
     }
@@ -205,6 +219,7 @@ fun ReceiptDetailDialog(
     printMessage: String?,
     onDismiss: () -> Unit,
     onReprint: () -> Unit,
+    onSharePdf: () -> Unit,
     onIssueRefund: (Long) -> Unit = {}
 ) {
     val t = details.transaction
@@ -280,17 +295,28 @@ fun ReceiptDetailDialog(
             }
         },
         confirmButton = {
-            Button(
-                onClick = onReprint,
-                enabled = !isPrinting
-            ) {
-                if (isPrinting) {
-                    CircularProgressIndicator(modifier = Modifier.size(16.dp), color = MaterialTheme.colorScheme.onPrimary)
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text("Printing...")
-                } else {
-                    Icon(Icons.Default.Print, contentDescription = null, modifier = Modifier.size(16.dp).padding(end = 4.dp))
-                    Text("Reprint")
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(
+                    onClick = onSharePdf,
+                    enabled = !isPrinting,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                ) {
+                    Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp).padding(end = 4.dp))
+                    Text("Share PDF")
+                }
+                
+                Button(
+                    onClick = onReprint,
+                    enabled = !isPrinting
+                ) {
+                    if (isPrinting) {
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), color = MaterialTheme.colorScheme.onPrimary)
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("Wait...")
+                    } else {
+                        Icon(Icons.Default.Print, contentDescription = null, modifier = Modifier.size(16.dp).padding(end = 4.dp))
+                        Text("Reprint")
+                    }
                 }
             }
         },
@@ -305,7 +331,7 @@ fun ReceiptDetailDialog(
                     ) {
                         Icon(Icons.Default.RemoveCircleOutline, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Issue Refund")
+                        Text("Refund")
                     }
                 }
                 TextButton(onClick = onDismiss) {
@@ -314,4 +340,18 @@ fun ReceiptDetailDialog(
             }
         }
     )
+}
+
+private fun sharePdfFile(context: android.content.Context, file: File) {
+    val uri = FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        file
+    )
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "application/pdf"
+        putExtra(Intent.EXTRA_STREAM, uri)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(Intent.createChooser(intent, "Share Invoice"))
 }

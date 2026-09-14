@@ -138,6 +138,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -150,6 +152,11 @@ dependencies {
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.kotlinx.coroutines.android)
+
+    // PDF & QR
+    implementation(libs.itext7.core)
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.android.embedded)
 
     // Testing
     testImplementation(libs.junit)

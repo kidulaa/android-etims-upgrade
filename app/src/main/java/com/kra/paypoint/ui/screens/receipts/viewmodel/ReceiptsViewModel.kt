@@ -1,12 +1,16 @@
 package com.kra.paypoint.ui.screens.receipts.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.TransactionWithItems
+import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.TransactionRepository
 import com.kra.paypoint.hardware.printer.PrinterService
+import com.kra.paypoint.ui.export.PdfGenerator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +19,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 enum class SyncFilter {
@@ -27,13 +32,16 @@ data class ReceiptsUiState(
     val filter: SyncFilter = SyncFilter.ALL,
     val selectedTransactionWithItems: TransactionWithItems? = null,
     val isPrinting: Boolean = false,
-    val printMessage: String? = null
+    val printMessage: String? = null,
+    val generatedPdf: File? = null
 )
 
 @HiltViewModel
 class ReceiptsViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
-    private val printerService: PrinterService
+    private val deviceRepository: DeviceRepository,
+    private val printerService: PrinterService,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ReceiptsUiState())
@@ -64,7 +72,40 @@ class ReceiptsViewModel @Inject constructor(
     }
 
     fun clearSelectedTransaction() {
-        _uiState.update { it.copy(selectedTransactionWithItems = null, printMessage = null) }
+        _uiState.update { it.copy(selectedTransactionWithItems = null, printMessage = null, generatedPdf = null) }
+    }
+
+    fun generateInvoicePdf(data: TransactionWithItems) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isPrinting = true, printMessage = "Generating PDF...") }
+            try {
+                val registration = deviceRepository.registration.value
+                val pdfFile = PdfGenerator.createInvoicePdf(
+                    context = context,
+                    transaction = data.transaction,
+                    items = data.items,
+                    registration = registration
+                )
+                _uiState.update {
+                    it.copy(
+                        isPrinting = false,
+                        printMessage = null,
+                        generatedPdf = pdfFile
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isPrinting = false,
+                        printMessage = "PDF error: ${e.localizedMessage}"
+                    )
+                }
+            }
+        }
+    }
+
+    fun clearGeneratedPdf() {
+        _uiState.update { it.copy(generatedPdf = null) }
     }
 
     fun reprintReceipt(data: TransactionWithItems) {

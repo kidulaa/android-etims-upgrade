@@ -2,8 +2,8 @@ package com.kra.paypoint.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val PrimaryBlue = Color(0xFF1E3A8A) // A deep professional blue
-val PrimaryBlueLight = Color(0xFF3B82F6)
+val PrimaryRed = Color(0xFFFF1919) // KRA Red
+val PrimaryRedLight = Color(0xFFFF4D4D)
 val AccentOrange = Color(0xFFF97316)
 val BackgroundLight = Color(0xFFF3F4F6)
 val SurfaceLight = Color(0xFFFFFFFF)
@@ -14,8 +14,8 @@ val ErrorRed = Color(0xFFDC2626)
 val SuccessGreen = Color(0xFF16A34A)
 
 // Dark theme
-val PrimaryBlueDark = Color(0xFF93B4F7)
-val PrimaryBlueLightDark = Color(0xFF60A5FA)
+val PrimaryRedDark = Color(0xFFFF8A8A)
+val PrimaryRedLightDark = Color(0xFFFFB3B3)
 val AccentOrangeDark = Color(0xFFFB923C)
 val BackgroundDark = Color(0xFF111318)
 val SurfaceDark = Color(0xFF1A1D23)

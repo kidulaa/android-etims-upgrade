@@ -22,7 +22,8 @@ object SyncManager {
      * when the device has active network connectivity.
      */
     fun schedulePeriodicSync(context: Context) {
-        val periodicRequest = PeriodicWorkRequestBuilder<SyncWorker>(
+        // 1. Transaction Sync
+        val syncRequest = PeriodicWorkRequestBuilder<SyncWorker>(
             15, TimeUnit.MINUTES,
             5, TimeUnit.MINUTES // Flex interval
         )
@@ -36,7 +37,23 @@ object SyncManager {
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             SyncWorker.WORK_NAME_PERIODIC,
             ExistingPeriodicWorkPolicy.KEEP,
-            periodicRequest
+            syncRequest
+        )
+
+        // 2. Daily Database Backup
+        val backupRequest = PeriodicWorkRequestBuilder<BackupWorker>(
+            1, TimeUnit.DAYS
+        )
+            .setBackoffCriteria(
+                BackoffPolicy.EXPONENTIAL,
+                1, TimeUnit.HOURS
+            )
+            .build()
+
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            "daily_database_backup",
+            ExistingPeriodicWorkPolicy.KEEP,
+            backupRequest
         )
     }
 

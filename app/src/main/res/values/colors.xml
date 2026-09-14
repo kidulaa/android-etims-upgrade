@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="paypoint_primary">#1E3A8A</color>
+    <color name="paypoint_primary">#FF1919</color>
     <color name="paypoint_background_light">#F3F4F6</color>
     <color name="paypoint_background_dark">#111318</color>
-    <color name="launcher_background">#1E3A8A</color>
+    <color name="launcher_background">#FF1919</color>
 </resources>
