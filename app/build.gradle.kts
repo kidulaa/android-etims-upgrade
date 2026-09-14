@@ -68,6 +68,7 @@ android {
     productFlavors {
         create("sandbox") {
             dimension = "environment"
+            isDefault = true
             applicationIdSuffix = ".sandbox"
             versionNameSuffix = "-sbx"
             buildConfigField("String", "BASE_URL", "\"https://etims-test-api.kra.go.ke/etims-api/\"")
