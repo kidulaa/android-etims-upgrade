@@ -7,11 +7,11 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.PointOfSale
-import androidx.compose.material.icons.filled.Receipt
-import androidx.compose.material.icons.filled.RequestQuote
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.kra.paypoint.R
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,29 +29,29 @@ import kotlinx.coroutines.launch
 data class OnboardingPage(
     val title: String,
     val description: String,
-    val icon: ImageVector
+    @DrawableRes val imageRes: Int
 )
 
 val onboardingPages = listOf(
     OnboardingPage(
         title = "Manage Documents",
         description = "Easily manage your taxpayer documents and business records in one place.",
-        icon = Icons.Filled.Description
+        imageRes = R.drawable.onboarding_documents
     ),
     OnboardingPage(
         title = "Tax Filing",
         description = "Simplify your tax calculations and ensure compliance with KRA regulations.",
-        icon = Icons.Filled.RequestQuote
+        imageRes = R.drawable.onboarding_tax
     ),
     OnboardingPage(
         title = "Invoices & Receipts",
         description = "Generate professional eTIMS invoices and receipts for your customers instantly.",
-        icon = Icons.Filled.Receipt
+        imageRes = R.drawable.onboarding_invoice
     ),
     OnboardingPage(
         title = "Point of Sale",
         description = "Seamless point of sale experience tailored for your retail needs.",
-        icon = Icons.Filled.PointOfSale
+        imageRes = R.drawable.onboarding_pos
     )
 )
 
@@ -109,19 +109,18 @@ fun OnboardingPageContent(page: OnboardingPage) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Placeholder for user images. Using Material Icons for now.
+        // Use the generated AI images
         Box(
             modifier = Modifier
-                .size(200.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colorScheme.primaryContainer),
+                .size(300.dp)
+                .clip(RoundedCornerShape(16.dp)),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = page.icon,
+            Image(
+                painter = painterResource(id = page.imageRes),
                 contentDescription = null,
-                modifier = Modifier.size(100.dp),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
             )
         }
 
