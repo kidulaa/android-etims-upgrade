@@ -4,6 +4,8 @@ import com.kra.paypoint.data.local.dao.ItemDao
 import com.kra.paypoint.data.local.dao.StockMovementDao
 import com.kra.paypoint.data.local.database.TransactionRunner
 import com.kra.paypoint.data.local.entity.StockMovementEntity
+import com.kra.paypoint.domain.exception.InsufficientStockException
+import com.kra.paypoint.domain.exception.ItemNotFoundException
 import com.kra.paypoint.domain.repository.InventoryRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -35,7 +37,7 @@ class InventoryRepositoryImpl @Inject constructor(
         return runCatching {
             transactionRunner.run {
                 val item = itemDao.getItemByCode(itemCode)
-                    ?: throw IllegalArgumentException("Item with code '$itemCode' not found.")
+                    ?: throw ItemNotFoundException(itemCode)
 
                 val previousStock = item.stockQuantity
                 itemDao.increaseStock(itemCode, quantity)
@@ -75,15 +77,17 @@ class InventoryRepositoryImpl @Inject constructor(
         return runCatching {
             transactionRunner.run {
                 val item = itemDao.getItemByCode(itemCode)
-                    ?: throw IllegalArgumentException("Item with code '$itemCode' not found.")
+                    ?: throw ItemNotFoundException(itemCode)
 
                 // Conditional on the live stockQuantity value in the same statement, so a
                 // second concurrent stock-out can't both read "enough stock" and both
                 // succeed, driving the count negative.
                 val rowsUpdated = itemDao.decreaseStockIfSufficient(itemCode, quantity)
                 if (rowsUpdated == 0) {
-                    throw IllegalStateException(
-                        "Cannot deduct $quantity units; only ${item.stockQuantity} units currently in stock."
+                    throw InsufficientStockException(
+                        itemCode = itemCode,
+                        requested = quantity,
+                        available = item.stockQuantity
                     )
                 }
 
@@ -122,7 +126,7 @@ class InventoryRepositoryImpl @Inject constructor(
         return runCatching {
             transactionRunner.run {
                 val item = itemDao.getItemByCode(itemCode)
-                    ?: throw IllegalArgumentException("Item with code '$itemCode' not found.")
+                    ?: throw ItemNotFoundException(itemCode)
 
                 val previousStock = item.stockQuantity
                 itemDao.setStockQuantity(itemCode, physicalCount)

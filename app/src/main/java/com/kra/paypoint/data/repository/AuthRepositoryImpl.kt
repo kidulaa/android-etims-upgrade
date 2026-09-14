@@ -7,6 +7,7 @@ import androidx.security.crypto.MasterKey
 import com.kra.paypoint.data.local.dao.UserDao
 import com.kra.paypoint.data.local.entity.UserEntity
 import com.kra.paypoint.domain.exception.InvalidCredentialsException
+import com.kra.paypoint.domain.exception.UserAlreadyExistsException
 import com.kra.paypoint.domain.model.auth.User
 import com.kra.paypoint.domain.repository.AuthRepository
 import com.kra.paypoint.security.PasswordHasher
@@ -118,6 +119,12 @@ class AuthRepositoryImpl @Inject constructor(
         }
         if (password.length < 6) {
             return@withContext Result.failure(IllegalArgumentException("Password must be at least 6 characters."))
+        }
+
+        // Check if user already exists to prevent silent overwrite via upsert
+        val existing = userDao.getByUsername(trimmedUsername)
+        if (existing != null) {
+            return@withContext Result.failure(UserAlreadyExistsException(trimmedUsername))
         }
 
         val salt = PasswordHasher.generateSalt()

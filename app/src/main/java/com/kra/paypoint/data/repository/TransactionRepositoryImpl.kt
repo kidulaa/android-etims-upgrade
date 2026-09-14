@@ -6,6 +6,8 @@ import com.kra.paypoint.data.local.dao.TransactionDao
 import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.data.local.entity.TransactionWithItems
+import com.kra.paypoint.domain.exception.EmptyTransactionException
+import com.kra.paypoint.domain.exception.InvalidOriginalTransactionException
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveItem
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
 import com.kra.paypoint.domain.repository.DeviceRepository
@@ -143,7 +145,7 @@ class TransactionRepositoryImpl @Inject constructor(
     ): Result<Long> {
         return try {
             if (itemsToRefund.isEmpty()) {
-                return Result.failure(IllegalArgumentException("Cannot issue Credit Note with zero items"))
+                return Result.failure(EmptyTransactionException("Cannot issue Credit Note with zero items"))
             }
 
             val now = LocalDateTime.now()

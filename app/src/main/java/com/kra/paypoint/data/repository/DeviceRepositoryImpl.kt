@@ -4,6 +4,7 @@ import com.kra.paypoint.data.local.device.DeviceConfigStore
 import com.kra.paypoint.data.remote.api.AuthService
 import com.kra.paypoint.data.remote.model.auth.DeviceInitReq
 import com.kra.paypoint.domain.exception.DeviceNotRegisteredException
+import com.kra.paypoint.domain.exception.DeviceRegistrationException
 import com.kra.paypoint.domain.model.device.DeviceRegistration
 import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.SignedReceipt
@@ -32,7 +33,7 @@ class DeviceRepositoryImpl @Inject constructor(
             runCatching {
                 val response = authService.initializeDevice(DeviceInitReq(tin = tin, bhfId = branchId))
                 if (!response.isSuccess || response.data == null) {
-                    throw IllegalStateException(
+                    throw DeviceRegistrationException(
                         "Device registration rejected by eTIMS: ${response.resultCd} ${response.resultMsg.orEmpty()}"
                     )
                 }
