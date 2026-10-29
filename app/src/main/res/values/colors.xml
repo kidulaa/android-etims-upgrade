@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="paypoint_primary">#FF1919</color>
-    <color name="paypoint_background_light">#F3F4F6</color>
-    <color name="paypoint_background_dark">#111318</color>
+    <color name="paypoint_primary">#C4141C</color>
+    <!-- Window backgrounds match the Compose Material 3 surfaces (ui/theme/Color.kt) so there's
+         no colour jump when the first Compose frame replaces the window. -->
+    <color name="paypoint_background_light">#FFF8F7</color>
+    <color name="paypoint_background_dark">#1A1110</color>
     <color name="launcher_background">#FF1919</color>
+    <color name="splash_icon_background">#FFFFFF</color>
 </resources>

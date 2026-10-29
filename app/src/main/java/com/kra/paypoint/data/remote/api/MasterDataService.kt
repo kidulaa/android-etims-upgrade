@@ -22,8 +22,8 @@ interface MasterDataService {
     suspend fun selectItemClsList(@Body request: ItemClsListReq): ItemClsListRes
 
     @POST("saveItem")
-    suspend fun saveItem(@Body request: ItemSaveReq): Any
+    suspend fun saveItem(@Body request: ItemSaveReq): MasterSaveRes
 
     @POST("saveBhfCustomer")
-    suspend fun saveBhfCustomer(@Body request: BhfCustSaveReq): Any
+    suspend fun saveBhfCustomer(@Body request: BhfCustSaveReq): MasterSaveRes
 }

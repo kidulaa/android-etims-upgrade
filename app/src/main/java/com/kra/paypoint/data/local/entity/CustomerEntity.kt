@@ -18,6 +18,7 @@ data class CustomerEntity(
     val branchId: String = "00",
     val customerNo: String = "",
     val customerName: String,
+    val customerType: String = "INDIVIDUAL", // "INDIVIDUAL" or "CORPORATE" (non-individual)
     val nationalId: String? = null,
     val address: String? = null,
     val telNo: String? = null,

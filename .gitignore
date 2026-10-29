@@ -15,3 +15,6 @@ keystore.properties
 
 # Claude Code harness state, not project source
 .claude/
+
+# Kotlin compiler daemon logs
+.kotlin/

@@ -3,6 +3,7 @@ package com.kra.paypoint.ui.screens.dashboard.viewmodel
 import com.kra.paypoint.domain.model.auth.User
 import com.kra.paypoint.domain.repository.AuthRepository
 import com.kra.paypoint.domain.repository.TransactionRepository
+import com.kra.paypoint.domain.repository.MasterDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,7 @@ class DashboardViewModelTest {
 
     private lateinit var authRepository: AuthRepository
     private lateinit var transactionRepository: TransactionRepository
+    private lateinit var masterDataRepository: MasterDataRepository
     private lateinit var viewModel: DashboardViewModel
     private val testDispatcher = StandardTestDispatcher()
     private val userFlow = MutableStateFlow<User?>(null)
@@ -36,11 +38,14 @@ class DashboardViewModelTest {
         Dispatchers.setMain(testDispatcher)
         authRepository = mock(AuthRepository::class.java)
         transactionRepository = mock(TransactionRepository::class.java)
+        masterDataRepository = mock(MasterDataRepository::class.java)
 
         `when`(authRepository.currentUser).thenReturn(userFlow)
         `when`(transactionRepository.getPendingCount()).thenReturn(flowOf(3))
+        `when`(transactionRepository.getAllTransactions()).thenReturn(flowOf(emptyList()))
+        `when`(masterDataRepository.getAllItems()).thenReturn(flowOf(emptyList()))
 
-        viewModel = DashboardViewModel(authRepository, transactionRepository)
+        viewModel = DashboardViewModel(authRepository, transactionRepository, masterDataRepository)
     }
 
     @After

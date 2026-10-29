@@ -1,5 +1,7 @@
 package com.kra.paypoint.ui.screens.receipts.viewmodel
 
+import android.content.Context
+import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.data.local.entity.TransactionWithItems
@@ -7,6 +9,7 @@ import com.kra.paypoint.domain.repository.TransactionRepository
 import com.kra.paypoint.hardware.printer.PrinterService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -61,7 +64,9 @@ class ReceiptsViewModelTest {
 
         `when`(transactionRepository.getAllTransactions()).thenReturn(flowOf(sampleTransactions))
 
-        viewModel = ReceiptsViewModel(transactionRepository, printerService)
+        val deviceRepository = mock(DeviceRepository::class.java)
+        `when`(deviceRepository.registration).thenReturn(MutableStateFlow(null))
+        viewModel = ReceiptsViewModel(transactionRepository, deviceRepository, printerService, mock(Context::class.java))
     }
 
     @After
@@ -130,5 +135,18 @@ class ReceiptsViewModelTest {
 
         verify(printerService).printReceipt(any(), eq(true))
         assertNotNull(viewModel.uiState.value.printMessage)
+    }
+
+    @Test
+    fun `search matches an exact invoice number or part of the customer name`() = runTest {
+        backgroundScope.launch { viewModel.filteredTransactions.collect {} }
+
+        viewModel.setSearchQuery("#1002")
+        testScheduler.advanceUntilIdle()
+        assertEquals(listOf(1002L), viewModel.filteredTransactions.value.map { it.invoiceNumber })
+
+        viewModel.setSearchQuery("walk")
+        testScheduler.advanceUntilIdle()
+        assertEquals(listOf(1001L), viewModel.filteredTransactions.value.map { it.invoiceNumber })
     }
 }

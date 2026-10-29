@@ -34,6 +34,19 @@ interface ItemDao {
     @Query("SELECT COUNT(*) FROM items WHERE isUsed = 1")
     fun getItemCount(): Flow<Int>
 
+    /** Includes discontinued items so item management can re-enable them. */
+    @Query("SELECT * FROM items ORDER BY itemName ASC")
+    fun getAllItemsIncludingUnused(): Flow<List<ItemEntity>>
+
+    @Query("SELECT itemCode FROM items WHERE itemCode LIKE :prefix || '%'")
+    suspend fun getItemCodesWithPrefix(prefix: String): List<String>
+
+    @Query("SELECT * FROM items WHERE syncStatus != 'SYNCED'")
+    suspend fun getUnsyncedItems(): List<ItemEntity>
+
+    @Query("UPDATE items SET syncStatus = :status WHERE itemCode = :itemCode")
+    suspend fun updateItemSyncStatus(itemCode: String, status: String)
+
     /** Absolute set — used only for a physical-recount adjustment, where "the new value" IS the input. */
     @Query("UPDATE items SET stockQuantity = :newQuantity WHERE itemCode = :itemCode")
     suspend fun setStockQuantity(itemCode: String, newQuantity: Double)

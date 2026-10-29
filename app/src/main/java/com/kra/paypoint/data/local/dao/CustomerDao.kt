@@ -36,4 +36,8 @@ interface CustomerDao {
 
     @Query("SELECT COUNT(*) FROM customers WHERE isUsed = 1")
     fun getCustomerCount(): Flow<Int>
+
+    /** Includes deactivated customers so customer management can re-enable them. */
+    @Query("SELECT * FROM customers ORDER BY customerName ASC")
+    fun getAllCustomersIncludingUnused(): Flow<List<CustomerEntity>>
 }

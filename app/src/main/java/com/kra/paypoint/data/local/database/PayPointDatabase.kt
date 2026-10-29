@@ -9,6 +9,14 @@ import com.kra.paypoint.data.local.dao.ItemDao
 import com.kra.paypoint.data.local.dao.StockMovementDao
 import com.kra.paypoint.data.local.dao.TransactionDao
 import com.kra.paypoint.data.local.dao.UserDao
+import com.kra.paypoint.data.local.dao.SupplierDao
+import com.kra.paypoint.data.local.dao.CommercialDocumentDao
+import com.kra.paypoint.data.local.dao.PurchaseDao
+import com.kra.paypoint.data.local.entity.SupplierEntity
+import com.kra.paypoint.data.local.entity.CommercialDocumentEntity
+import com.kra.paypoint.data.local.entity.CommercialDocumentItemEntity
+import com.kra.paypoint.data.local.entity.PurchaseEntity
+import com.kra.paypoint.data.local.entity.PurchaseItemEntity
 import com.kra.paypoint.data.local.dao.ZReportDao
 import com.kra.paypoint.data.local.entity.CodeEntity
 import com.kra.paypoint.data.local.entity.CustomerEntity
@@ -30,9 +38,14 @@ import com.kra.paypoint.data.local.entity.ZReportEntity
         ItemClsEntity::class,
         ZReportEntity::class,
         StockMovementEntity::class,
-        UserEntity::class
+        UserEntity::class,
+        SupplierEntity::class,
+        CommercialDocumentEntity::class,
+        CommercialDocumentItemEntity::class,
+        PurchaseEntity::class,
+        PurchaseItemEntity::class
     ],
-    version = 6,
+    version = 8,
     exportSchema = true
 )
 abstract class PayPointDatabase : RoomDatabase() {
@@ -44,4 +57,7 @@ abstract class PayPointDatabase : RoomDatabase() {
     abstract fun zReportDao(): ZReportDao
     abstract fun stockMovementDao(): StockMovementDao
     abstract fun userDao(): UserDao
+    abstract fun supplierDao(): SupplierDao
+    abstract fun commercialDocumentDao(): CommercialDocumentDao
+    abstract fun purchaseDao(): PurchaseDao
 }

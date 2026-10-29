@@ -71,7 +71,7 @@ class CreditNoteViewModelTest {
             quantity = 2.0,
             unitPrice = 116.0,
             supplyAmount = 200.0,
-            taxTypeCode = "A",
+            taxTypeCode = "B",
             taxableAmount = 200.0,
             taxAmount = 32.0,
             totalAmount = 232.0
@@ -121,7 +121,7 @@ class CreditNoteViewModelTest {
 
     @Test
     fun `lookupInvoice rejects refund if original invoice is already a Credit Note`() = runTest {
-        val creditNoteTx = testTx.copy(salesTypeCode = "C", receiptTypeCode = "R")
+        val creditNoteTx = testTx.copy(originalInvoiceNumber = 4000L, receiptTypeCode = "R")
         val cnWithItems = TransactionWithItems(creditNoteTx, testItems)
         `when`(transactionRepository.getTransactionByInvoiceNumber(5002L)).thenReturn(cnWithItems)
 
@@ -145,7 +145,7 @@ class CreditNoteViewModelTest {
         val state = viewModel.uiState.value
         assertEquals(2.0, state.totalRefundQuantity, 0.001)
         assertEquals(232.0, state.totalRefundAmount, 0.001)
-        // Rate A (16% VAT): 232 / 1.16 = 200 taxable, 32 tax
+        // Band B (16% VAT): 232 / 1.16 = 200 taxable, 32 tax
         assertEquals(32.0, state.totalRefundTax, 0.01)
         assertEquals(200.0, state.totalRefundTaxable, 0.01)
     }
@@ -186,7 +186,7 @@ class CreditNoteViewModelTest {
             )
         ).thenReturn(Result.success(99L))
 
-        val cnTx = testTx.copy(id = 99L, invoiceNumber = 5002L, originalInvoiceNumber = 5001L, salesTypeCode = "C", receiptTypeCode = "R")
+        val cnTx = testTx.copy(id = 99L, invoiceNumber = 5002L, originalInvoiceNumber = 5001L, receiptTypeCode = "R")
         val cnWithItems = TransactionWithItems(cnTx, testItems)
         `when`(transactionRepository.getTransactionDetails(99L)).thenReturn(cnWithItems)
 

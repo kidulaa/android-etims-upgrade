@@ -110,4 +110,70 @@ class LoginViewModelTest {
         assertTrue(state.isAuthenticated)
         assertEquals(false, state.isLoading)
     }
+
+    private fun newSignInViewModel(): LoginViewModel {
+        kotlinx.coroutines.runBlocking { `when`(authRepository.hasAnyUsers()).thenReturn(true) }
+        return LoginViewModel(authRepository, deviceRepository, masterDataRepository)
+    }
+
+    @Test
+    fun `forgot password opens the reset form with the typed user ID`() = runTest {
+        viewModel = newSignInViewModel()
+        viewModel.onUsernameChanged("cashier1")
+        viewModel.startPasswordReset()
+
+        assertEquals("cashier1", viewModel.uiState.value.reset?.username)
+        viewModel.cancelPasswordReset()
+        assertEquals(null, viewModel.uiState.value.reset)
+    }
+
+    @Test
+    fun `reset form validates locally before calling the repository`() = runTest {
+        viewModel = newSignInViewModel()
+        viewModel.startPasswordReset()
+        viewModel.updateReset {
+            it.copy(username = "cashier1", tin = "P051234567Z", branchId = "00", deviceSerial = "MOBILE001",
+                newPassword = "secret1", confirmPassword = "different")
+        }
+        viewModel.submitPasswordReset()
+
+        assertEquals("Passwords do not match.", viewModel.uiState.value.reset?.errorMessage)
+        org.mockito.Mockito.verify(authRepository, org.mockito.Mockito.never())
+            .resetForgottenPassword(org.mockito.kotlin.any(), org.mockito.kotlin.any(), org.mockito.kotlin.any(), org.mockito.kotlin.any(), org.mockito.kotlin.any())
+    }
+
+    @Test
+    fun `successful reset returns to sign-in with the user ID filled in`() = runTest {
+        viewModel = newSignInViewModel()
+        `when`(authRepository.resetForgottenPassword("cashier1", "P051234567Z", "00", "MOBILE001", "secret1"))
+            .thenReturn(Result.success(Unit))
+        viewModel.startPasswordReset()
+        viewModel.updateReset {
+            it.copy(username = "cashier1", tin = "P051234567Z", branchId = "00", deviceSerial = "MOBILE001",
+                newPassword = "secret1", confirmPassword = "secret1")
+        }
+        viewModel.submitPasswordReset()
+
+        val state = viewModel.uiState.value
+        assertEquals(null, state.reset)
+        assertEquals("cashier1", state.username)
+        assertNotNull(state.infoMessage)
+    }
+
+    @Test
+    fun `failed reset keeps the form open with the repository's message`() = runTest {
+        viewModel = newSignInViewModel()
+        `when`(authRepository.resetForgottenPassword("cashier1", "P051234567Z", "00", "WRONG", "secret1"))
+            .thenReturn(Result.failure(IllegalArgumentException("Those details don't match an active user on this device.")))
+        viewModel.startPasswordReset()
+        viewModel.updateReset {
+            it.copy(username = "cashier1", tin = "P051234567Z", branchId = "00", deviceSerial = "WRONG",
+                newPassword = "secret1", confirmPassword = "secret1")
+        }
+        viewModel.submitPasswordReset()
+
+        val reset = viewModel.uiState.value.reset
+        assertEquals("Those details don't match an active user on this device.", reset?.errorMessage)
+        assertFalse(reset!!.isSubmitting)
+    }
 }

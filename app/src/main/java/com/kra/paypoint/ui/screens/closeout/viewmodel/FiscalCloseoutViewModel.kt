@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.closeout.viewmodel
 
+import com.kra.paypoint.domain.exception.toUserMessage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kra.paypoint.data.local.entity.ZReportEntity
@@ -53,7 +54,7 @@ class FiscalCloseoutViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isProcessing = false,
-                        feedbackMessage = "Error loading shift reading: ${e.localizedMessage}"
+                        feedbackMessage = "Error loading shift reading: ${e.toUserMessage()}"
                     )
                 }
             }
@@ -77,7 +78,7 @@ class FiscalCloseoutViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isProcessing = false,
-                        feedbackMessage = "Failed to print X-Report: ${e.localizedMessage}"
+                        feedbackMessage = "Failed to print X-Report: ${e.toUserMessage()}"
                     )
                 }
             }
@@ -85,8 +86,10 @@ class FiscalCloseoutViewModel @Inject constructor(
     }
 
     fun closeShiftAndPrintZReport() {
+        // Re-entry guard: a double tap can land before the disabled button recomposes.
+        if (_uiState.value.isProcessing) return
+        _uiState.update { it.copy(isProcessing = true, feedbackMessage = null) }
         viewModelScope.launch {
-            _uiState.update { it.copy(isProcessing = true, feedbackMessage = null) }
             try {
                 val user = authRepository.currentUser.value
                 val operatorId = user?.id ?: "OPERATOR"
@@ -110,7 +113,7 @@ class FiscalCloseoutViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isProcessing = false,
-                        feedbackMessage = "Closeout error: ${e.localizedMessage}"
+                        feedbackMessage = "Closeout error: ${e.toUserMessage()}"
                     )
                 }
             }
@@ -133,7 +136,7 @@ class FiscalCloseoutViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isProcessing = false,
-                        feedbackMessage = "Print error: ${e.localizedMessage}"
+                        feedbackMessage = "Print error: ${e.toUserMessage()}"
                     )
                 }
             }
@@ -151,19 +154,23 @@ class FiscalCloseoutViewModel @Inject constructor(
             appendLine("FIRST INVC  : #${s.firstInvoiceNumber}")
             appendLine("LAST INVC   : #${s.lastInvoiceNumber}")
             appendLine("--------------------------------")
-            appendLine(String.format("TAXABLE A (16%%) : KES %.2f", s.taxableAmountA))
-            appendLine(String.format("VAT A (16%%)     : KES %.2f", s.taxAmountA))
-            appendLine(String.format("TAXABLE E (8%%)  : KES %.2f", s.taxableAmountE))
-            appendLine(String.format("VAT E (8%%)      : KES %.2f", s.taxAmountE))
-            appendLine(String.format("EXEMPT (C)      : KES %.2f", s.taxableAmountC))
+            appendLine(String.format("TAXABLE B-16%%   : KES %.2f", s.taxableAmountB))
+            appendLine(String.format("VAT B-16%%       : KES %.2f", s.taxAmountB))
+            appendLine(String.format("TAXABLE E-8%%    : KES %.2f", s.taxableAmountE))
+            appendLine(String.format("VAT E-8%%        : KES %.2f", s.taxAmountE))
+            appendLine(String.format("A-EXEMPT        : KES %.2f", s.taxableAmountA))
+            appendLine(String.format("C-ZERO RATED    : KES %.2f", s.taxableAmountC))
+            appendLine(String.format("D-NON-VAT       : KES %.2f", s.taxableAmountD))
             appendLine("--------------------------------")
             appendLine(String.format("TOTAL TAXABLE   : KES %.2f", s.totalTaxableAmount))
             appendLine(String.format("TOTAL VAT       : KES %.2f", s.totalTaxAmount))
-            appendLine(String.format("GROSS SALES     : KES %.2f", s.grossSalesAmount))
+            appendLine(String.format("REFUNDS (%d)     : KES %.2f", s.creditNoteCount, s.creditNoteAmount))
+            appendLine(String.format("NET SALES       : KES %.2f", s.grossSalesAmount))
             appendLine("--------------------------------")
             appendLine(String.format("CASH DRAWER     : KES %.2f", s.cashAmount))
             appendLine(String.format("MOBILE MONEY    : KES %.2f", s.mobileAmount))
             appendLine(String.format("CARD            : KES %.2f", s.cardAmount))
+            appendLine(String.format("CREDIT (UNPAID) : KES %.2f", s.creditAmount))
             appendLine("================================")
             appendLine("     MID-SHIFT READING ONLY     ")
             appendLine("================================")
@@ -182,19 +189,22 @@ class FiscalCloseoutViewModel @Inject constructor(
             appendLine("TX COUNT    : ${z.totalTransactionCount}")
             appendLine("INVOICE SEQ : #${z.firstInvoiceNumber} - #${z.lastInvoiceNumber}")
             appendLine("--------------------------------")
-            appendLine(String.format("TAXABLE A (16%%) : KES %.2f", z.taxableAmountA))
-            appendLine(String.format("VAT A (16%%)     : KES %.2f", z.taxAmountA))
-            appendLine(String.format("TAXABLE E (8%%)  : KES %.2f", z.taxableAmountE))
-            appendLine(String.format("VAT E (8%%)      : KES %.2f", z.taxAmountE))
-            appendLine(String.format("EXEMPT (C)      : KES %.2f", z.taxableAmountC))
+            appendLine(String.format("TAXABLE B-16%%   : KES %.2f", z.taxableAmountB))
+            appendLine(String.format("VAT B-16%%       : KES %.2f", z.taxAmountB))
+            appendLine(String.format("TAXABLE E-8%%    : KES %.2f", z.taxableAmountE))
+            appendLine(String.format("VAT E-8%%        : KES %.2f", z.taxAmountE))
+            appendLine(String.format("A-EXEMPT        : KES %.2f", z.taxableAmountA))
+            appendLine(String.format("C-ZERO RATED    : KES %.2f", z.taxableAmountC))
+            appendLine(String.format("D-NON-VAT       : KES %.2f", z.taxableAmountD))
             appendLine("--------------------------------")
             appendLine(String.format("TOTAL TAXABLE   : KES %.2f", z.totalTaxableAmount))
             appendLine(String.format("TOTAL VAT       : KES %.2f", z.totalTaxAmount))
-            appendLine(String.format("GROSS SALES     : KES %.2f", z.grossSalesAmount))
+            appendLine(String.format("NET SALES       : KES %.2f", z.grossSalesAmount))
             appendLine("--------------------------------")
             appendLine(String.format("TOTAL CASH      : KES %.2f", z.cashAmount))
             appendLine(String.format("TOTAL MOBILE    : KES %.2f", z.mobileAmount))
             appendLine(String.format("TOTAL CARD      : KES %.2f", z.cardAmount))
+            appendLine(String.format("TOTAL CREDIT    : KES %.2f", z.creditAmount))
             appendLine("================================")
             appendLine("     FISCAL DAY CLOSED          ")
             appendLine("================================")

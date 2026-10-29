@@ -1,5 +1,7 @@
 package com.kra.paypoint.ui.screens.receipts
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kra.paypoint.ui.theme.PayPointTheme
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import com.kra.paypoint.data.local.entity.TransactionEntity
+import com.kra.paypoint.data.local.entity.isCreditNote
 import com.kra.paypoint.data.local.entity.TransactionWithItems
 import com.kra.paypoint.ui.screens.receipts.viewmodel.ReceiptsViewModel
 import com.kra.paypoint.ui.screens.receipts.viewmodel.SyncFilter
@@ -31,11 +34,12 @@ import java.io.File
 @Composable
 fun ReceiptsScreen(
     viewModel: ReceiptsViewModel,
-    onNavigateBack: () -> Unit,
+    /** Null when Receipts is shown as a top-level tab, which has no back arrow. */
+    onNavigateBack: (() -> Unit)? = null,
     onIssueRefund: (Long) -> Unit = {}
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val transactions by viewModel.filteredTransactions.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val transactions by viewModel.filteredTransactions.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     // Handle PDF Sharing
@@ -56,6 +60,7 @@ fun ReceiptsScreen(
             onDismiss = viewModel::clearSelectedTransaction,
             onReprint = { viewModel.reprintReceipt(details) },
             onSharePdf = { viewModel.generateInvoicePdf(details) },
+            onMarkPaid = { viewModel.markPaid(details.transaction.id) },
             onIssueRefund = onIssueRefund
         )
     }
@@ -63,17 +68,14 @@ fun ReceiptsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Receipts & Fiscal History", fontWeight = FontWeight.SemiBold) },
+                title = { Text("Receipts", fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    if (onNavigateBack != null) {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-                )
             )
         }
     ) { padding ->
@@ -83,6 +85,15 @@ fun ReceiptsScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
+            OutlinedTextField(
+                value = uiState.searchQuery,
+                onValueChange = viewModel::setSearchQuery,
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                placeholder = { Text("Search invoice no., customer or PIN") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            )
+
             // Filter Chips
             Row(
                 modifier = Modifier
@@ -132,7 +143,7 @@ fun ReceiptsScreen(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    items(transactions) { transaction ->
+                    items(transactions, key = { it.id }) { transaction ->
                         ReceiptItemCard(
                             transaction = transaction,
                             onClick = { viewModel.selectTransaction(transaction.id) }
@@ -185,17 +196,33 @@ fun ReceiptItemCard(
                 )
             }
 
-            SyncBadge(status = transaction.syncStatus)
+            Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                SyncBadge(status = transaction.syncStatus)
+                if (!transaction.isPaid) UnpaidBadge()
+            }
         }
+    }
+}
+
+@Composable
+fun UnpaidBadge() {
+    Surface(color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(16.dp)) {
+        Text(
+            text = "UNPAID",
+            color = MaterialTheme.colorScheme.onErrorContainer,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+        )
     }
 }
 
 @Composable
 fun SyncBadge(status: String) {
     val (bgColor, textColor) = when (status) {
-        "SYNCED" -> Color(0xFFE8F5E9) to Color(0xFF2E7D32)
-        "PENDING" -> Color(0xFFFFF3E0) to Color(0xFFE65100)
-        else -> Color(0xFFFFEBEE) to Color(0xFFC62828)
+        "SYNCED" -> PayPointTheme.status.successContainer to PayPointTheme.status.onSuccessContainer
+        "PENDING", "SYNCING" -> PayPointTheme.status.warningContainer to PayPointTheme.status.onWarningContainer
+        else -> MaterialTheme.colorScheme.errorContainer to MaterialTheme.colorScheme.onErrorContainer
     }
 
     Surface(
@@ -220,6 +247,7 @@ fun ReceiptDetailDialog(
     onDismiss: () -> Unit,
     onReprint: () -> Unit,
     onSharePdf: () -> Unit,
+    onMarkPaid: () -> Unit = {},
     onIssueRefund: (Long) -> Unit = {}
 ) {
     val t = details.transaction
@@ -242,6 +270,20 @@ fun ReceiptDetailDialog(
                 Text("Customer: ${t.customerName ?: "Walk-in Customer"}", style = MaterialTheme.typography.bodySmall)
                 if (!t.customerTin.isNullOrBlank()) {
                     Text("Customer PIN: ${t.customerTin}", style = MaterialTheme.typography.bodySmall)
+                }
+                t.note?.let { Text("Note: $it", style = MaterialTheme.typography.bodySmall) }
+                if (!t.isPaid) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column {
+                            UnpaidBadge()
+                            t.dueDate?.let { Text("Due ${it.takeLast(2)}/${it.substring(4, 6)}/${it.take(4)}", style = MaterialTheme.typography.bodySmall) }
+                        }
+                        OutlinedButton(onClick = onMarkPaid) { Text("Mark as paid") }
+                    }
                 }
 
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
@@ -322,7 +364,7 @@ fun ReceiptDetailDialog(
         },
         dismissButton = {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (t.salesTypeCode != "C" && t.receiptTypeCode != "R") {
+                if (!t.isCreditNote) {
                     OutlinedButton(
                         onClick = {
                             onDismiss()

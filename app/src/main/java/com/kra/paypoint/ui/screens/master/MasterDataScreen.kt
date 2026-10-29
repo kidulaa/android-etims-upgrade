@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.master
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,9 +25,9 @@ fun MasterDataScreen(
     viewModel: MasterDataViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val itemCount by viewModel.itemCount.collectAsState()
-    val customerCount by viewModel.customerCount.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val itemCount by viewModel.itemCount.collectAsStateWithLifecycle()
+    val customerCount by viewModel.customerCount.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -37,11 +38,6 @@ fun MasterDataScreen(
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-                )
             )
         }
     ) { padding ->

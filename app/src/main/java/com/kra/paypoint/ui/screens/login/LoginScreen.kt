@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.login
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -17,7 +18,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import com.kra.paypoint.R
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import com.kra.paypoint.ui.screens.login.viewmodel.LoginUiState
+import com.kra.paypoint.ui.screens.login.viewmodel.PasswordResetForm
 import com.kra.paypoint.ui.screens.login.viewmodel.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,7 +32,7 @@ fun LoginScreen(
     viewModel: LoginViewModel,
     onNavigateToDashboard: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.isAuthenticated, uiState.deviceWarning) {
         // Hold on the login screen if setup produced a device-registration warning, so it's
@@ -96,8 +102,19 @@ fun LoginScreen(
                     )
                 }
 
+                uiState.infoMessage?.let {
+                    Text(
+                        text = it,
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                    )
+                }
+
                 if (uiState.isAuthenticated && uiState.deviceWarning != null) {
                     DeviceWarningNotice(uiState.deviceWarning!!, onContinue = onNavigateToDashboard)
+                } else if (uiState.reset != null) {
+                    ResetPasswordForm(uiState.reset!!, viewModel)
                 } else if (uiState.needsFirstRunSetup) {
                     FirstRunSetupForm(uiState, viewModel)
                 } else {
@@ -175,6 +192,92 @@ private fun SignInForm(uiState: LoginUiState, viewModel: LoginViewModel) {
             Text(text = "Sign In", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
         }
     }
+
+    TextButton(
+        onClick = viewModel::startPasswordReset,
+        enabled = !uiState.isLoading,
+        modifier = Modifier.padding(top = 8.dp)
+    ) {
+        Text("Forgot password?")
+    }
+}
+
+/**
+ * Offline reset: the operator proves they belong to this till with the device's KRA
+ * registration details, which are on the account and were entered at device setup.
+ */
+@Composable
+private fun ResetPasswordForm(form: PasswordResetForm, viewModel: LoginViewModel) {
+    Text(
+        text = "Reset password",
+        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+        modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)
+    )
+    Text(
+        text = "Enter your user ID and this device's KRA registration details, then choose a new password.",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+    )
+
+    val enabled = !form.isSubmitting
+    ResetField("User ID", form.username, enabled) { v -> viewModel.updateReset { it.copy(username = v) } }
+    ResetField("KRA PIN (Branch TIN)", form.tin, enabled, KeyboardCapitalization.Characters) { v -> viewModel.updateReset { it.copy(tin = v) } }
+    ResetField("Branch ID", form.branchId, enabled) { v -> viewModel.updateReset { it.copy(branchId = v) } }
+    ResetField("Device Serial Number", form.deviceSerial, enabled) { v -> viewModel.updateReset { it.copy(deviceSerial = v) } }
+    ResetField("New Password", form.newPassword, enabled, isPassword = true) { v -> viewModel.updateReset { it.copy(newPassword = v) } }
+    ResetField("Confirm New Password", form.confirmPassword, enabled, isPassword = true) { v -> viewModel.updateReset { it.copy(confirmPassword = v) } }
+
+    form.errorMessage?.let {
+        Text(
+            text = it,
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
+        )
+    }
+
+    Spacer(modifier = Modifier.height(20.dp))
+    Button(
+        onClick = viewModel::submitPasswordReset,
+        enabled = enabled,
+        modifier = Modifier.fillMaxWidth().height(56.dp),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        if (form.isSubmitting) {
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(24.dp))
+        } else {
+            Text(text = "Reset Password", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+        }
+    }
+    TextButton(onClick = viewModel::cancelPasswordReset, enabled = enabled, modifier = Modifier.padding(top = 8.dp)) {
+        Text("Back to sign in")
+    }
+}
+
+@Composable
+private fun ResetField(
+    label: String,
+    value: String,
+    enabled: Boolean,
+    capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
+    isPassword: Boolean = false,
+    onChange: (String) -> Unit
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onChange,
+        label = { Text(label) },
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+        keyboardOptions = KeyboardOptions(
+            capitalization = capitalization,
+            keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text
+        ),
+        modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+        shape = RoundedCornerShape(8.dp),
+        singleLine = true,
+        enabled = enabled
+    )
 }
 
 @Composable

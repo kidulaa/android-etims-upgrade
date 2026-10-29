@@ -1,5 +1,7 @@
 package com.kra.paypoint.ui.screens.creditnote
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kra.paypoint.ui.theme.PayPointTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -31,7 +33,7 @@ fun CreditNoteScreen(
     initialInvoiceNumber: Long? = null,
     onNavigateBack: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showConfirmDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(initialInvoiceNumber) {
@@ -56,9 +58,6 @@ fun CreditNoteScreen(
                         }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                )
             )
         }
     ) { paddingValues ->
@@ -96,26 +95,26 @@ fun CreditNoteScreen(
             if (uiState.successCreditNoteNumber != null) {
                 item {
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9)),
+                        colors = CardDefaults.cardColors(containerColor = PayPointTheme.status.successContainer),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.shadow(2.dp, RoundedCornerShape(12.dp))
                     ) {
                         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Default.CheckCircle, contentDescription = "Success", tint = Color(0xFF2E7D32))
+                                Icon(Icons.Default.CheckCircle, contentDescription = "Success", tint = PayPointTheme.status.success)
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "Credit Note #${uiState.successCreditNoteNumber} Issued!",
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 16.sp,
-                                    color = Color(0xFF1B5E20)
+                                    color = PayPointTheme.status.onSuccessContainer
                                 )
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 text = uiState.feedbackMessage ?: "Fiscal refund successfully registered and queued for KRA synchronization.",
                                 fontSize = 13.sp,
-                                color = Color(0xFF2E7D32)
+                                color = PayPointTheme.status.onSuccessContainer
                             )
                             Spacer(modifier = Modifier.height(12.dp))
                             Row(
@@ -125,7 +124,7 @@ fun CreditNoteScreen(
                                 Button(
                                     onClick = { viewModel.reprintSuccessCreditNote() },
                                     modifier = Modifier.weight(1f),
-                                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
+                                    colors = ButtonDefaults.buttonColors(containerColor = PayPointTheme.status.success, contentColor = PayPointTheme.status.onSuccess)
                                 ) {
                                     Icon(Icons.Default.Print, contentDescription = "Reprint")
                                     Spacer(modifier = Modifier.width(6.dp))
@@ -205,14 +204,14 @@ fun CreditNoteScreen(
                                     Text("Date: ${t.salesDate}", fontSize = 12.sp, color = MaterialTheme.colorScheme.outline)
                                 }
                                 Surface(
-                                    color = if (t.syncStatus == "SYNCED") Color(0xFFE8F5E9) else Color(0xFFFFF3E0),
+                                    color = if (t.syncStatus == "SYNCED") PayPointTheme.status.successContainer else PayPointTheme.status.warningContainer,
                                     shape = RoundedCornerShape(6.dp)
                                 ) {
                                     Text(
                                         text = t.syncStatus,
                                         fontSize = 11.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (t.syncStatus == "SYNCED") Color(0xFF2E7D32) else Color(0xFFE65100),
+                                        color = if (t.syncStatus == "SYNCED") PayPointTheme.status.onSuccessContainer else PayPointTheme.status.onWarningContainer,
                                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                     )
                                 }

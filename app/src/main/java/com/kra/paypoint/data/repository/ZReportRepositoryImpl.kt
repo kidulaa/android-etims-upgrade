@@ -4,6 +4,8 @@ import com.kra.paypoint.data.local.dao.TransactionDao
 import com.kra.paypoint.data.local.dao.ZReportDao
 import com.kra.paypoint.data.local.entity.TransactionEntity
 import com.kra.paypoint.data.local.entity.ZReportEntity
+import com.kra.paypoint.data.local.entity.isCreditNote
+import com.kra.paypoint.domain.model.EtimsCodes.PaymentType
 import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.XReportSummary
 import com.kra.paypoint.domain.repository.ZReportRepository
@@ -40,6 +42,14 @@ class ZReportRepositoryImpl @Inject constructor(
         }
 
         val sorted = shiftTransactions.sortedBy { it.createdAt }
+        val creditNotes = sorted.filter { it.isCreditNote }
+
+        // Credit notes are stored with positive amounts; they reverse sales, so they net off.
+        fun net(amount: (TransactionEntity) -> Double): Double =
+            sorted.sumOf { if (it.isCreditNote) -amount(it) else amount(it) }
+
+        fun netPaidBy(vararg codes: String): Double =
+            sorted.filter { it.paymentTypeCode in codes }.sumOf { if (it.isCreditNote) -it.totalAmount else it.totalAmount }
 
         return XReportSummary(
             reportDate = todayStr,
@@ -47,19 +57,24 @@ class ZReportRepositoryImpl @Inject constructor(
             firstInvoiceNumber = sorted.first().invoiceNumber,
             lastInvoiceNumber = sorted.last().invoiceNumber,
             totalTransactionCount = sorted.size,
-            grossSalesAmount = sorted.sumOf { it.totalAmount },
-            totalTaxableAmount = sorted.sumOf { it.totalTaxableAmount },
-            totalTaxAmount = sorted.sumOf { it.totalTaxAmount },
-            taxableAmountA = sorted.sumOf { it.taxableAmountA },
-            taxAmountA = sorted.sumOf { it.taxAmountA },
-            taxableAmountB = sorted.sumOf { it.taxableAmountB },
-            taxableAmountC = sorted.sumOf { it.taxableAmountC },
-            taxableAmountD = sorted.sumOf { it.taxableAmountD },
-            taxableAmountE = sorted.sumOf { it.taxableAmountE },
-            taxAmountE = sorted.sumOf { it.taxAmountE },
-            cashAmount = sorted.filter { it.paymentTypeCode == "01" }.sumOf { it.totalAmount },
-            cardAmount = sorted.filter { it.paymentTypeCode == "02" }.sumOf { it.totalAmount },
-            mobileAmount = sorted.filter { it.paymentTypeCode == "03" }.sumOf { it.totalAmount }
+            grossSalesAmount = net { it.totalAmount },
+            totalTaxableAmount = net { it.totalTaxableAmount },
+            totalTaxAmount = net { it.totalTaxAmount },
+            taxableAmountA = net { it.taxableAmountA },
+            taxAmountA = net { it.taxAmountA },
+            taxableAmountB = net { it.taxableAmountB },
+            taxAmountB = net { it.taxAmountB },
+            taxableAmountC = net { it.taxableAmountC },
+            taxableAmountD = net { it.taxableAmountD },
+            taxableAmountE = net { it.taxableAmountE },
+            taxAmountE = net { it.taxAmountE },
+            creditNoteCount = creditNotes.size,
+            creditNoteAmount = creditNotes.sumOf { it.totalAmount },
+            // "03" was this app's pre-KRA-code mobile value; the till never offers Cash/Credit, so keep counting it as mobile.
+            cashAmount = netPaidBy(PaymentType.CASH),
+            cardAmount = netPaidBy(PaymentType.CARD),
+            mobileAmount = netPaidBy(PaymentType.MOBILE_MONEY, PaymentType.CASH_CREDIT),
+            creditAmount = netPaidBy(PaymentType.CREDIT)
         )
     }
 
@@ -93,6 +108,7 @@ class ZReportRepositoryImpl @Inject constructor(
                 taxableAmountA = summary.taxableAmountA,
                 taxAmountA = summary.taxAmountA,
                 taxableAmountB = summary.taxableAmountB,
+                taxAmountB = summary.taxAmountB,
                 taxableAmountC = summary.taxableAmountC,
                 taxableAmountD = summary.taxableAmountD,
                 taxableAmountE = summary.taxableAmountE,
@@ -102,6 +118,7 @@ class ZReportRepositoryImpl @Inject constructor(
                 cashAmount = summary.cashAmount,
                 cardAmount = summary.cardAmount,
                 mobileAmount = summary.mobileAmount,
+                creditAmount = summary.creditAmount,
                 // Honest default: there is no `saveReportZ`-equivalent eTIMS submission wired
                 // up yet (the KRA Z-report contract needs confirming before building against
                 // it), so this must not claim SYNCED for a report that was never actually filed.

@@ -1,5 +1,7 @@
 package com.kra.paypoint.ui.screens.inventory
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kra.paypoint.ui.theme.PayPointTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -32,9 +34,9 @@ fun InventoryScreen(
     viewModel: InventoryViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val items by viewModel.filteredItems.collectAsState()
-    val movements by viewModel.recentMovements.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val items by viewModel.filteredItems.collectAsStateWithLifecycle()
+    val movements by viewModel.recentMovements.collectAsStateWithLifecycle()
 
     var selectedTab by remember { mutableStateOf(0) } // 0: Stock Levels, 1: Movement Audit Log
 
@@ -60,11 +62,6 @@ fun InventoryScreen(
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-                )
             )
         }
     ) { padding ->
@@ -211,18 +208,18 @@ fun InventoryItemCard(
 
             Surface(
                 color = when {
-                    item.stockQuantity <= 0 -> Color(0xFFFFEBEE)
-                    item.stockQuantity <= 20 -> Color(0xFFFFF3E0)
-                    else -> Color(0xFFE8F5E9)
+                    item.stockQuantity <= 0 -> MaterialTheme.colorScheme.errorContainer
+                    item.stockQuantity <= 20 -> PayPointTheme.status.warningContainer
+                    else -> PayPointTheme.status.successContainer
                 },
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
                     text = "${item.stockQuantity.toInt()} ${item.packagingUnitCode}",
                     color = when {
-                        item.stockQuantity <= 0 -> Color(0xFFC62828)
-                        item.stockQuantity <= 20 -> Color(0xFFE65100)
-                        else -> Color(0xFF2E7D32)
+                        item.stockQuantity <= 0 -> MaterialTheme.colorScheme.onErrorContainer
+                        item.stockQuantity <= 20 -> PayPointTheme.status.onWarningContainer
+                        else -> PayPointTheme.status.onSuccessContainer
                     },
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
@@ -268,9 +265,9 @@ fun StockMovementCard(movement: StockMovementEntity) {
 
             Surface(
                 color = when (movement.movementType) {
-                    "STOCK_IN" -> Color(0xFFE8F5E9)
-                    "STOCK_OUT" -> Color(0xFFFFEBEE)
-                    else -> Color(0xFFE3F2FD)
+                    "STOCK_IN" -> PayPointTheme.status.successContainer
+                    "STOCK_OUT" -> MaterialTheme.colorScheme.errorContainer
+                    else -> PayPointTheme.status.infoContainer
                 },
                 shape = RoundedCornerShape(8.dp)
             ) {
@@ -281,9 +278,9 @@ fun StockMovementCard(movement: StockMovementEntity) {
                         else -> "Recount"
                     },
                     color = when (movement.movementType) {
-                        "STOCK_IN" -> Color(0xFF2E7D32)
-                        "STOCK_OUT" -> Color(0xFFC62828)
-                        else -> Color(0xFF1565C0)
+                        "STOCK_IN" -> PayPointTheme.status.onSuccessContainer
+                        "STOCK_OUT" -> MaterialTheme.colorScheme.onErrorContainer
+                        else -> PayPointTheme.status.onInfoContainer
                     },
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,

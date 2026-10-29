@@ -16,8 +16,16 @@ data class RefundItemParam(
     val quantityUnitCode: String = "U",
     val quantity: Double,
     val unitPrice: Double,
-    val taxRateClassificationCode: String = "A",
+    val taxRateClassificationCode: String = "B",
     val totalAmount: Double = quantity * unitPrice
+)
+
+/** Sale details that live only on this device (not in the KRA payload). */
+data class SaleExtras(
+    /** False for a credit sale ("pay later") until it's marked paid. */
+    val isPaid: Boolean = true,
+    val dueDate: String? = null, // yyyyMMdd
+    val note: String? = null
 )
 
 interface TransactionRepository {
@@ -27,7 +35,14 @@ interface TransactionRepository {
     suspend fun getTransactionDetails(id: Long): TransactionWithItems?
     suspend fun getTransactionByInvoiceNumber(invoiceNumber: Long): TransactionWithItems?
     /** Returns the locally-assigned (transactionId, invoiceNumber) pair for the recorded sale. */
-    suspend fun processSale(request: TrnsSalesSaveReq, lineItems: List<TransactionItemEntity>): Pair<Long, Long>
+    suspend fun processSale(
+        request: TrnsSalesSaveReq,
+        lineItems: List<TransactionItemEntity>,
+        extras: SaleExtras = SaleExtras()
+    ): Pair<Long, Long>
+
+    /** Settles a credit sale. */
+    suspend fun markPaid(transactionId: Long)
     suspend fun issueCreditNote(
         originalTransaction: TransactionEntity,
         itemsToRefund: List<RefundItemParam>,

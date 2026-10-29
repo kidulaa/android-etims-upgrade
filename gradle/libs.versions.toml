@@ -10,6 +10,7 @@ hiltWork = "1.2.0"
 # history) caps at compileSdk 36, while compose-bom/core-ktx/okhttp 2026.08+ require 37.
 composeBom = "2026.06.01"
 coreKtx = "1.15.0"
+coreSplashscreen = "1.0.1"
 lifecycle = "2.8.7"
 activityCompose = "1.9.3"
 navigationCompose = "2.8.4"
@@ -35,6 +36,7 @@ zxingEmbedded = "4.3.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }

@@ -12,6 +12,9 @@ interface ItemClsDao {
     @Query("SELECT * FROM item_classifications WHERE isUsed = 1 ORDER BY name ASC")
     fun getAllActive(): Flow<List<ItemClsEntity>>
 
+    @Query("SELECT * FROM item_classifications WHERE isUsed = 1 AND (name LIKE '%' || :query || '%' OR code LIKE :query || '%') ORDER BY name ASC LIMIT 50")
+    fun search(query: String): Flow<List<ItemClsEntity>>
+
     @Query("SELECT * FROM item_classifications WHERE code = :code LIMIT 1")
     suspend fun getByCode(code: String): ItemClsEntity?
 

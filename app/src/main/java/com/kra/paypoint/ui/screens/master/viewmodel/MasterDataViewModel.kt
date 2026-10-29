@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.master.viewmodel
 
+import com.kra.paypoint.domain.exception.toUserMessage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kra.paypoint.data.local.dao.CustomerDao
@@ -61,7 +62,7 @@ class MasterDataViewModel @Inject constructor(
                     isSyncingItems = false,
                     statusMessage = result.fold(
                         onSuccess = { count -> "Synced $count item(s) from eTIMS." },
-                        onFailure = { e -> "Item sync failed: ${e.localizedMessage}" }
+                        onFailure = { e -> "Item sync failed: ${e.toUserMessage()}" }
                     )
                 )
             }
@@ -84,7 +85,7 @@ class MasterDataViewModel @Inject constructor(
                     isSyncingCustomers = false,
                     statusMessage = result.fold(
                         onSuccess = { count -> "Synced $count customer(s) from eTIMS." },
-                        onFailure = { e -> "Customer sync failed: ${e.localizedMessage}" }
+                        onFailure = { e -> "Customer sync failed: ${e.toUserMessage()}" }
                     )
                 )
             }

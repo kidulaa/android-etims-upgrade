@@ -70,6 +70,18 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
+    abstract fun bindDocumentRepository(
+        impl: com.kra.paypoint.data.repository.DocumentRepositoryImpl
+    ): com.kra.paypoint.domain.repository.DocumentRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPurchaseRepository(
+        impl: com.kra.paypoint.data.repository.PurchaseRepositoryImpl
+    ): com.kra.paypoint.domain.repository.PurchaseRepository
+
+    @Binds
+    @Singleton
     abstract fun bindPreferencesRepository(
         impl: PreferencesRepositoryImpl
     ): PreferencesRepository

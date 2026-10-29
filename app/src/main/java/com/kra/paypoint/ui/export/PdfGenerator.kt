@@ -15,6 +15,8 @@ import com.itextpdf.layout.properties.VerticalAlignment
 import com.itextpdf.layout.borders.Border
 import com.kra.paypoint.R
 import com.kra.paypoint.data.local.entity.TransactionEntity
+import com.kra.paypoint.data.local.entity.isCreditNote
+import com.kra.paypoint.domain.model.EtimsCodes.TaxType
 import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.domain.model.device.DeviceRegistration
 import com.kra.paypoint.ui.components.QRCodeGenerator
@@ -92,10 +94,7 @@ object PdfGenerator {
                 .setVerticalAlignment(VerticalAlignment.MIDDLE)
         )
 
-        val title = when (transaction.salesTypeCode) {
-            "C" -> "CREDIT NOTE"
-            else -> "FISCAL INVOICE"
-        }
+        val title = if (transaction.isCreditNote) "CREDIT NOTE" else "FISCAL INVOICE"
 
         table.addCell(
             Cell().add(Paragraph(title).setBold().setFontSize(24f))
@@ -239,11 +238,11 @@ object PdfGenerator {
             table.addCell(Cell().add(Paragraph("%,.2f".format(taxable + tax))))
         }
 
-        addTaxRow("A-16%", transaction.taxableAmountA, transaction.taxAmountA)
-        addTaxRow("B-0%", transaction.taxableAmountB, transaction.taxAmountB)
-        addTaxRow("C-Exempt", transaction.taxableAmountC, transaction.taxAmountC)
-        addTaxRow("D-NonVAT", transaction.taxableAmountD, transaction.taxAmountD)
-        addTaxRow("E-8%", transaction.taxableAmountE, transaction.taxAmountE)
+        addTaxRow(TaxType.label("A"), transaction.taxableAmountA, transaction.taxAmountA)
+        addTaxRow(TaxType.label("B"), transaction.taxableAmountB, transaction.taxAmountB)
+        addTaxRow(TaxType.label("C"), transaction.taxableAmountC, transaction.taxAmountC)
+        addTaxRow(TaxType.label("D"), transaction.taxableAmountD, transaction.taxAmountD)
+        addTaxRow(TaxType.label("E"), transaction.taxableAmountE, transaction.taxAmountE)
 
         // Totals
         table.addCell(Cell().add(Paragraph("TOTALS").setBold()))

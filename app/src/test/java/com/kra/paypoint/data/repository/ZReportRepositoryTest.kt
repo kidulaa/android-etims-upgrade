@@ -109,4 +109,31 @@ class ZReportRepositoryTest {
         assertEquals(1L, first.zReportNumber)
         assertEquals(2L, second.zReportNumber)
     }
+
+    @Test
+    fun `credit notes net off sales and KRA payment codes land in the right buckets`() = runTest {
+        val sale = TransactionEntity(
+            id = 10L, invoiceNumber = 2001L, totalAmount = 232.0, totalTaxableAmount = 200.0, totalTaxAmount = 32.0,
+            taxableAmountB = 200.0, taxAmountB = 32.0, paymentTypeCode = "06", // Mobile Money (KRA code)
+            salesDate = "20260912", payloadJson = "{}", createdAt = 1000L
+        )
+        val cardSale = sale.copy(id = 11L, invoiceNumber = 2002L, paymentTypeCode = "05", createdAt = 1500L)
+        val refund = sale.copy(
+            id = 12L, invoiceNumber = 2003L, originalInvoiceNumber = 2001L, receiptTypeCode = "R",
+            totalAmount = 116.0, totalTaxableAmount = 100.0, totalTaxAmount = 16.0,
+            taxableAmountB = 100.0, taxAmountB = 16.0, createdAt = 2000L
+        )
+        `when`(transactionDao.getAllTransactions()).thenReturn(flowOf(listOf(sale, cardSale, refund)))
+
+        val summary = repository.getLiveShiftSummary()
+
+        assertEquals(3, summary.totalTransactionCount)
+        assertEquals(1, summary.creditNoteCount)
+        assertEquals(116.0, summary.creditNoteAmount, 0.001)
+        assertEquals(348.0, summary.grossSalesAmount, 0.001) // 232 + 232 - 116
+        assertEquals(48.0, summary.taxAmountB, 0.001) // 32 + 32 - 16
+        assertEquals(116.0, summary.mobileAmount, 0.001) // 232 - 116 refunded to wallet
+        assertEquals(232.0, summary.cardAmount, 0.001)
+        assertEquals(0.0, summary.cashAmount, 0.001)
+    }
 }

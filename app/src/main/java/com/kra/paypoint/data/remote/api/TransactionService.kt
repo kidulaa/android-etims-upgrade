@@ -1,5 +1,6 @@
 package com.kra.paypoint.data.remote.api
 
+import com.kra.paypoint.data.remote.model.transaction.TrnsPurchaseSaveReq
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesRes
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesReceiptReq
@@ -10,6 +11,10 @@ import retrofit2.http.POST
 interface TransactionService {
     @POST("saveTrnsSales")
     suspend fun saveSalesTransaction(@Body request: TrnsSalesSaveReq): TrnsSalesRes
+
+    /** Reports a supplier's invoice; uses the same result envelope as sales. */
+    @POST("insertTrnsPurchase")
+    suspend fun savePurchaseTransaction(@Body request: TrnsPurchaseSaveReq): TrnsSalesRes
 
     @POST("saveTrnsSalesReceipt")
     suspend fun saveSalesReceipt(@Body request: TrnsSalesReceiptReq): TrnsSalesReceiptRes

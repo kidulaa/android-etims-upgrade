@@ -8,11 +8,13 @@ import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.data.local.entity.TransactionWithItems
 import com.kra.paypoint.domain.exception.EmptyTransactionException
 import com.kra.paypoint.domain.exception.InvalidOriginalTransactionException
+import com.kra.paypoint.domain.model.EtimsCodes
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveItem
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
 import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.InventoryRepository
 import com.kra.paypoint.domain.repository.RefundItemParam
+import com.kra.paypoint.domain.repository.SaleExtras
 import com.kra.paypoint.domain.repository.SignedReceipt
 import com.kra.paypoint.domain.repository.TransactionRepository
 import com.kra.paypoint.domain.usecase.TaxCalculationEngine
@@ -75,7 +77,8 @@ class TransactionRepositoryImpl @Inject constructor(
 
     override suspend fun processSale(
         request: TrnsSalesSaveReq,
-        lineItems: List<TransactionItemEntity>
+        lineItems: List<TransactionItemEntity>,
+        extras: SaleExtras
     ): Pair<Long, Long> {
         // The invoice number is assigned atomically inside the DAO transaction (last local
         // number + 1, mirroring the legacy till's sequencing) rather than by the caller, so
@@ -100,6 +103,9 @@ class TransactionRepositoryImpl @Inject constructor(
                     salesTypeCode = finalRequest.salesTyCd,
                     receiptTypeCode = finalRequest.rcptTyCd,
                     paymentTypeCode = finalRequest.pmtTyCd,
+                    isPaid = extras.isPaid,
+                    dueDate = extras.dueDate,
+                    note = extras.note,
                     totalItemCount = finalRequest.totItemCnt,
                     taxableAmountA = finalRequest.taxblAmtA,
                     taxableAmountB = finalRequest.taxblAmtB,
@@ -126,8 +132,32 @@ class TransactionRepositoryImpl @Inject constructor(
             buildItems = { transactionId -> lineItems.map { it.copy(transactionId = transactionId) } }
         )
 
+        deductSoldStock(lineItems, result.invoiceNumber, request.regrId ?: "SYSTEM")
         safeTriggerSync()
         return result.transactionId to result.invoiceNumber
+    }
+
+    /**
+     * The sale is already a durable fiscal record by now, so stock is best-effort: services
+     * carry no stock and a till may legitimately sell ahead of a delivery being booked —
+     * neither may undo or block an issued invoice.
+     */
+    private suspend fun deductSoldStock(lineItems: List<TransactionItemEntity>, invoiceNumber: Long, operatorId: String) {
+        for (line in lineItems) {
+            runCatching {
+                inventoryRepository.recordStockOut(
+                    itemCode = line.itemCode,
+                    quantity = line.quantity,
+                    reasonCode = "11",
+                    reasonDescription = "Sale (Inv #$invoiceNumber)",
+                    operatorId = operatorId
+                ).getOrThrow()
+            }.onFailure { Log.i("TransactionRepository", "No stock deducted for ${line.itemCode}: ${it.message}") }
+        }
+    }
+
+    override suspend fun markPaid(transactionId: Long) {
+        transactionDao.markPaid(transactionId)
     }
 
     override suspend fun getTransactionByInvoiceNumber(invoiceNumber: Long): TransactionWithItems? {
@@ -152,26 +182,14 @@ class TransactionRepositoryImpl @Inject constructor(
             val dateStr = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
             val salesDt = dateStr.substring(0, 8)
 
-            val splits = itemsToRefund.map { it to TaxCalculationEngine.split(it.totalAmount, it.taxRateClassificationCode) }
-
-            var taxblAmtA = 0.0; var taxAmtA = 0.0
-            var taxblAmtB = 0.0
-            var taxblAmtC = 0.0
-            var taxblAmtD = 0.0
-            var taxblAmtE = 0.0; var taxAmtE = 0.0
-            for ((item, split) in splits) {
-                when (item.taxRateClassificationCode) {
-                    "A" -> { taxblAmtA += split.taxableAmount.toDouble(); taxAmtA += split.taxAmount.toDouble() }
-                    "E" -> { taxblAmtE += split.taxableAmount.toDouble(); taxAmtE += split.taxAmount.toDouble() }
-                    "B" -> taxblAmtB += split.taxableAmount.toDouble()
-                    "C" -> taxblAmtC += split.taxableAmount.toDouble()
-                    "D" -> taxblAmtD += split.taxableAmount.toDouble()
-                    else -> { taxblAmtA += split.taxableAmount.toDouble(); taxAmtA += split.taxAmount.toDouble() }
+            val bands = TaxCalculationEngine.bandTotals(
+                itemsToRefund.map {
+                    val split = TaxCalculationEngine.split(it.totalAmount, it.taxRateClassificationCode)
+                    Triple(it.taxRateClassificationCode, split.taxableAmount.toDouble(), split.taxAmount.toDouble())
                 }
-            }
-
-            val totTaxblAmt = taxblAmtA + taxblAmtB + taxblAmtC + taxblAmtD + taxblAmtE
-            val totTaxAmt = taxAmtA + taxAmtE
+            )
+            val totTaxblAmt = bands.totalTaxable
+            val totTaxAmt = bands.totalTax
             val totAmt = itemsToRefund.sumOf { it.totalAmount }
             val totItemCnt = itemsToRefund.sumOf { it.quantity }
 
@@ -204,15 +222,25 @@ class TransactionRepositoryImpl @Inject constructor(
 
             // orgInvcNo/invcNo=0L here are placeholders finalized once insertWithNextInvoiceNumber
             // assigns the real, atomically-sequenced number below.
+            // The seller on a credit note is the same taxpayer/branch that issued the original
+            // invoice — never the customer — so take it from the payload filed with KRA, falling
+            // back to this device's registration. Gson ignores Kotlin nullability, hence String?.
+            val originalReq = runCatching { gson.fromJson(originalTransaction.payloadJson, TrnsSalesSaveReq::class.java) }.getOrNull()
+            val originalTin: String? = originalReq?.tin
+            val originalBhfId: String? = originalReq?.bhfId
+            val registration = deviceRepository.registration.value
+            val sellerTin = originalTin?.takeIf { it.isNotBlank() } ?: registration?.tin
+                ?: throw IllegalStateException("Cannot determine the seller PIN for invoice #${originalTransaction.invoiceNumber}.")
+            val sellerBhfId = originalBhfId?.takeIf { it.isNotBlank() } ?: registration?.branchId ?: "00"
             val baseReq = TrnsSalesSaveReq(
-                tin = originalTransaction.customerTin ?: "",
-                bhfId = "00",
+                tin = sellerTin,
+                bhfId = sellerBhfId,
                 invcNo = 0L,
                 orgInvcNo = originalTransaction.invoiceNumber,
                 custTin = originalTransaction.customerTin,
                 custNm = originalTransaction.customerName ?: "Walk-in Customer",
-                salesTyCd = "C",
-                rcptTyCd = "R",
+                salesTyCd = EtimsCodes.SalesType.NORMAL,
+                rcptTyCd = EtimsCodes.ReceiptType.CREDIT_NOTE,
                 pmtTyCd = originalTransaction.paymentTypeCode,
                 rfdRsnCd = reasonCode,
                 salesSttsCd = "02",
@@ -223,21 +251,21 @@ class TransactionRepositoryImpl @Inject constructor(
                 cnclDt = null,
                 rfdDt = dateStr,
                 totItemCnt = totItemCnt,
-                taxblAmtA = taxblAmtA,
-                taxblAmtB = taxblAmtB,
-                taxblAmtC = taxblAmtC,
-                taxblAmtD = taxblAmtD,
-                taxblAmtE = taxblAmtE,
+                taxblAmtA = bands.taxableFor("A"),
+                taxblAmtB = bands.taxableFor("B"),
+                taxblAmtC = bands.taxableFor("C"),
+                taxblAmtD = bands.taxableFor("D"),
+                taxblAmtE = bands.taxableFor("E"),
                 taxRtA = TaxCalculationEngine.ratePercentFor("A"),
-                taxRtB = 0,
-                taxRtC = 0,
-                taxRtD = 0,
+                taxRtB = TaxCalculationEngine.ratePercentFor("B"),
+                taxRtC = TaxCalculationEngine.ratePercentFor("C"),
+                taxRtD = TaxCalculationEngine.ratePercentFor("D"),
                 taxRtE = TaxCalculationEngine.ratePercentFor("E"),
-                taxAmtA = taxAmtA,
-                taxAmtB = 0.0,
-                taxAmtC = 0.0,
-                taxAmtD = 0.0,
-                taxAmtE = taxAmtE,
+                taxAmtA = bands.taxFor("A"),
+                taxAmtB = bands.taxFor("B"),
+                taxAmtC = bands.taxFor("C"),
+                taxAmtD = bands.taxFor("D"),
+                taxAmtE = bands.taxFor("E"),
                 totTaxblAmt = totTaxblAmt,
                 totTaxAmt = totTaxAmt,
                 totAmt = totAmt,
@@ -289,20 +317,20 @@ class TransactionRepositoryImpl @Inject constructor(
                         originalInvoiceNumber = originalTransaction.invoiceNumber,
                         customerTin = originalTransaction.customerTin,
                         customerName = originalTransaction.customerName,
-                        salesTypeCode = "C",
-                        receiptTypeCode = "R",
+                        salesTypeCode = EtimsCodes.SalesType.NORMAL,
+                        receiptTypeCode = EtimsCodes.ReceiptType.CREDIT_NOTE,
                         paymentTypeCode = originalTransaction.paymentTypeCode,
                         totalItemCount = totItemCnt,
-                        taxableAmountA = taxblAmtA,
-                        taxableAmountB = taxblAmtB,
-                        taxableAmountC = taxblAmtC,
-                        taxableAmountD = taxblAmtD,
-                        taxableAmountE = taxblAmtE,
-                        taxAmountA = taxAmtA,
-                        taxAmountB = 0.0,
-                        taxAmountC = 0.0,
-                        taxAmountD = 0.0,
-                        taxAmountE = taxAmtE,
+                        taxableAmountA = bands.taxableFor("A"),
+                        taxableAmountB = bands.taxableFor("B"),
+                        taxableAmountC = bands.taxableFor("C"),
+                        taxableAmountD = bands.taxableFor("D"),
+                        taxableAmountE = bands.taxableFor("E"),
+                        taxAmountA = bands.taxFor("A"),
+                        taxAmountB = bands.taxFor("B"),
+                        taxAmountC = bands.taxFor("C"),
+                        taxAmountD = bands.taxFor("D"),
+                        taxAmountE = bands.taxFor("E"),
                         totalTaxableAmount = totTaxblAmt,
                         totalTaxAmount = totTaxAmt,
                         totalAmount = totAmt,

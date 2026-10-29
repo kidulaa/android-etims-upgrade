@@ -20,9 +20,13 @@ data class TransactionEntity(
     val originalInvoiceNumber: Long = 0L,
     val customerTin: String? = null,
     val customerName: String? = null,
-    val salesTypeCode: String = "N", // N: Normal, C: Copy, R: Refund
-    val receiptTypeCode: String = "R", // R: Receipt, S: Simplified, I: Invoice
-    val paymentTypeCode: String = "01", // 01: CASH, 02: CARD, 03: MOBILE
+    val salesTypeCode: String = "N", // N: Normal
+    val receiptTypeCode: String = "S", // S: Sale, R: Credit Note
+    val paymentTypeCode: String = "01", // See EtimsCodes.PaymentType
+    /** False for a credit sale until "Mark as paid"; always true for immediate payment. */
+    val isPaid: Boolean = true,
+    val dueDate: String? = null, // yyyyMMdd, credit sales only
+    val note: String? = null,
     val totalItemCount: Double = 0.0,
     val taxableAmountA: Double = 0.0,
     val taxableAmountB: Double = 0.0,
@@ -47,3 +51,10 @@ data class TransactionEntity(
     val createdAt: Long = System.currentTimeMillis(),
     val syncedAt: Long? = null
 )
+
+/**
+ * A credit note always references the invoice it reverses. Keyed off that rather than the
+ * type codes because rows written before the KRA code fix stored sales as rcptTyCd "R" and
+ * credit notes as salesTyCd "C".
+ */
+val TransactionEntity.isCreditNote: Boolean get() = originalInvoiceNumber > 0L

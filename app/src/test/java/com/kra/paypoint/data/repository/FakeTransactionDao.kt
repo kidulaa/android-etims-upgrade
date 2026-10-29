@@ -60,6 +60,12 @@ class FakeTransactionDao : TransactionDao {
         return TransactionWithItems(tx, itemsByTransactionId[tx.id].orEmpty())
     }
 
+    override suspend fun getAllTransactionsWithItems(): List<TransactionWithItems> {
+        return transactionsFlow.value.sortedByDescending { it.createdAt }.map { tx ->
+            TransactionWithItems(tx, itemsByTransactionId[tx.id].orEmpty())
+        }
+    }
+
     override suspend fun updateSyncStatus(
         id: Long,
         status: String,
@@ -81,6 +87,10 @@ class FakeTransactionDao : TransactionDao {
                 )
             } else it
         }
+    }
+
+    override suspend fun markPaid(id: Long) {
+        transactionsFlow.value = transactionsFlow.value.map { if (it.id == id) it.copy(isPaid = true) else it }
     }
 
     override fun getPendingCount(): Flow<Int> =

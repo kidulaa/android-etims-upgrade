@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.hardware.viewmodel
 
+import com.kra.paypoint.domain.exception.toUserMessage
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
@@ -69,7 +70,7 @@ class HardwareSettingsViewModel @Inject constructor(
                     isDeviceRegistered = result.isSuccess,
                     statusMessage = result.fold(
                         onSuccess = { "Device eTIMS registration complete." },
-                        onFailure = { e -> "Device registration failed: ${e.localizedMessage}" }
+                        onFailure = { e -> "Device registration failed: ${e.toUserMessage()}" }
                     )
                 )
             }
@@ -140,7 +141,7 @@ class HardwareSettingsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isTestingPrint = false,
-                        statusMessage = "Test print error: ${e.localizedMessage}"
+                        statusMessage = "Test print error: ${e.toUserMessage()}"
                     )
                 }
             }

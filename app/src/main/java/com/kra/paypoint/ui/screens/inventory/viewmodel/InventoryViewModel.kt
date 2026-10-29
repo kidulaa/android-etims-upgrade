@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.inventory.viewmodel
 
+import com.kra.paypoint.domain.exception.toUserMessage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kra.paypoint.data.local.entity.ItemEntity
@@ -90,7 +91,7 @@ class InventoryViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isProcessing = false,
-                            feedbackMessage = "Stock-In failed: ${err.localizedMessage}",
+                            feedbackMessage = "Stock-In failed: ${err.toUserMessage()}",
                             isError = true
                         )
                     }
@@ -132,7 +133,7 @@ class InventoryViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isProcessing = false,
-                            feedbackMessage = "Stock-Out failed: ${err.localizedMessage}",
+                            feedbackMessage = "Stock-Out failed: ${err.toUserMessage()}",
                             isError = true
                         )
                     }
@@ -167,7 +168,7 @@ class InventoryViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isProcessing = false,
-                            feedbackMessage = "Adjustment failed: ${err.localizedMessage}",
+                            feedbackMessage = "Adjustment failed: ${err.toUserMessage()}",
                             isError = true
                         )
                     }

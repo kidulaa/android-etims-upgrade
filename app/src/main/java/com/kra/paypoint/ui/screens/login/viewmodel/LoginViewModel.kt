@@ -1,7 +1,9 @@
 package com.kra.paypoint.ui.screens.login.viewmodel
 
+import com.kra.paypoint.domain.exception.toUserMessage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kra.paypoint.domain.model.auth.User
 import com.kra.paypoint.domain.repository.AuthRepository
 import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.MasterDataRepository
@@ -26,7 +28,21 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val deviceWarning: String? = null,
-    val isAuthenticated: Boolean = false
+    val isAuthenticated: Boolean = false,
+    /** Shown instead of the sign-in form while resetting a forgotten password. */
+    val reset: PasswordResetForm? = null,
+    val infoMessage: String? = null
+)
+
+data class PasswordResetForm(
+    val username: String = "",
+    val tin: String = "",
+    val branchId: String = "",
+    val deviceSerial: String = "",
+    val newPassword: String = "",
+    val confirmPassword: String = "",
+    val isSubmitting: Boolean = false,
+    val errorMessage: String? = null
 )
 
 @HiltViewModel
@@ -55,15 +71,73 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onUsernameChanged(value: String) = _uiState.update { it.copy(username = value, errorMessage = null) }
-    fun onPasswordChanged(value: String) = _uiState.update { it.copy(password = value, errorMessage = null) }
+    fun onUsernameChanged(value: String) = _uiState.update { it.copy(username = value, errorMessage = null, infoMessage = null) }
+    fun onPasswordChanged(value: String) = _uiState.update { it.copy(password = value, errorMessage = null, infoMessage = null) }
     fun onFullNameChanged(value: String) = _uiState.update { it.copy(fullName = value, errorMessage = null) }
     fun onConfirmPasswordChanged(value: String) = _uiState.update { it.copy(confirmPassword = value, errorMessage = null) }
     fun onBranchTinChanged(value: String) = _uiState.update { it.copy(branchTin = value, errorMessage = null) }
     fun onBranchIdChanged(value: String) = _uiState.update { it.copy(branchId = value, errorMessage = null) }
     fun onDeviceSerialChanged(value: String) = _uiState.update { it.copy(deviceSerial = value, errorMessage = null) }
 
+    fun startPasswordReset() {
+        _uiState.update {
+            it.copy(reset = PasswordResetForm(username = it.username.trim()), errorMessage = null, infoMessage = null)
+        }
+    }
+
+    fun cancelPasswordReset() {
+        _uiState.update { it.copy(reset = null) }
+    }
+
+    fun updateReset(transform: (PasswordResetForm) -> PasswordResetForm) {
+        _uiState.update { s -> s.copy(reset = s.reset?.let(transform)?.copy(errorMessage = null)) }
+    }
+
+    fun submitPasswordReset() {
+        val form = _uiState.value.reset ?: return
+        if (form.isSubmitting) return
+        val error = when {
+            form.username.isBlank() -> "Enter your user ID."
+            form.tin.isBlank() || form.branchId.isBlank() || form.deviceSerial.isBlank() ->
+                "Enter the device's KRA PIN, branch ID and device serial."
+            form.newPassword.length < 6 -> "Password must be at least 6 characters."
+            form.newPassword != form.confirmPassword -> "Passwords do not match."
+            else -> null
+        }
+        if (error != null) {
+            _uiState.update { s -> s.copy(reset = s.reset?.copy(errorMessage = error)) }
+            return
+        }
+
+        _uiState.update { s -> s.copy(reset = s.reset?.copy(isSubmitting = true, errorMessage = null)) }
+        viewModelScope.launch {
+            val result = authRepository.resetForgottenPassword(
+                username = form.username,
+                tin = form.tin,
+                branchId = form.branchId,
+                deviceSerial = form.deviceSerial,
+                newPassword = form.newPassword
+            )
+            _uiState.update { s ->
+                result.fold(
+                    onSuccess = {
+                        s.copy(
+                            reset = null,
+                            username = form.username.trim(),
+                            password = "",
+                            infoMessage = "Password reset. Sign in with your new password."
+                        )
+                    },
+                    onFailure = { e ->
+                        s.copy(reset = s.reset?.copy(isSubmitting = false, errorMessage = e.toUserMessage()))
+                    }
+                )
+            }
+        }
+    }
+
     fun login() {
+        if (_uiState.value.isLoading) return
         val state = _uiState.value
         if (state.username.isBlank() || state.password.isBlank()) {
             _uiState.update { it.copy(errorMessage = "Please enter username and password") }
@@ -81,7 +155,7 @@ class LoginViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = error.localizedMessage ?: "Authentication failed"
+                            errorMessage = error.toUserMessage()
                         )
                     }
                 }
@@ -91,6 +165,7 @@ class LoginViewModel @Inject constructor(
 
     /** First-run device setup: provisions the first (admin) operator account. */
     fun completeFirstRunSetup() {
+        if (_uiState.value.isLoading) return
         val state = _uiState.value
         when {
             state.fullName.isBlank() || state.username.isBlank() -> {
@@ -117,7 +192,7 @@ class LoginViewModel @Inject constructor(
                 username = state.username,
                 password = state.password,
                 fullName = state.fullName,
-                authorityCode = "ROLE_ADMIN",
+                authorityCode = User.ROLE_ADMIN,
                 branchId = state.branchId,
                 tin = state.branchTin,
                 deviceSerial = state.deviceSerial
@@ -149,7 +224,7 @@ class LoginViewModel @Inject constructor(
                                     isLoading = false,
                                     isAuthenticated = true,
                                     deviceWarning = deviceResult.exceptionOrNull()?.let { e ->
-                                        "Device eTIMS registration did not complete (${e.localizedMessage}). " +
+                                        "Device eTIMS registration did not complete: ${e.toUserMessage()} " +
                                             "Retry it from Hardware Settings before processing real sales."
                                     }
                                 )
@@ -157,14 +232,14 @@ class LoginViewModel @Inject constructor(
                         },
                         onFailure = { error ->
                             _uiState.update {
-                                it.copy(isLoading = false, errorMessage = error.localizedMessage ?: "Setup failed")
+                                it.copy(isLoading = false, errorMessage = error.toUserMessage())
                             }
                         }
                     )
                 },
                 onFailure = { error ->
                     _uiState.update {
-                        it.copy(isLoading = false, errorMessage = error.localizedMessage ?: "Setup failed")
+                        it.copy(isLoading = false, errorMessage = error.toUserMessage())
                     }
                 }
             )

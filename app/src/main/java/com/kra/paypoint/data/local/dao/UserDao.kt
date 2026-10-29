@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kra.paypoint.data.local.entity.UserEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -22,4 +23,17 @@ interface UserDao {
 
     @Query("UPDATE users SET isActive = 0 WHERE username = :username")
     suspend fun deactivate(username: String)
+
+    /** Includes inactive accounts — user management must be able to see and re-enable them. */
+    @Query("SELECT * FROM users ORDER BY username ASC")
+    fun observeAll(): Flow<List<UserEntity>>
+
+    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
+    suspend fun findAny(username: String): UserEntity?
+
+    @Query("UPDATE users SET isActive = :active WHERE username = :username")
+    suspend fun setActive(username: String, active: Boolean)
+
+    @Query("SELECT COUNT(*) FROM users WHERE isActive = 1 AND authorityCode = :adminCode")
+    suspend fun countActiveWithAuthority(adminCode: String): Int
 }

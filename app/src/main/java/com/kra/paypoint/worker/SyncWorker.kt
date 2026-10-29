@@ -10,6 +10,9 @@ import com.kra.paypoint.data.remote.api.TransactionService
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesRes
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesSaveReq
 import com.kra.paypoint.data.remote.model.transaction.TrnsSalesReceiptReq
+import com.kra.paypoint.domain.repository.DeviceRepository
+import com.kra.paypoint.domain.repository.MasterDataRepository
+import com.kra.paypoint.domain.repository.PurchaseRepository
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -35,6 +38,9 @@ class SyncWorker(
         fun transactionDao(): TransactionDao
         fun transactionService(): TransactionService
         fun gson(): Gson
+        fun masterDataRepository(): MasterDataRepository
+        fun deviceRepository(): DeviceRepository
+        fun purchaseRepository(): PurchaseRepository
     }
 
     override suspend fun doWork(): Result {
@@ -47,6 +53,23 @@ class SyncWorker(
         val gson = entryPoint.gson()
 
         return try {
+            // Items/customers first: KRA can reject an invoice that references an item it
+            // hasn't been told about yet. Failures stay PENDING and are retried next pass.
+            entryPoint.deviceRepository().registration.value?.let { reg ->
+                try {
+                    val pushed = entryPoint.masterDataRepository().pushPendingMasterData(reg.tin, reg.branchId)
+                    if (pushed > 0) Log.i(TAG, "Registered $pushed pending item(s)/customer(s) with eTIMS.")
+                } catch (e: Exception) {
+                    Log.w(TAG, "Pending master-data push failed: ${e.message}")
+                }
+                try {
+                    val purchases = entryPoint.purchaseRepository().pushPendingPurchases()
+                    if (purchases > 0) Log.i(TAG, "Reported $purchases purchase invoice(s) to eTIMS.")
+                } catch (e: Exception) {
+                    Log.w(TAG, "Pending purchase push failed: ${e.message}")
+                }
+            }
+
             val pendingTransactions = transactionDao.getPendingTransactionsList()
 
             if (pendingTransactions.isEmpty()) {

@@ -9,6 +9,9 @@ import com.kra.paypoint.data.local.dao.ItemDao
 import com.kra.paypoint.data.local.dao.StockMovementDao
 import com.kra.paypoint.data.local.dao.TransactionDao
 import com.kra.paypoint.data.local.dao.UserDao
+import com.kra.paypoint.data.local.dao.SupplierDao
+import com.kra.paypoint.data.local.dao.CommercialDocumentDao
+import com.kra.paypoint.data.local.dao.PurchaseDao
 import com.kra.paypoint.data.local.dao.ZReportDao
 import com.kra.paypoint.data.local.database.ALL_MIGRATIONS
 import com.kra.paypoint.data.local.database.PayPointDatabase
@@ -81,6 +84,15 @@ object DatabaseModule {
     fun provideUserDao(database: PayPointDatabase): UserDao {
         return database.userDao()
     }
+
+    @Provides
+    fun provideSupplierDao(database: PayPointDatabase): SupplierDao = database.supplierDao()
+
+    @Provides
+    fun provideCommercialDocumentDao(database: PayPointDatabase): CommercialDocumentDao = database.commercialDocumentDao()
+
+    @Provides
+    fun providePurchaseDao(database: PayPointDatabase): PurchaseDao = database.purchaseDao()
 
     @Provides
     @Singleton

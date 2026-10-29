@@ -148,7 +148,7 @@ class TransactionRepositoryTest {
             paymentTypeCode = "01",
             totalAmount = 232.0,
             salesDate = "20260912100000",
-            payloadJson = "{}"
+            payloadJson = gson.toJson(dummySaleReq())
         )
         transactionDao.insertTransaction(origTx)
 
@@ -158,7 +158,7 @@ class TransactionRepositoryTest {
                 itemName = "Soda 300ml",
                 quantity = 1.0,
                 unitPrice = 116.0,
-                taxRateClassificationCode = "A",
+                taxRateClassificationCode = "B",
                 totalAmount = 116.0
             )
         )
@@ -179,18 +179,23 @@ class TransactionRepositoryTest {
 
         assertEquals(2001L, capturedTx.invoiceNumber) // next number after the seeded 2000
         assertEquals(2000L, capturedTx.originalInvoiceNumber)
-        assertEquals("C", capturedTx.salesTypeCode)
+        assertEquals("N", capturedTx.salesTypeCode)
         assertEquals("R", capturedTx.receiptTypeCode)
         assertEquals("PENDING", capturedTx.syncStatus)
         assertEquals(116.0, capturedTx.totalAmount, 0.001)
 
-        // Rate A 16% VAT math, via the shared TaxCalculationEngine
-        assertEquals(100.0, capturedTx.taxableAmountA, 0.01)
-        assertEquals(16.0, capturedTx.taxAmountA, 0.01)
+        // Band B 16% VAT math, via the shared TaxCalculationEngine
+        assertEquals(100.0, capturedTx.taxableAmountB, 0.01)
+        assertEquals(16.0, capturedTx.taxAmountB, 0.01)
+        assertEquals(0.0, capturedTx.taxableAmountA, 0.01)
 
         val parsedReq = gson.fromJson(capturedTx.payloadJson, TrnsSalesSaveReq::class.java)
-        assertEquals("C", parsedReq.salesTyCd)
+        assertEquals("N", parsedReq.salesTyCd)
         assertEquals("R", parsedReq.rcptTyCd)
+        // Seller is the issuing taxpayer from the original invoice, never the buyer (P051234567Z)
+        assertEquals("P012345678X", parsedReq.tin)
+        assertEquals(16, parsedReq.taxRtB)
+        assertEquals(16.0, parsedReq.taxAmtB, 0.01)
         assertEquals(2001L, parsedReq.invcNo)
         assertEquals(2000L, parsedReq.orgInvcNo)
         assertEquals("01", parsedReq.rfdRsnCd)
@@ -213,7 +218,7 @@ class TransactionRepositoryTest {
             invoiceNumber = 3000L,
             totalAmount = 50.0,
             salesDate = "20260912100000",
-            payloadJson = "{}"
+            payloadJson = gson.toJson(dummySaleReq())
         )
         transactionDao.insertTransaction(origTx)
 

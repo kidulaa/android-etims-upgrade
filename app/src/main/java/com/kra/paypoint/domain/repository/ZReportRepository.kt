@@ -15,13 +15,18 @@ data class XReportSummary(
     val taxableAmountA: Double = 0.0,
     val taxAmountA: Double = 0.0,
     val taxableAmountB: Double = 0.0,
+    val taxAmountB: Double = 0.0,
     val taxableAmountC: Double = 0.0,
     val taxableAmountD: Double = 0.0,
     val taxableAmountE: Double = 0.0,
     val taxAmountE: Double = 0.0,
+    val creditNoteCount: Int = 0,
+    val creditNoteAmount: Double = 0.0,
     val cashAmount: Double = 0.0,
     val cardAmount: Double = 0.0,
-    val mobileAmount: Double = 0.0
+    val mobileAmount: Double = 0.0,
+    /** Sales on credit ("pay later") — invoiced but not money in the drawer. */
+    val creditAmount: Double = 0.0
 )
 
 interface ZReportRepository {

@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.receipts.viewmodel
 
+import com.kra.paypoint.domain.exception.toUserMessage
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +10,8 @@ import com.kra.paypoint.domain.repository.DeviceRepository
 import com.kra.paypoint.domain.repository.TransactionRepository
 import com.kra.paypoint.hardware.printer.PrinterService
 import com.kra.paypoint.ui.export.PdfGenerator
+import com.kra.paypoint.ui.export.ReceiptHeader
+import com.kra.paypoint.ui.export.ReceiptJournal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +21,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
@@ -30,6 +35,7 @@ enum class SyncFilter {
 
 data class ReceiptsUiState(
     val filter: SyncFilter = SyncFilter.ALL,
+    val searchQuery: String = "",
     val selectedTransactionWithItems: TransactionWithItems? = null,
     val isPrinting: Boolean = false,
     val printMessage: String? = null,
@@ -53,10 +59,17 @@ class ReceiptsViewModel @Inject constructor(
 
     val filteredTransactions: StateFlow<List<TransactionEntity>> =
         combine(allTransactions, _uiState) { list, state ->
-            when (state.filter) {
+            val byStatus = when (state.filter) {
                 SyncFilter.ALL -> list
                 SyncFilter.PENDING -> list.filter { it.syncStatus == "PENDING" || it.syncStatus == "FAILED" }
                 SyncFilter.SYNCED -> list.filter { it.syncStatus == "SYNCED" }
+            }
+            val q = state.searchQuery.trim().removePrefix("#")
+            if (q.isEmpty()) byStatus
+            else byStatus.filter {
+                it.invoiceNumber.toString() == q ||
+                    it.customerName?.contains(q, ignoreCase = true) == true ||
+                    it.customerTin?.contains(q, ignoreCase = true) == true
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -64,10 +77,24 @@ class ReceiptsViewModel @Inject constructor(
         _uiState.update { it.copy(filter = filter) }
     }
 
+    /** "Search Receipt": matches an exact invoice number, or part of the buyer's name or PIN. */
+    fun setSearchQuery(query: String) {
+        _uiState.update { it.copy(searchQuery = query) }
+    }
+
     fun selectTransaction(id: Long) {
         viewModelScope.launch {
             val details = transactionRepository.getTransactionDetails(id)
             _uiState.update { it.copy(selectedTransactionWithItems = details) }
+        }
+    }
+
+    /** "Mark as paid" for a credit sale; refreshes the open receipt so the badge clears. */
+    fun markPaid(transactionId: Long) {
+        viewModelScope.launch {
+            transactionRepository.markPaid(transactionId)
+            val refreshed = transactionRepository.getTransactionDetails(transactionId)
+            _uiState.update { it.copy(selectedTransactionWithItems = refreshed, printMessage = "Marked as paid.") }
         }
     }
 
@@ -80,12 +107,15 @@ class ReceiptsViewModel @Inject constructor(
             _uiState.update { it.copy(isPrinting = true, printMessage = "Generating PDF...") }
             try {
                 val registration = deviceRepository.registration.value
-                val pdfFile = PdfGenerator.createInvoicePdf(
-                    context = context,
-                    transaction = data.transaction,
-                    items = data.items,
-                    registration = registration
-                )
+                // iText layout + QR rendering is CPU/IO heavy; keep it off the main thread.
+                val pdfFile = withContext(Dispatchers.IO) {
+                    PdfGenerator.createInvoicePdf(
+                        context = context,
+                        transaction = data.transaction,
+                        items = data.items,
+                        registration = registration
+                    )
+                }
                 _uiState.update {
                     it.copy(
                         isPrinting = false,
@@ -97,7 +127,7 @@ class ReceiptsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isPrinting = false,
-                        printMessage = "PDF error: ${e.localizedMessage}"
+                        printMessage = "PDF error: ${e.toUserMessage()}"
                     )
                 }
             }
@@ -124,7 +154,7 @@ class ReceiptsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isPrinting = false,
-                        printMessage = "Print error: ${e.localizedMessage}"
+                        printMessage = "Print error: ${e.toUserMessage()}"
                     )
                 }
             }
@@ -132,40 +162,12 @@ class ReceiptsViewModel @Inject constructor(
     }
 
     private fun buildFiscalReceiptJournal(data: TransactionWithItems): String {
-        val t = data.transaction
-        val sb = StringBuilder()
-        val isCreditNote = t.salesTypeCode == "C" || t.receiptTypeCode == "R" || t.originalInvoiceNumber > 0
-        if (isCreditNote) {
-            sb.appendLine("================================")
-            sb.appendLine("     KRA FISCAL CREDIT NOTE     ")
-            sb.appendLine("             (COPY)             ")
-            sb.appendLine("================================")
-            sb.appendLine("CREDIT NOTE: #${t.invoiceNumber}")
-            sb.appendLine("ORIG INVC  : #${t.originalInvoiceNumber}")
-        } else {
-            sb.appendLine("================================")
-            sb.appendLine("       eTIMS FISCAL RECEIPT     ")
-            sb.appendLine("             (COPY)             ")
-            sb.appendLine("================================")
-            sb.appendLine("INVOICE NO : #${t.invoiceNumber}")
-        }
-        sb.appendLine("DATE/TIME  : ${t.salesDate}")
-        sb.appendLine("CUSTOMER   : ${t.customerName ?: "Walk-in"}")
-        if (!t.customerTin.isNullOrBlank()) {
-            sb.appendLine("CUST PIN   : ${t.customerTin}")
-        }
-        sb.appendLine("--------------------------------")
-        data.items.forEach { item ->
-            sb.appendLine("${item.itemName} x ${item.quantity}")
-            sb.appendLine(String.format("  @ KES %.2f = KES %.2f [%s]", item.unitPrice, item.totalAmount, item.taxTypeCode))
-        }
-        sb.appendLine("--------------------------------")
-        sb.appendLine(String.format("TAXABLE AMOUNT : KES %.2f", t.totalTaxableAmount))
-        sb.appendLine(String.format("TOTAL VAT      : KES %.2f", t.totalTaxAmount))
-        sb.appendLine(String.format("TOTAL PAID     : KES %.2f", t.totalAmount))
-        sb.appendLine("--------------------------------")
-        sb.appendLine("STATUS : ${t.syncStatus}")
-        sb.appendLine("================================")
-        return sb.toString()
+        val registration = deviceRepository.registration.value
+        return ReceiptJournal.build(
+            data = data,
+            header = ReceiptHeader.from(registration),
+            registration = registration,
+            isCopy = true
+        )
     }
 }

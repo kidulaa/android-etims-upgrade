@@ -38,5 +38,6 @@ data class ZReportEntity(
     val cashAmount: Double = 0.0,
     val cardAmount: Double = 0.0,
     val mobileAmount: Double = 0.0,
+    val creditAmount: Double = 0.0,
     val syncStatus: String = "SYNCED"
 )

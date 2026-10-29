@@ -89,6 +89,9 @@ interface TransactionDao {
     @Query("SELECT COUNT(*) FROM transactions WHERE syncStatus = 'PENDING' OR syncStatus = 'FAILED'")
     fun getPendingCount(): Flow<Int>
 
+    @Query("UPDATE transactions SET isPaid = 1 WHERE id = :id")
+    suspend fun markPaid(id: Long)
+
     @Query("SELECT MAX(invoiceNumber) FROM transactions")
     suspend fun getLastInvoiceNumber(): Long?
 }

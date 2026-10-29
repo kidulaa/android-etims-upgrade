@@ -1,9 +1,12 @@
 package com.kra.paypoint.ui.screens.creditnote.viewmodel
 
+import com.kra.paypoint.domain.exception.toUserMessage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kra.paypoint.data.local.entity.TransactionItemEntity
 import com.kra.paypoint.data.local.entity.TransactionWithItems
+import com.kra.paypoint.data.local.entity.isCreditNote
+import com.kra.paypoint.domain.usecase.TaxCalculationEngine
 import com.kra.paypoint.domain.repository.AuthRepository
 import com.kra.paypoint.domain.repository.RefundItemParam
 import com.kra.paypoint.domain.repository.TransactionRepository
@@ -46,16 +49,9 @@ data class CreditNoteUiState(
     val totalRefundAmount: Double
         get() = refundItems.filter { it.isSelected }.sumOf { it.lineRefundTotal }
 
-    val refundTaxAmountA: Double
-        get() = refundItems.filter { it.isSelected && it.originalItem.taxTypeCode == "A" }
-            .sumOf { it.lineRefundTotal - (it.lineRefundTotal / 1.16) }
-
-    val refundTaxAmountE: Double
-        get() = refundItems.filter { it.isSelected && it.originalItem.taxTypeCode == "E" }
-            .sumOf { it.lineRefundTotal - (it.lineRefundTotal / 1.08) }
-
     val totalRefundTax: Double
-        get() = refundTaxAmountA + refundTaxAmountE
+        get() = refundItems.filter { it.isSelected }
+            .sumOf { TaxCalculationEngine.split(it.lineRefundTotal, it.originalItem.taxTypeCode).taxAmount.toDouble() }
 
     val totalRefundTaxable: Double
         get() = totalRefundAmount - totalRefundTax
@@ -96,12 +92,7 @@ class CreditNoteViewModel @Inject constructor(
                     return@launch
                 }
 
-                // salesTypeCode "C" is the actual credit-note marker (see
-                // TransactionRepositoryImpl.issueCreditNote). receiptTypeCode distinguishes
-                // Receipt/Simplified/Invoice document types, not refund status — "R" (Receipt)
-                // is the default for every ordinary sale, so checking it here would reject
-                // every normal invoice as "already a credit note."
-                if (transactionWithItems.transaction.salesTypeCode == "C") {
+                if (transactionWithItems.transaction.isCreditNote) {
                     _uiState.update {
                         it.copy(
                             isLoading = false,
@@ -130,7 +121,7 @@ class CreditNoteViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(isLoading = false, errorMessage = "Error retrieving invoice: ${e.localizedMessage}")
+                    it.copy(isLoading = false, errorMessage = "Error retrieving invoice: ${e.toUserMessage()}")
                 }
             }
         }
@@ -193,6 +184,8 @@ class CreditNoteViewModel @Inject constructor(
 
     fun issueCreditNote() {
         val state = _uiState.value
+        // Re-entry guard: a double tap can land before the disabled button recomposes.
+        if (state.isProcessing) return
         val originalTx = state.originalTransactionWithItems?.transaction ?: run {
             _uiState.update { it.copy(errorMessage = "No original invoice loaded.") }
             return
@@ -269,13 +262,13 @@ class CreditNoteViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isProcessing = false,
-                            errorMessage = "Credit Note failed: ${result.exceptionOrNull()?.localizedMessage}"
+                            errorMessage = "Credit Note failed: ${result.exceptionOrNull()?.toUserMessage()}"
                         )
                     }
                 }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(isProcessing = false, errorMessage = "Error processing Credit Note: ${e.localizedMessage}")
+                    it.copy(isProcessing = false, errorMessage = "Error processing Credit Note: ${e.toUserMessage()}")
                 }
             }
         }
@@ -298,7 +291,7 @@ class CreditNoteViewModel @Inject constructor(
                     _uiState.update { it.copy(feedbackMessage = "Credit Note #$cnNumber sent to printer (COPY).") }
                 }
             } catch (e: Exception) {
-                _uiState.update { it.copy(errorMessage = "Reprint failed: ${e.localizedMessage}") }
+                _uiState.update { it.copy(errorMessage = "Reprint failed: ${e.toUserMessage()}") }
             }
         }
     }

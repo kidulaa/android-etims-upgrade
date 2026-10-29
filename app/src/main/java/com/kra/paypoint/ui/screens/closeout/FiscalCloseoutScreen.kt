@@ -1,5 +1,6 @@
 package com.kra.paypoint.ui.screens.closeout
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,8 +26,8 @@ fun FiscalCloseoutScreen(
     viewModel: FiscalCloseoutViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val pastZReports by viewModel.pastZReports.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val pastZReports by viewModel.pastZReports.collectAsStateWithLifecycle()
 
     var showZCloseoutConfirmation by remember { mutableStateOf(false) }
 
@@ -87,12 +88,6 @@ fun FiscalCloseoutScreen(
                         Icon(Icons.Default.Refresh, contentDescription = "Refresh Shift")
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-                )
             )
         }
     ) { padding ->
@@ -224,7 +219,7 @@ fun CurrentShiftCard(
             Divider(modifier = Modifier.padding(vertical = 10.dp))
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("Gross Sales Total:", style = MaterialTheme.typography.bodyMedium)
+                Text("Net Sales Total:", style = MaterialTheme.typography.bodyMedium)
                 Text(
                     String.format("KES %.2f", summary.grossSalesAmount),
                     style = MaterialTheme.typography.titleMedium,
@@ -243,6 +238,14 @@ fun CurrentShiftCard(
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Mobile Payments:", style = MaterialTheme.typography.bodySmall)
                 Text(String.format("KES %.2f", summary.mobileAmount), style = MaterialTheme.typography.bodySmall)
+            }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Card Payments:", style = MaterialTheme.typography.bodySmall)
+                Text(String.format("KES %.2f", summary.cardAmount), style = MaterialTheme.typography.bodySmall)
+            }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Credit (unpaid):", style = MaterialTheme.typography.bodySmall)
+                Text(String.format("KES %.2f", summary.creditAmount), style = MaterialTheme.typography.bodySmall)
             }
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -304,7 +307,7 @@ fun PastZReportCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = String.format("Gross: KES %.2f (VAT: KES %.2f)", report.grossSalesAmount, report.totalTaxAmount),
+                    text = String.format("Net: KES %.2f (VAT: KES %.2f)", report.grossSalesAmount, report.totalTaxAmount),
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.primary

@@ -30,5 +30,6 @@ data class RemoteItem(
     @SerializedName("qtyUnitCd") val qtyUnitCd: String? = null,
     @SerializedName("taxTyCd") val taxTyCd: String? = null,
     @SerializedName("dftPrc") val dftPrc: Double? = null,
+    @SerializedName("orgnNatCd") val orgnNatCd: String? = null,
     @SerializedName("useYn") val useYn: String? = null
 )

@@ -40,8 +40,13 @@
 -keep class com.kra.paypoint.worker.** { *; }
 
 # --- Android Jetpack Compose ---
--keep class androidx.compose.** { *; }
+# No blanket keep: Compose ships its own consumer rules, and keeping all of androidx.compose
+# stopped R8 shrinking/optimising the UI toolkit (larger APK, slower startup).
 -dontwarn androidx.compose.**
 
 # --- Bluetooth Printer Hardware ---
 -keep class com.kra.paypoint.hardware.** { *; }
+
+# --- iText PDF ---
+# iText logs through SLF4J; no binder is bundled, so it falls back to a no-op logger.
+-dontwarn org.slf4j.impl.StaticLoggerBinder
